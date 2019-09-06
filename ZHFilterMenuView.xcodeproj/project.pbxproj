@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5003FABF231CFDB100D06560 /* ZHFilterMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */; };
 		50FD12FE230D20C20030499E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD12FD230D20C20030499E /* AppDelegate.m */; };
 		50FD1301230D20C20030499E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD1300230D20C20030499E /* ViewController.m */; };
 		50FD1304230D20C20030499E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50FD1302230D20C20030499E /* Main.storyboard */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5003FABD231CFDB100D06560 /* ZHFilterMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterMenuView.h; sourceTree = "<group>"; };
+		5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterMenuView.m; sourceTree = "<group>"; };
 		50FD12F9230D20C20030499E /* ZHFilterMenuView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZHFilterMenuView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50FD12FC230D20C20030499E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		50FD12FD230D20C20030499E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -78,6 +81,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5003FABC231CDC3D00D06560 /* ZHFilterMenuView */ = {
+			isa = PBXGroup;
+			children = (
+				5003FABD231CFDB100D06560 /* ZHFilterMenuView.h */,
+				5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */,
+			);
+			path = ZHFilterMenuView;
+			sourceTree = "<group>";
+		};
 		50FD12F0230D20C20030499E = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +113,7 @@
 		50FD12FB230D20C20030499E /* ZHFilterMenuView */ = {
 			isa = PBXGroup;
 			children = (
+				5003FABC231CDC3D00D06560 /* ZHFilterMenuView */,
 				50FD12FC230D20C20030499E /* AppDelegate.h */,
 				50FD12FD230D20C20030499E /* AppDelegate.m */,
 				50FD12FF230D20C20030499E /* ViewController.h */,
@@ -263,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50FD1301230D20C20030499E /* ViewController.m in Sources */,
+				5003FABF231CFDB100D06560 /* ZHFilterMenuView.m in Sources */,
 				50FD130C230D20C40030499E /* main.m in Sources */,
 				50FD12FE230D20C20030499E /* AppDelegate.m in Sources */,
 			);
@@ -438,6 +452,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -455,6 +470,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
