@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5003FABF231CFDB100D06560 /* ZHFilterMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */; };
+		509890F3239A0028007FA433 /* ZHFilterRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = 509890F2239A0028007FA433 /* ZHFilterRightView.m */; };
+		509890F6239A01E9007FA433 /* ZHFilterItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 509890F5239A01E9007FA433 /* ZHFilterItemTableViewCell.m */; };
+		509890F9239A0763007FA433 /* ZHFilterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 509890F8239A0763007FA433 /* ZHFilterModel.m */; };
+		509890FC239A0776007FA433 /* ZHFilterItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 509890FB239A0776007FA433 /* ZHFilterItemModel.m */; };
 		50FD12FE230D20C20030499E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD12FD230D20C20030499E /* AppDelegate.m */; };
 		50FD1301230D20C20030499E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD1300230D20C20030499E /* ViewController.m */; };
 		50FD1304230D20C20030499E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50FD1302230D20C20030499E /* Main.storyboard */; };
@@ -38,6 +42,14 @@
 /* Begin PBXFileReference section */
 		5003FABD231CFDB100D06560 /* ZHFilterMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterMenuView.h; sourceTree = "<group>"; };
 		5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterMenuView.m; sourceTree = "<group>"; };
+		509890F1239A0028007FA433 /* ZHFilterRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterRightView.h; sourceTree = "<group>"; };
+		509890F2239A0028007FA433 /* ZHFilterRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterRightView.m; sourceTree = "<group>"; };
+		509890F4239A01E9007FA433 /* ZHFilterItemTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterItemTableViewCell.h; sourceTree = "<group>"; };
+		509890F5239A01E9007FA433 /* ZHFilterItemTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterItemTableViewCell.m; sourceTree = "<group>"; };
+		509890F7239A0763007FA433 /* ZHFilterModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterModel.h; sourceTree = "<group>"; };
+		509890F8239A0763007FA433 /* ZHFilterModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterModel.m; sourceTree = "<group>"; };
+		509890FA239A0776007FA433 /* ZHFilterItemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterItemModel.h; sourceTree = "<group>"; };
+		509890FB239A0776007FA433 /* ZHFilterItemModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterItemModel.m; sourceTree = "<group>"; };
 		50FD12F9230D20C20030499E /* ZHFilterMenuView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZHFilterMenuView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50FD12FC230D20C20030499E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		50FD12FD230D20C20030499E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -86,6 +98,14 @@
 			children = (
 				5003FABD231CFDB100D06560 /* ZHFilterMenuView.h */,
 				5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */,
+				509890F1239A0028007FA433 /* ZHFilterRightView.h */,
+				509890F2239A0028007FA433 /* ZHFilterRightView.m */,
+				509890F4239A01E9007FA433 /* ZHFilterItemTableViewCell.h */,
+				509890F5239A01E9007FA433 /* ZHFilterItemTableViewCell.m */,
+				509890F7239A0763007FA433 /* ZHFilterModel.h */,
+				509890F8239A0763007FA433 /* ZHFilterModel.m */,
+				509890FA239A0776007FA433 /* ZHFilterItemModel.h */,
+				509890FB239A0776007FA433 /* ZHFilterItemModel.m */,
 			);
 			path = ZHFilterMenuView;
 			sourceTree = "<group>";
@@ -275,9 +295,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				509890F6239A01E9007FA433 /* ZHFilterItemTableViewCell.m in Sources */,
+				509890F3239A0028007FA433 /* ZHFilterRightView.m in Sources */,
 				50FD1301230D20C20030499E /* ViewController.m in Sources */,
 				5003FABF231CFDB100D06560 /* ZHFilterMenuView.m in Sources */,
 				50FD130C230D20C40030499E /* main.m in Sources */,
+				509890F9239A0763007FA433 /* ZHFilterModel.m in Sources */,
+				509890FC239A0776007FA433 /* ZHFilterItemModel.m in Sources */,
 				50FD12FE230D20C20030499E /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

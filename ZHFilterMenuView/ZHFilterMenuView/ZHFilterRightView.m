@@ -1,19 +1,14 @@
 //
-//  ZHFilterMenuView.m
+//  ZHFilterRightView.m
 //  ZHFilterMenuView
 //
-//  Created by 周亚楠 on 2019/12/5.
+//  Created by 周亚楠 on 2019/12/6.
 //  Copyright © 2019 Zhou. All rights reserved.
 //
 
-#import "ZHFilterMenuView.h"
+#import "ZHFilterRightView.h"
 
-@interface ZHFilterMenuView ()
-//@property (nonatomic, strong) UITableView *
-
-@end
-
-@implementation ZHFilterMenuView
+@implementation ZHFilterRightView
 
 /*
 // Only override drawRect: if you perform custom drawing.
