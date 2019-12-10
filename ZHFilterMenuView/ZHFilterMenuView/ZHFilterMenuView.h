@@ -26,7 +26,8 @@
 @property (nonatomic, strong) UIButton * _Nonnull confirmButton;
 @property (nonatomic, strong) UIView * _Nonnull lineView;
 
-- (instancetype _Nonnull )init;
+/** 快速初始化 */
+- (instancetype _Nonnull )initBottomViewWithResetAction:(SEL _Nonnull )resetAction confirmAction:(SEL _Nonnull )confirmAction;
 
 @end
 
@@ -79,7 +80,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-
+/** 快速初始化 */
+- (instancetype)initWithFrame:(CGRect)frame maxHeight:(CGFloat)maxHeight;
 
 @end
 
