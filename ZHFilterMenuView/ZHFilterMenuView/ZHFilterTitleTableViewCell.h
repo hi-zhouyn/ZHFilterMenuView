@@ -1,5 +1,5 @@
 //
-//  ZHFilterItemTableViewCell.h
+//  ZHFilterTitleTableViewCell.h
 //  ZHFilterMenuView
 //
 //  Created by 周亚楠 on 2019/12/10.
@@ -10,8 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZHFilterItemTableViewCell : UITableViewCell
-
+@interface ZHFilterTitleTableViewCell : UITableViewCell
+@property (nonatomic, strong) UILabel *titleLabel;
 @end
 
 NS_ASSUME_NONNULL_END
