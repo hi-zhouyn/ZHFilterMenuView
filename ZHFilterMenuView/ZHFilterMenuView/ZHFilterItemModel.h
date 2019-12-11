@@ -12,6 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZHFilterItemModel : NSObject
 
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *code;
+@property (nonatomic, copy) NSString *parentCode;
+@property (nonatomic, assign) BOOL selected;
+
 @end
 
 NS_ASSUME_NONNULL_END

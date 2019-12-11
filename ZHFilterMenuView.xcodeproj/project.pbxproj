@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5003FABF231CFDB100D06560 /* ZHFilterMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */; };
+		5006756723A0E997007ADC12 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006756623A0E997007ADC12 /* FilterViewController.m */; };
 		500EFDC0239F84530027721C /* ZHFilterItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500EFDBE239F84530027721C /* ZHFilterItemTableViewCell.m */; };
 		500EFDC1239F84530027721C /* ZHFilterItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EFDBF239F84530027721C /* ZHFilterItemTableViewCell.xib */; };
 		500EFDC4239F849A0027721C /* ZHFilterTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500EFDC3239F849A0027721C /* ZHFilterTitleTableViewCell.m */; };
@@ -44,6 +45,8 @@
 /* Begin PBXFileReference section */
 		5003FABD231CFDB100D06560 /* ZHFilterMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterMenuView.h; sourceTree = "<group>"; };
 		5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterMenuView.m; sourceTree = "<group>"; };
+		5006756523A0E997007ADC12 /* FilterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
+		5006756623A0E997007ADC12 /* FilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		500EFDBD239F84530027721C /* ZHFilterItemTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterItemTableViewCell.h; sourceTree = "<group>"; };
 		500EFDBE239F84530027721C /* ZHFilterItemTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterItemTableViewCell.m; sourceTree = "<group>"; };
 		500EFDBF239F84530027721C /* ZHFilterItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZHFilterItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -146,6 +149,8 @@
 				50FD12FD230D20C20030499E /* AppDelegate.m */,
 				50FD12FF230D20C20030499E /* ViewController.h */,
 				50FD1300230D20C20030499E /* ViewController.m */,
+				5006756523A0E997007ADC12 /* FilterViewController.h */,
+				5006756623A0E997007ADC12 /* FilterViewController.m */,
 				50FD1302230D20C20030499E /* Main.storyboard */,
 				50FD1305230D20C40030499E /* Assets.xcassets */,
 				50FD1307230D20C40030499E /* LaunchScreen.storyboard */,
@@ -306,6 +311,7 @@
 			files = (
 				500EFDC0239F84530027721C /* ZHFilterItemTableViewCell.m in Sources */,
 				509890F3239A0028007FA433 /* ZHFilterRightView.m in Sources */,
+				5006756723A0E997007ADC12 /* FilterViewController.m in Sources */,
 				50FD1301230D20C20030499E /* ViewController.m in Sources */,
 				5003FABF231CFDB100D06560 /* ZHFilterMenuView.m in Sources */,
 				500EFDC4239F849A0027721C /* ZHFilterTitleTableViewCell.m in Sources */,

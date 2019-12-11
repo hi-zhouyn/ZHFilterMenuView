@@ -76,12 +76,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIColor *titleColor;
 @property (nonatomic, strong) UIColor *titleSelectedColor;
 @property (nonatomic, strong) UIColor *lineColor;
+@property (nonatomic, assign) CGFloat titleFontSize;
 @property (nonatomic, assign) BOOL showLine;
 
+@property (nonatomic, strong) NSArray<NSString *> *titleArr;
+@property (nonatomic, strong) NSArray<NSString *> *imageNameArr;
+@property (nonatomic, strong) NSArray<NSString *> *selectImageNameArr;
+@property (nonatomic, assign) BOOL titleLeft; // 文字标题是否居左 不平分 default NO
+@property (nonatomic, strong) NSMutableArray *buttonArr;
 
 
 /** 快速初始化 */
 - (instancetype)initWithFrame:(CGRect)frame maxHeight:(CGFloat)maxHeight;
+
+/** 参数传完后开始调用 */
+- (void)beginShow;
 
 @end
 

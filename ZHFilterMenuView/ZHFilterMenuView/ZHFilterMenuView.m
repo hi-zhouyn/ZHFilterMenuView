@@ -74,19 +74,101 @@
 
 @interface ZHFilterMenuView ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *leftTableView;
-@property (nonatomic, strong) UITableView *mediumTableView;
+@property (nonatomic, strong) UITableView *mediumTableView;//后续拓展使用
 @property (nonatomic, strong) UITableView *rightTableView;
 @property (nonatomic, strong) UIView *backGroundView;
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) ZHFilterBottomView *bottomView;
 
+@property (nonatomic, assign) NSInteger menuCount;
 @property (nonatomic, assign) NSInteger selectedTabIndex;
+@property (nonatomic, assign) CGFloat maxHeight;
 
 @end
 
 @implementation ZHFilterMenuView
 
+- (instancetype)initWithFrame:(CGRect)frame maxHeight:(CGFloat)maxHeight
+{
+    if (self = [super initWithFrame:frame]) {
+        self.titleColor = KTitleColor;
+        self.titleSelectedColor = KTitleSelectedColor;
+        self.lineColor = KLineColor;
+        self.showLine = YES;
+        self.titleLeft = NO;
+        
+        
+        //        _bottomView.frame = CGRectMake(0, CGRectGetMaxY(self.backGroundView.frame), 0, 0)
+        
+        
+    }
+    return self;
+}
 
+/** 参数传完后开始调用 */
+- (void)beginShow
+{
+    
+    
+    CGFloat buttonInterval = (self.frame.size.width - 60 - (_menuCount - 1) * 10) / (_menuCount - 1);
+    self.buttonArr = [NSMutableArray arrayWithCapacity:_menuCount];
+    for (int i = 0; i < _menuCount; i++) {
+        NSString *titleString = self.titleArr[i];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.titleLabel.font = [UIFont systemFontOfSize:_titleFontSize];
+        [button setTitleColor:self.titleColor forState:UIControlStateNormal];
+        [button setTitleColor:self.titleSelectedColor forState:UIControlStateSelected];
+        UIImage *image = [UIImage imageNamed:self.imageNameArr[i]];
+        UIImage *selectImage = [UIImage imageNamed:self.selectImageNameArr[i]];
+//        image = [image imageTintedWithColor:self.textColor];
+//        selectImage = [image imageTintedWithColor:self.textSelectedColor];
+        [button setImage:[image imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:UIControlStateNormal];
+        [button setImage:[selectImage imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:UIControlStateSelected];
+        [button setTitle:titleString forState:UIControlStateNormal];
+        button.tintColor = [UIColor clearColor];
+        button.adjustsImageWhenHighlighted = NO;
+        button.backgroundColor = [UIColor whiteColor];
+        [self addSubview:button];
+        CGFloat buttonWidth = buttonInterval;
+        CGFloat titlePositionX = i * buttonInterval + (i + 1) * 10;
+        if (self.titleLeft) {
+            buttonWidth = 60 + 30;
+            titlePositionX = i * buttonWidth + (i + 1) * 10;
+            buttonWidth = 80;
+        }
+        if (i == _menuCount - 1 && ![self.titleArr lastObject].length) {
+            buttonWidth = 60;
+            titlePositionX = self.frame.size.width - 60;
+        }
+        button.tag = i;
+        [button addTarget:self action:@selector(menuTapped:) forControlEvents:UIControlEventTouchUpInside];
+        button.frame = CGRectMake(titlePositionX, 0, buttonWidth, self.frame.size.height);
+        button.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+//        [button layoutButtonWithEdgeInsetsStyle:(MKButtonEdgeInsetsStyleRight) imageTitleSpace:3];
+        [self.buttonArr addObject:button];
+    }
+    
+}
+
+#pragma mark - 顶部菜单点击
+- (void)menuTapped:(UIButton *)sender {
+    if (_zh_dataSource == nil) {
+        return;
+    }
+    [self menuTappedWithIndex:sender.tag];
+}
+
+#pragma mark - 点击
+- (void)menuTappedWithIndex:(NSInteger)tapIndex
+{
+    
+}
+
+/** 点击背景回复默认 */
+- (void)backGroundViewTappedClick:(UITapGestureRecognizer *)tapGesture
+{
+    
+}
 
 /** 重置 */
 - (void)resetAction
@@ -187,12 +269,21 @@
 {
     if (!_bottomView) {
         _bottomView = [[ZHFilterBottomView alloc] initBottomViewWithResetAction:@selector(resetAction) confirmAction:@selector(confirmAction)];
-//        _bottomView.frame = CGRectMake(0, CGRectGetMaxY(self.backGroundView.frame), 0, 0)
     }
     return _bottomView;
 }
 
-
+- (UIView *)backGroundView
+{
+    if (!_backGroundView) {
+        _backGroundView = [[UIView alloc] init];
+        _backGroundView.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.f];
+        _backGroundView.opaque = NO;
+        UIGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backGroundViewTappedClick:)];
+        [_backGroundView addGestureRecognizer:gesture];
+    }
+    return _backGroundView;
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.
