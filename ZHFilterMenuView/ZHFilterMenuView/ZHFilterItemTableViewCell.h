@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZHFilterModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZHFilterItemTableViewCell : UITableViewCell
-
+@property (nonatomic, strong) ZHFilterModel *filterModel;
+@property (nonatomic, assign) NSInteger downType;
 @end
 
 NS_ASSUME_NONNULL_END

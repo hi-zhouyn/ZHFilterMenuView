@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ZHFilterModel.h"
 
 @class ZHFilterMenuView;
 
@@ -78,7 +78,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIColor *lineColor;
 @property (nonatomic, assign) CGFloat titleFontSize;
 @property (nonatomic, assign) BOOL showLine;
+@property (nonatomic, assign) CGFloat listHeight;  //选择列表的高度（默认44）
+@property (nonatomic, assign) CGFloat bottomHeight;//列表底部的高度（默认90）
 
+@property (nonatomic, strong) NSMutableArray *dataArr;//传入数据源
 @property (nonatomic, strong) NSArray<NSString *> *titleArr;
 @property (nonatomic, strong) NSArray<NSString *> *imageNameArr;
 @property (nonatomic, strong) NSArray<NSString *> *selectImageNameArr;

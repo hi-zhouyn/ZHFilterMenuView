@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *minPrice;          //输入框最低值
 @property (nonatomic, copy) NSString *maxPrice;          //输入框最大值
 
+@property (nonatomic, assign) CGFloat listHeight;        //列表高度(用于内部列表展示时使用)
+
 + (ZHFilterModel *)createFilterModelWithHeadTitle:(NSString *)title modelArr:(NSArray *)modelArr selectFirst:(BOOL)selectFirst multiple:(BOOL)multiple;
 
 - (void)setModelItemSelectesNO;
