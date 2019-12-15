@@ -347,9 +347,9 @@
         ZHFilterItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZHFilterItemTableViewCell class]) forIndexPath:indexPath];
         ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section][indexPath.row];
         if (downType == ZHFilterMenuDownTypeOnlyItem) {
-            
+            cell.itemType = ZHFilterItemTypeOnlyItem;
         } else if (downType == ZHFilterMenuDownTypeItemInput) {
-            
+            cell.itemType = ZHFilterItemTypeItemInput;
         }
         cell.filterModel = filterModel;
     }

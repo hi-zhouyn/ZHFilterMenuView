@@ -29,7 +29,27 @@
     
 }
 
+- (void)setItemType:(ZHFilterItemType)itemType
+{
+    _itemType = itemType;
+    if (itemType == ZHFilterItemTypeOnlyItem) {
+        self.titleLabel.hidden = NO;
+        self.leftButton.hidden = YES;
+        self.rightButton.hidden = YES;
+        self.bottomView.hidden = YES;
+    } else if (itemType == ZHFilterItemTypeItemInput) {
+        self.titleLabel.hidden = YES;
+        self.leftButton.hidden = NO;
+        self.rightButton.hidden = NO;
+        self.bottomView.hidden = NO;
+    }
+}
 
+- (void)setFilterModel:(ZHFilterModel *)filterModel
+{
+    _filterModel = filterModel;
+    
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
