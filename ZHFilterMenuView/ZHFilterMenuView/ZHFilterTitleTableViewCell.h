@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *titleLabel;
 
 @property (nonatomic, strong) ZHFilterModel *filterModel;
+@property (nonatomic, strong) ZHFilterItemModel *itemModel;
 @end
 
 NS_ASSUME_NONNULL_END

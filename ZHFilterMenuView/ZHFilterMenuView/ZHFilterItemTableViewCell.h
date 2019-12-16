@@ -14,11 +14,26 @@ typedef NS_ENUM(NSUInteger, ZHFilterItemType) {
     ZHFilterItemTypeItemInput,   //可点item加输入框
 };
 
+@interface ZHFilterItemManger : NSObject
+@property (nonatomic, strong) UIColor * _Nullable titleColor;
+@property (nonatomic, strong) UIColor * _Nullable titleSelectedColor;
+@property (nonatomic, strong) UIColor * _Nullable itemBGColor;
+@property (nonatomic, strong) UIColor * _Nullable itemBGSelectedColor;
+@property (nonatomic, assign) CGFloat itemTitleFontSize;
+@property (nonatomic, assign) CGFloat width;
+@property (nonatomic, assign) CGFloat space;
+@property (nonatomic, assign) CGFloat itemHeight;
+@property (nonatomic, assign) NSInteger lineNum;
+@end
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZHFilterItemTableViewCell : UITableViewCell
-@property (nonatomic, strong) ZHFilterModel *filterModel;
 @property (nonatomic, assign) ZHFilterItemType itemType;
+@property (nonatomic, strong) ZHFilterItemManger *itemManager;
+@property (nonatomic, strong) NSArray *modelArr;
+@property (nonatomic, strong) ZHFilterModel *filterModel;
+
 @end
 
 NS_ASSUME_NONNULL_END

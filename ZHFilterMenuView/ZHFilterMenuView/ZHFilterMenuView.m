@@ -22,10 +22,11 @@
 
 #define kSetHEXColor(rgbValue) kBaseSetHEXColor(rgbValue,1)
 
-#define KTitleColor         kSetHEXColor(0x333333)
-#define KTitleSelectedColor kSetHEXColor(0x4998E8)
-#define KLineColor          kSetHEXColor(0xe8e8e8)//分割线
-
+#define KTitleColor          kSetHEXColor(0x333333)
+#define KTitleSelectedColor  kSetHEXColor(0x4998E8)
+#define KLineColor           kSetHEXColor(0xe8e8e8)//分割线
+#define KItemBGColor         kSetHEXColor(0xf5f5f5)
+#define KItemBGSelectedColor kSetHEXColor(0xeef6ff)
 
 @implementation ZHIndexPath
 
@@ -90,6 +91,7 @@
 @property (nonatomic, assign) NSInteger selectedTabIndex;
 @property (nonatomic, assign) CGFloat maxHeight;
 @property (nonatomic, assign) BOOL isShow;//是否展开
+@property (nonatomic, strong) ZHFilterItemManger *itemManager;
 
 @end
 
@@ -106,7 +108,13 @@
         self.listHeight = KTableViewCellHeight;
         self.bottomHeight = KBottomViewHeight;
         
-        
+        self.itemManager = [[ZHFilterItemManger alloc] init];
+        self.itemManager.titleColor = KTitleColor;
+        self.itemManager.titleSelectedColor = KTitleSelectedColor;
+        self.itemManager.itemBGColor = KItemBGColor;
+        self.itemManager.itemBGSelectedColor = KItemBGSelectedColor;
+        self.itemManager.itemTitleFontSize = 13;
+        self.itemManager.width = self.frame.size.width;
     }
     return self;
 }
@@ -315,7 +323,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
     return 1;
 }
 
@@ -336,13 +343,16 @@
         ZHFilterTitleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZHFilterTitleTableViewCell class]) forIndexPath:indexPath];
         if (tableView == self.leftTableView) {
             ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section][indexPath.row];
-            cell.filterModel = filterModel;
+            cell.titleLabel.text = filterModel.title;
+            cell.titleLabel.textColor = filterModel.selected?self.titleSelectedColor:self.titleColor;
         } else if (tableView == self.rightTableView) {
             ZHFilterModel *filterModel = [self getSelectedFilterModel];
-            cell.filterModel = filterModel;
+            ZHFilterItemModel *itemModel = filterModel.itemArr[indexPath.row];
+            cell.titleLabel.text = itemModel.name;
+            cell.titleLabel.textColor = itemModel.selected?self.titleSelectedColor:self.titleColor;
         }
         
-        
+        return cell;
     } else {
         ZHFilterItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZHFilterItemTableViewCell class]) forIndexPath:indexPath];
         ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section][indexPath.row];
@@ -352,8 +362,8 @@
             cell.itemType = ZHFilterItemTypeItemInput;
         }
         cell.filterModel = filterModel;
+        return cell;
     }
-    return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

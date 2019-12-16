@@ -77,6 +77,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIColor *titleSelectedColor;
 @property (nonatomic, strong) UIColor *lineColor;
 @property (nonatomic, assign) CGFloat titleFontSize;
+@property (nonatomic, assign) CGFloat itemTitleFontSize;
+@property (nonatomic, strong) UIColor *itemBGColor;
+@property (nonatomic, strong) UIColor *itemBGSelectedColor;
 @property (nonatomic, assign) BOOL showLine;
 @property (nonatomic, assign) CGFloat listHeight;  //选择列表的高度（默认44）
 @property (nonatomic, assign) CGFloat bottomHeight;//列表底部的高度（默认90）

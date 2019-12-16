@@ -17,6 +17,17 @@
     [self titleLabel];
 }
 
+- (void)setFilterModel:(ZHFilterModel *)filterModel
+{
+    _filterModel = filterModel;
+    self.titleLabel.text = filterModel.title;
+}
+
+- (void)setItemModel:(ZHFilterItemModel *)itemModel
+{
+    _itemModel = itemModel;
+    self.titleLabel.text = itemModel.name;
+}
 
 - (UILabel *)titleLabel
 {
