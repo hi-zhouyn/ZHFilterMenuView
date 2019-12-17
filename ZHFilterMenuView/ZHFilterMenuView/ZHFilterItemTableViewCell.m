@@ -8,6 +8,11 @@
 
 #import "ZHFilterItemTableViewCell.h"
 
+@implementation ZHFilterItemManger
+
+
+@end
+
 @interface ZHFilterItemTableViewCell ()
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIButton *leftButton;
@@ -19,6 +24,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewBottom;
 
 @property (nonatomic, strong) NSMutableArray *buttonArr;
+@property (nonatomic, assign) NSInteger maxCount;
 @end
 
 @implementation ZHFilterItemTableViewCell
@@ -27,7 +33,8 @@
     [super awakeFromNib];
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    [self.minTextField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.maxTextField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)setItemType:(ZHFilterItemType)itemType
@@ -38,25 +45,24 @@
         self.leftButton.hidden = YES;
         self.rightButton.hidden = YES;
         self.bottomView.hidden = YES;
+        self.bottomViewBottom.constant = 20;
     } else if (itemType == ZHFilterItemTypeItemInput) {
         self.titleLabel.hidden = YES;
         self.leftButton.hidden = NO;
         self.rightButton.hidden = NO;
         self.bottomView.hidden = NO;
+        self.bottomViewBottom.constant = 90;
     }
-}
-
-- (void)setItemManager:(ZHFilterItemManger *)itemManager
-{
-    _itemManager = itemManager;
-    _itemManager.space = 15;
-    _itemManager.itemHeight = 28;
-    _itemManager.lineNum = 4;
 }
 
 - (void)setModelArr:(NSArray *)modelArr
 {
     _modelArr = modelArr;
+    for (ZHFilterModel *filterModel in modelArr) {
+        if (filterModel.itemArr.count > self.maxCount) {
+            self.maxCount = filterModel.itemArr.count;
+        }
+    }
     if (!self.leftButton.selected && !self.rightButton.selected) {
         self.leftButton.selected = YES;
         self.filterModel = [modelArr firstObject];
@@ -66,13 +72,30 @@
 - (void)setFilterModel:(ZHFilterModel *)filterModel
 {
     _filterModel = filterModel;
-    CGFloat listHiight = 0.f;
-    if (self.itemType == ZHFilterItemTypeOnlyItem) {
-        
-    } else if (self.itemType == ZHFilterItemTypeItemInput) {
-        
+    CGFloat listHiight = 60.f;
+    NSInteger lineCount = self.maxCount / self.itemManager.lineNum + (self.maxCount % self.itemManager.lineNum ? 1 : 0);
+    if (self.maxCount) {
+        listHiight += (self.itemManager.itemHeight + self.itemManager.space) * lineCount + self.itemManager.space;
     }
+    if (self.itemType == ZHFilterItemTypeOnlyItem) {
+        listHiight += 20;
+    } else if (self.itemType == ZHFilterItemTypeItemInput) {
+        listHiight += 90;
+        self.minTextField.text = filterModel.minPrice;
+        self.maxTextField.text = filterModel.maxPrice;
+    }
+    filterModel.listHeight = listHiight;
     [self createButtonItem];
+}
+
+- (void)textFieldChanged:(UITextField *)textField
+{
+    [self strLengthLimitWithTextField:textField maxLength:self.itemManager.maxLength];
+    if (textField.tag == 101) {
+        self.filterModel.minPrice = textField.text;
+    } else if (textField.tag == 102) {
+        self.filterModel.maxPrice = textField.text;
+    }
 }
 
 - (IBAction)leftButtonClick:(id)sender {
@@ -83,7 +106,9 @@
         [button removeFromSuperview];
     }
     [self.buttonArr removeAllObjects];
-    self.filterModel = [self.modelArr firstObject];
+    ZHFilterModel *filterModel = [self.modelArr firstObject];
+    [filterModel setModelItemSelectesNO];
+    self.filterModel = filterModel;
 }
 
 - (IBAction)rightButtonClick:(id)sender {
@@ -94,12 +119,18 @@
         [button removeFromSuperview];
     }
     [self.buttonArr removeAllObjects];
-    self.filterModel = [self.modelArr lastObject];
+    ZHFilterModel *filterModel = [self.modelArr lastObject];
+    [filterModel setModelItemSelectesNO];
+    self.filterModel = filterModel;
 }
 
 
 - (void)itemButtonClick:(UIButton *)sender
 {
+    self.minTextField.text = nil;
+    self.maxTextField.text = nil;
+    self.filterModel.minPrice = @"";
+    self.filterModel.maxPrice = @"";
     if (self.filterModel.multiple) {
         sender.selected = !sender.selected;
         ZHFilterItemModel *itemModel = self.filterModel.itemArr[sender.tag];
@@ -175,6 +206,32 @@
     UIGraphicsEndImageContext();
     
     return image;
+}
+
+/**
+ 输入框字符数限制 并且未确定文字不做截取处理
+ */
+- (void)strLengthLimitWithTextField:(UITextField *)textField maxLength:(NSInteger)maxLength
+{
+    NSString *lang = [[UIApplication sharedApplication]textInputMode].primaryLanguage; // 键盘输入模式
+    if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+        UITextRange *selectedRange = [textField markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+        // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+        if (!position) {
+            if (textField.text.length > maxLength) {
+                textField.text = [textField.text substringToIndex:maxLength];
+            }
+        }else{
+            // 有高亮选择的字符串，则暂不对文字进行统计和限制
+        }
+    }else{
+        // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+        if (textField.text.length > maxLength) {
+            textField.text = [textField.text substringToIndex:maxLength];
+        }
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

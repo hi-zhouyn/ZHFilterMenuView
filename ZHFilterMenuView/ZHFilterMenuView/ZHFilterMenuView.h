@@ -35,7 +35,7 @@
 
 /** 确定类型 */
 typedef NS_ENUM(NSUInteger, ZHFilterMenuConfirmType) {
-    ZHFilterMenuConfirmTypeSpeedConfirm,    //快速点击列表选择
+    ZHFilterMenuConfirmTypeSpeedConfirm,    //列表快速点击选择
     ZHFilterMenuConfirmTypeBottomConfirm,   //底部确定按钮选择
 };
 
@@ -51,7 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZHFilterMenuViewDelegate <NSObject>
 
-
+/** 点击确定回调 */
+- (void)menuView:(ZHFilterMenuView *)menuView didSelectConfirm:(NSArray *)selectedModelArr;
 
 @end
 
@@ -77,12 +78,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIColor *titleSelectedColor;
 @property (nonatomic, strong) UIColor *lineColor;
 @property (nonatomic, assign) CGFloat titleFontSize;
-@property (nonatomic, assign) CGFloat itemTitleFontSize;
-@property (nonatomic, strong) UIColor *itemBGColor;
-@property (nonatomic, strong) UIColor *itemBGSelectedColor;
+
 @property (nonatomic, assign) BOOL showLine;
 @property (nonatomic, assign) CGFloat listHeight;  //选择列表的高度（默认44）
 @property (nonatomic, assign) CGFloat bottomHeight;//列表底部的高度（默认90）
+
+@property (nonatomic, assign) CGFloat itemTitleFontSize;
+@property (nonatomic, strong) UIColor *itemBGColor;//item背景颜色（默认f5f5f5）
+@property (nonatomic, strong) UIColor *itemBGSelectedColor;//item选择时背景颜色（默认eef6ff）
+@property (nonatomic, assign) CGFloat space;//item间隔（默认15）
+@property (nonatomic, assign) CGFloat itemHeight;//item高（默认28）
+@property (nonatomic, assign) NSInteger lineNum;//一行展示数量（默认4）
+@property (nonatomic, assign) NSInteger maxLength;//输入框最大文本数量（默认7位）
 
 @property (nonatomic, strong) NSMutableArray *dataArr;//传入数据源
 @property (nonatomic, strong) NSArray<NSString *> *titleArr;
@@ -95,8 +102,14 @@ NS_ASSUME_NONNULL_BEGIN
 /** 快速初始化 */
 - (instancetype)initWithFrame:(CGRect)frame maxHeight:(CGFloat)maxHeight;
 
-/** 参数传完后开始调用 */
-- (void)beginShow;
+/** 参数传完后开始调用以显示 */
+- (void)beginShowMenuView;
+
+/** 外部快捷调用展开菜单列表 */
+- (void)menuTappedWithIndex:(NSInteger)tapIndex;
+
+/** 菜单列表消失 */
+- (void)hideMenuList;
 
 @end
 

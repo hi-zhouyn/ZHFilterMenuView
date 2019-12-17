@@ -21,9 +21,10 @@ typedef NS_ENUM(NSUInteger, ZHFilterItemType) {
 @property (nonatomic, strong) UIColor * _Nullable itemBGSelectedColor;
 @property (nonatomic, assign) CGFloat itemTitleFontSize;
 @property (nonatomic, assign) CGFloat width;
-@property (nonatomic, assign) CGFloat space;
-@property (nonatomic, assign) CGFloat itemHeight;
-@property (nonatomic, assign) NSInteger lineNum;
+@property (nonatomic, assign) CGFloat space;//item间隔（默认15）
+@property (nonatomic, assign) CGFloat itemHeight;//item高（默认28）
+@property (nonatomic, assign) NSInteger lineNum;//一行展示数量（默认4）
+@property (nonatomic, assign) NSInteger maxLength;//输入框最大文本数量（默认7）
 @end
 
 NS_ASSUME_NONNULL_BEGIN

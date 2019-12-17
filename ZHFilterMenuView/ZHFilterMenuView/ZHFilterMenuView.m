@@ -115,12 +115,82 @@
         self.itemManager.itemBGSelectedColor = KItemBGSelectedColor;
         self.itemManager.itemTitleFontSize = 13;
         self.itemManager.width = self.frame.size.width;
+        self.itemManager.space = 15;
+        self.itemManager.itemHeight = 28;
+        self.itemManager.lineNum = 4;
+        self.itemManager.maxLength = 7;
     }
     return self;
 }
 
-/** 参数传完后开始调用 */
-- (void)beginShow
+- (void)setTitleColor:(UIColor *)titleColor
+{
+    _titleColor = titleColor;
+    self.itemManager.titleColor = titleColor;
+}
+
+- (void)setTitleSelectedColor:(UIColor *)titleSelectedColor
+{
+    _titleSelectedColor = titleSelectedColor;
+    self.itemManager.titleSelectedColor = titleSelectedColor;
+}
+
+- (void)setItemBGColor:(UIColor *)itemBGColor
+{
+    _itemBGColor = itemBGColor;
+    self.itemManager.itemBGColor = itemBGColor;
+}
+
+- (void)setItemBGSelectedColor:(UIColor *)itemBGSelectedColor
+{
+    _itemBGSelectedColor = itemBGSelectedColor;
+    self.itemManager.itemBGSelectedColor = itemBGSelectedColor;
+}
+
+- (void)setItemTitleFontSize:(CGFloat)itemTitleFontSize
+{
+    _itemTitleFontSize = itemTitleFontSize;
+    self.itemManager.itemTitleFontSize = itemTitleFontSize;
+}
+
+- (void)setSpace:(CGFloat)space
+{
+    if (space <= 0) {
+        space = 0.f;
+    }
+    _space = space;
+    self.itemManager.space = space;
+}
+
+- (void)setItemHeight:(CGFloat)itemHeight
+{
+    if (itemHeight <= 0) {
+        itemHeight = 1.f;
+    }
+    _itemHeight = itemHeight;
+    self.itemManager.itemHeight = itemHeight;
+}
+
+- (void)setLineNum:(NSInteger)lineNum
+{
+    if (lineNum <= 0) {
+        lineNum = 1;
+    }
+    _lineNum = lineNum;
+    self.itemManager.lineNum = lineNum;
+}
+
+- (void)setMaxLength:(NSInteger)maxLength
+{
+    if (maxLength <= 0) {
+        maxLength = 1;
+    }
+    _maxLength = maxLength;
+    self.itemManager.maxLength = maxLength;
+}
+
+/** 参数传完后开始调用以显示 */
+- (void)beginShowMenuView
 {
     CGFloat buttonInterval = (self.frame.size.width - 60 - (_menuCount - 1) * 10) / (_menuCount - 1);
     self.buttonArr = [NSMutableArray arrayWithCapacity:_menuCount];
@@ -168,28 +238,93 @@
         return;
     }
     
-    
-    
+    [self menuTappedWithIndex:sender.tag];
 }
 
-
+#pragma mark - 点击
+- (void)menuTappedWithIndex:(NSInteger)tapIndex
+{
+    if (self.selectedTabIndex == tapIndex) {
+        [self animateMenuViewWithShow:NO];
+    } else {
+        self.selectedTabIndex = tapIndex;
+        [self animateMenuViewWithShow:YES];
+    }
+}
 
 /** 点击背景恢复默认 */
 - (void)backGroundViewTappedClick:(UITapGestureRecognizer *)tapGesture
 {
+    [self hideMenuList];
+}
+
+- (void)hideMenuList
+{
     
+    [self animateMenuViewWithShow:NO];
 }
 
 /** 重置 */
 - (void)resetAction
 {
-    
+    NSArray *modelArr = [self getSelectedTabIndexFilterModelArr];
+    ZHFilterModel *filterModel = [modelArr firstObject];
+    for (ZHFilterModel *model in modelArr) {
+        if (model.selectFirst) {
+            [model setModelItemSelectesNO];
+            if (model == filterModel) {
+                model.selected = YES;
+            }
+        } else {
+            [model setModelItemSelectesNO];
+        }
+    }
+    [self.leftTableView reloadData];
+    [self.rightTableView reloadData];
 }
 
 /** 确定 */
 - (void)confirmAction
 {
+    NSArray *modelArr = [self getSelectedTabIndexFilterModelArr];
+    ZHFilterMenuDownType downType = [self getDownTypeBySelectedTabIndex:self.selectedTabIndex];
+    if (downType == ZHFilterMenuDownTypeItemInput) {
+        ZHFilterModel *filterModel = [[ZHFilterModel alloc] init];
+        for (ZHFilterModel *model in modelArr) {
+            if (model.selected) {
+                filterModel = model;
+                break;
+            }
+        }
+        if (filterModel.minPrice.integerValue > filterModel.maxPrice.integerValue) {
+            NSLog(@"请输入正确的价格区间！");
+            return;
+        }
+    }
+    NSMutableArray *selectedModelArr = [NSMutableArray array];
+    for (NSArray *modelArr in self.dataArr) {
+        for (ZHFilterModel *filterModel in modelArr) {
+            NSMutableArray *selectArr = [NSMutableArray array];
+            if (filterModel.minPrice.length || filterModel.maxPrice.length) {
+                ZHFilterItemModel *itemModel = [[ZHFilterItemModel alloc] init];
+                itemModel.name = filterModel.title;
+                itemModel.minPrice = filterModel.minPrice;
+                itemModel.maxPrice = filterModel.maxPrice;
+                itemModel.code = [NSString stringWithFormat:@"%ld",[modelArr indexOfObject:filterModel]];
+            } else {
+                for (ZHFilterItemModel *itemModel in filterModel.itemArr) {
+                    if (itemModel.selected) {
+                        [selectArr addObject:itemModel];
+                    }
+                }
+            }
+            filterModel.selectArr = selectArr;
+            [selectedModelArr addObjectsFromArray:selectArr];
+        }
+    }
     
+    
+    [self animateMenuViewWithShow:NO];
 }
 
 
@@ -253,6 +388,7 @@
             [self.bottomView removeFromSuperview];
         }];
     }
+    self.isShow = !show;
 }
 
 
@@ -321,6 +457,9 @@
     return listHeight;
 }
 
+
+#pragma mark - UITableView
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -361,6 +500,7 @@
         } else if (downType == ZHFilterMenuDownTypeItemInput) {
             cell.itemType = ZHFilterItemTypeItemInput;
         }
+        cell.itemManager = self.itemManager;
         cell.filterModel = filterModel;
         return cell;
     }
@@ -379,20 +519,51 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ZHFilterMenuDownType downType = [self getDownTypeBySelectedTabIndex:self.selectedTabIndex];
     ZHFilterMenuConfirmType confirmType = [self getConfirmTypeBySelectedTabIndex:self.selectedTabIndex];
     if (confirmType == ZHFilterMenuConfirmTypeSpeedConfirm) {
-        
-        
-        
+        NSArray *modelArr = [self getSelectedTabIndexFilterModelArr];
+        ZHFilterModel *filterModel = [modelArr firstObject];
+        for (int i = 0; i < filterModel.itemArr.count; i ++) {
+            ZHFilterItemModel *itemModel = filterModel.itemArr[i];
+            itemModel.selected = i == indexPath.row;
+        }
+        [self.leftTableView reloadData];
+        [self.rightTableView reloadData];
+    } else if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
+        if (downType == ZHFilterMenuDownTypeTwoLists) {
+            if (tableView == self.leftTableView) {
+                NSArray *modelArr = [self getSelectedTabIndexFilterModelArr];
+                for (ZHFilterModel *filterModel in modelArr) {
+                    filterModel.selected = NO;
+                }
+                ZHFilterModel *tempModel = modelArr[indexPath.row];
+                tempModel.selected = YES;
+                [self.leftTableView reloadData];
+                [self.rightTableView reloadData];
+            } else if (tableView == self.rightTableView) {
+                ZHFilterModel *filterModel = [self getSelectedFilterModel];
+                [filterModel setModelItemSelectesNO];
+                ZHFilterItemModel *itemModel = filterModel.itemArr[indexPath.row];
+                itemModel.selected = YES;
+                [self.rightTableView reloadData];
+            }
+        } else if (downType == ZHFilterMenuDownTypeOnlyList) {
+            NSArray *modelArr = [self getSelectedTabIndexFilterModelArr];
+            ZHFilterModel *filterModel = [modelArr firstObject];
+            for (int i = 0; i < filterModel.itemArr.count; i ++) {
+                ZHFilterItemModel *itemModel = filterModel.itemArr[i];
+                itemModel.selected = i == indexPath.row;
+            }
+            [self.leftTableView reloadData];
+            [self.rightTableView reloadData];
+        }
     }
 }
 
 
 
-
-
-
-
+#pragma mark - lazyloading
 
 - (UITableView *)leftTableView
 {

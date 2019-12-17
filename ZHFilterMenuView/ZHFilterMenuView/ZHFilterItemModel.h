@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *parentCode;
 @property (nonatomic, assign) BOOL selected;
 
+@property (nonatomic, copy) NSString *minPrice;          //输入框最低值
+@property (nonatomic, copy) NSString *maxPrice;          //输入框最大值
+
 @end
 
 NS_ASSUME_NONNULL_END

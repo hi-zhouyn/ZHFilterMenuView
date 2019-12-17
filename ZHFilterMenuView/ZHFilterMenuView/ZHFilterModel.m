@@ -19,11 +19,14 @@
     model.title = title;
     model.itemArr = [NSMutableArray arrayWithArray:modelArr];
     model.multiple = multiple;
-    return @[model];
+    return model;
 }
 
 - (void)setModelItemSelectesNO
 {
+    self.minPrice = @"";
+    self.maxPrice = @"";
+    self.selectArr = [NSMutableArray array];
     for (ZHFilterItemModel *infoModel in self.itemArr) {
         infoModel.selected = NO;
     }
