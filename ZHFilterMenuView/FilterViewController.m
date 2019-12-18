@@ -11,7 +11,7 @@
 #import "ZHFilterRightView.h"
 
 @interface FilterViewController ()
-
+@property (nonatomic, strong) NSMutableArray *dataArr;
 @end
 
 @implementation FilterViewController
@@ -19,7 +19,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
 }
+
+
 
 /*
 #pragma mark - Navigation

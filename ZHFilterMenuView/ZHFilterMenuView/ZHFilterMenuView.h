@@ -51,8 +51,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZHFilterMenuViewDelegate <NSObject>
 
-/** 点击确定回调 */
-- (void)menuView:(ZHFilterMenuView *)menuView didSelectConfirm:(NSArray *)selectedModelArr;
+/** 确定回调 */
+- (void)menuView:(ZHFilterMenuView *)menuView didSelectConfirmAtSelectedModelArr:(NSArray *)selectedModelArr;
+
+@optional
+
+/** 消失回调 */
+- (void)menuView:(ZHFilterMenuView *)menuView didHideAtSelectedModelArr:(NSArray *)selectedModelArr;
+
+/** 列表将要显示回调 */
+- (void)menuView:(ZHFilterMenuView *)menuView willShowAtTabIndex:(NSInteger)tabIndex;
 
 @end
 
@@ -66,7 +74,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (ZHFilterMenuDownType)menuView:(ZHFilterMenuView *)menuView downTypeInTabIndex:(NSInteger)tabIndex;
 
 
-
 @end
 
 @interface ZHFilterMenuView : UIView
@@ -74,12 +81,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<ZHFilterMenuViewDelegate> zh_delegate;
 @property (nonatomic, weak) id<ZHFilterMenuViewDetaSource> zh_dataSource;
 
+@property (nonatomic, strong) NSMutableArray *dataArr;//传入数据源
+@property (nonatomic, strong) NSArray<NSString *> *titleArr;
+@property (nonatomic, strong) NSArray<NSString *> *imageNameArr;
+@property (nonatomic, strong) NSArray<NSString *> *selectImageNameArr;
+
 @property (nonatomic, strong) UIColor *titleColor;
 @property (nonatomic, strong) UIColor *titleSelectedColor;
 @property (nonatomic, strong) UIColor *lineColor;
 @property (nonatomic, assign) CGFloat titleFontSize;
 
 @property (nonatomic, assign) BOOL showLine;
+@property (nonatomic, assign) BOOL titleLeft; // 文字标题是否居左 不平分 default NO
 @property (nonatomic, assign) CGFloat listHeight;  //选择列表的高度（默认44）
 @property (nonatomic, assign) CGFloat bottomHeight;//列表底部的高度（默认90）
 
@@ -91,11 +104,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger lineNum;//一行展示数量（默认4）
 @property (nonatomic, assign) NSInteger maxLength;//输入框最大文本数量（默认7位）
 
-@property (nonatomic, strong) NSMutableArray *dataArr;//传入数据源
-@property (nonatomic, strong) NSArray<NSString *> *titleArr;
-@property (nonatomic, strong) NSArray<NSString *> *imageNameArr;
-@property (nonatomic, strong) NSArray<NSString *> *selectImageNameArr;
-@property (nonatomic, assign) BOOL titleLeft; // 文字标题是否居左 不平分 default NO
 @property (nonatomic, strong) NSMutableArray *buttonArr;
 
 

@@ -66,16 +66,6 @@
     return self;
 }
 
-
-- (UIButton *)resetButton
-{
-    if (!_resetButton) {
-        
-        [self addSubview:_resetButton];
-    }
-    return _resetButton;
-}
-
 @end
 
 
@@ -202,8 +192,8 @@
         [button setTitleColor:self.titleSelectedColor forState:UIControlStateSelected];
         UIImage *image = [UIImage imageNamed:self.imageNameArr[i]];
         UIImage *selectImage = [UIImage imageNamed:self.selectImageNameArr[i]];
-//        image = [image imageTintedWithColor:self.textColor];
-//        selectImage = [image imageTintedWithColor:self.textSelectedColor];
+        image = [self imageTintedWithImage:image color:self.titleColor fraction:0.f];
+        selectImage = [self imageTintedWithImage:selectImage color:self.titleSelectedColor fraction:0.f];
         [button setImage:[image imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:UIControlStateNormal];
         [button setImage:[selectImage imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:UIControlStateSelected];
         [button setTitle:titleString forState:UIControlStateNormal];
@@ -229,7 +219,44 @@
 //        [button layoutButtonWithEdgeInsetsStyle:(MKButtonEdgeInsetsStyleRight) imageTitleSpace:3];
         [self.buttonArr addObject:button];
     }
-    
+}
+
+- (UIImage *)imageTintedWithImage:(UIImage *)fromImage color:(UIColor *)color fraction:(CGFloat)fraction
+{
+    if (color) {
+        // Construct new image the same size as this one.
+        UIImage *image;
+        
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
+        if ([UIScreen instancesRespondToSelector:@selector(scale)]) {
+            UIGraphicsBeginImageContextWithOptions([fromImage size], NO, 0.f); // 0.f for scale means "scale for device's main screen".
+        } else {
+            UIGraphicsBeginImageContext([fromImage size]);
+        }
+#else
+        UIGraphicsBeginImageContext([fromImage size]);
+#endif
+        CGRect rect = CGRectZero;
+        rect.size = [fromImage size];
+        
+        // Composite tint color at its own opacity.
+        [color set];
+        UIRectFill(rect);
+        
+        // Mask tint color-swatch to this image's opaque mask.
+        // We want behaviour like NSCompositeDestinationIn on Mac OS X.
+        [fromImage drawInRect:rect blendMode:kCGBlendModeDestinationIn alpha:1.0];
+        
+        // Finally, composite this image over the tinted mask at desired opacity.
+        if (fraction > 0.0) {
+            // We want behaviour like NSCompositeSourceOver on Mac OS X.
+            [fromImage drawInRect:rect blendMode:kCGBlendModeSourceAtop alpha:fraction];
+        }
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return image;
+    }
+    return fromImage;
 }
 
 #pragma mark - 顶部菜单点击
@@ -258,10 +285,14 @@
     [self hideMenuList];
 }
 
+/** 隐藏 */
 - (void)hideMenuList
 {
-    
+    NSArray *selectedModelArr = [self getSelectedModelArrAndUpdateSelectArr];
     [self animateMenuViewWithShow:NO];
+    if (self.zh_delegate && [self.zh_delegate respondsToSelector:@selector(menuView:didHideAtSelectedModelArr:)]) {
+        [self.zh_delegate menuView:self didHideAtSelectedModelArr:selectedModelArr];
+    }
 }
 
 /** 重置 */
@@ -301,30 +332,11 @@
             return;
         }
     }
-    NSMutableArray *selectedModelArr = [NSMutableArray array];
-    for (NSArray *modelArr in self.dataArr) {
-        for (ZHFilterModel *filterModel in modelArr) {
-            NSMutableArray *selectArr = [NSMutableArray array];
-            if (filterModel.minPrice.length || filterModel.maxPrice.length) {
-                ZHFilterItemModel *itemModel = [[ZHFilterItemModel alloc] init];
-                itemModel.name = filterModel.title;
-                itemModel.minPrice = filterModel.minPrice;
-                itemModel.maxPrice = filterModel.maxPrice;
-                itemModel.code = [NSString stringWithFormat:@"%ld",[modelArr indexOfObject:filterModel]];
-            } else {
-                for (ZHFilterItemModel *itemModel in filterModel.itemArr) {
-                    if (itemModel.selected) {
-                        [selectArr addObject:itemModel];
-                    }
-                }
-            }
-            filterModel.selectArr = selectArr;
-            [selectedModelArr addObjectsFromArray:selectArr];
-        }
-    }
-    
-    
+    NSArray *selectedModelArr = [self getSelectedModelArrAndUpdateSelectArr];
     [self animateMenuViewWithShow:NO];
+    if (self.zh_delegate && [self.zh_delegate respondsToSelector:@selector(menuView:didSelectConfirmAtSelectedModelArr:)]) {
+        [self.zh_delegate menuView:self didSelectConfirmAtSelectedModelArr:selectedModelArr];
+    }
 }
 
 
@@ -333,6 +345,11 @@
     ZHFilterMenuConfirmType confirmType = [self getConfirmTypeBySelectedTabIndex:self.selectedTabIndex];
     ZHFilterMenuDownType downType = [self getDownTypeBySelectedTabIndex:self.selectedTabIndex];
     if (show) {
+        //将要显示回调
+        if (self.zh_delegate && [self.zh_delegate respondsToSelector:@selector(menuView:willShowAtTabIndex:)]) {
+            [self.zh_delegate menuView:self willShowAtTabIndex:self.selectedTabIndex];
+        }
+        
         [self.superview addSubview:self.backGroundView];
         if (downType == ZHFilterMenuDownTypeTwoLists) {
             self.leftTableView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width / 3, 0);
@@ -457,6 +474,32 @@
     return listHeight;
 }
 
+/** 获取所有选择的数据并更新选择数据 */
+- (NSArray *)getSelectedModelArrAndUpdateSelectArr
+{
+    NSMutableArray *selectedModelArr = [NSMutableArray array];
+    for (NSArray *modelArr in self.dataArr) {
+        for (ZHFilterModel *filterModel in modelArr) {
+            NSMutableArray *selectArr = [NSMutableArray array];
+            if (filterModel.minPrice.length || filterModel.maxPrice.length) {
+                ZHFilterItemModel *itemModel = [[ZHFilterItemModel alloc] init];
+                itemModel.name = filterModel.title;
+                itemModel.minPrice = filterModel.minPrice;
+                itemModel.maxPrice = filterModel.maxPrice;
+                itemModel.code = [NSString stringWithFormat:@"%ld",[modelArr indexOfObject:filterModel]];
+            } else {
+                for (ZHFilterItemModel *itemModel in filterModel.itemArr) {
+                    if (itemModel.selected) {
+                        [selectArr addObject:itemModel];
+                    }
+                }
+            }
+            filterModel.selectArr = selectArr;
+            [selectedModelArr addObjectsFromArray:selectArr];
+        }
+    }
+    return selectedModelArr;
+}
 
 #pragma mark - UITableView
 

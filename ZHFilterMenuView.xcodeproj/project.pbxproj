@@ -45,6 +45,7 @@
 /* Begin PBXFileReference section */
 		5003FABD231CFDB100D06560 /* ZHFilterMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterMenuView.h; sourceTree = "<group>"; };
 		5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterMenuView.m; sourceTree = "<group>"; };
+		5005D12323A9FAA70040EDB9 /* FilterData.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = FilterData.geojson; sourceTree = "<group>"; };
 		5006756523A0E997007ADC12 /* FilterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		5006756623A0E997007ADC12 /* FilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		500EFDBD239F84530027721C /* ZHFilterItemTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterItemTableViewCell.h; sourceTree = "<group>"; };
@@ -151,6 +152,7 @@
 				50FD1300230D20C20030499E /* ViewController.m */,
 				5006756523A0E997007ADC12 /* FilterViewController.h */,
 				5006756623A0E997007ADC12 /* FilterViewController.m */,
+				5005D12323A9FAA70040EDB9 /* FilterData.geojson */,
 				50FD1302230D20C20030499E /* Main.storyboard */,
 				50FD1305230D20C40030499E /* Assets.xcassets */,
 				50FD1307230D20C40030499E /* LaunchScreen.storyboard */,
