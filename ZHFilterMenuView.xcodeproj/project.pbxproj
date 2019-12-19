@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5003FABF231CFDB100D06560 /* ZHFilterMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */; };
 		5006756723A0E997007ADC12 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006756623A0E997007ADC12 /* FilterViewController.m */; };
+		500733B823AB67E600BB3B2E /* FilterDataUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 500733B723AB67E600BB3B2E /* FilterDataUtil.m */; };
 		500EFDC0239F84530027721C /* ZHFilterItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500EFDBE239F84530027721C /* ZHFilterItemTableViewCell.m */; };
 		500EFDC1239F84530027721C /* ZHFilterItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EFDBF239F84530027721C /* ZHFilterItemTableViewCell.xib */; };
 		500EFDC4239F849A0027721C /* ZHFilterTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500EFDC3239F849A0027721C /* ZHFilterTitleTableViewCell.m */; };
@@ -23,6 +24,7 @@
 		50FD130C230D20C40030499E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD130B230D20C40030499E /* main.m */; };
 		50FD1316230D20C40030499E /* ZHFilterMenuViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD1315230D20C40030499E /* ZHFilterMenuViewTests.m */; };
 		50FD1321230D20C40030499E /* ZHFilterMenuViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD1320230D20C40030499E /* ZHFilterMenuViewUITests.m */; };
+		51E439D176DD75A77A082BA8 /* libPods-ZHFilterMenuView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB4AB243A42B1C39CB36A3F /* libPods-ZHFilterMenuView.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,11 +45,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0AF371853686C03D265217A2 /* Pods-ZHFilterMenuView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZHFilterMenuView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZHFilterMenuView/Pods-ZHFilterMenuView.debug.xcconfig"; sourceTree = "<group>"; };
 		5003FABD231CFDB100D06560 /* ZHFilterMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterMenuView.h; sourceTree = "<group>"; };
 		5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterMenuView.m; sourceTree = "<group>"; };
 		5005D12323A9FAA70040EDB9 /* FilterData.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = FilterData.geojson; sourceTree = "<group>"; };
 		5006756523A0E997007ADC12 /* FilterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		5006756623A0E997007ADC12 /* FilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
+		500733B623AB67E600BB3B2E /* FilterDataUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterDataUtil.h; sourceTree = "<group>"; };
+		500733B723AB67E600BB3B2E /* FilterDataUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterDataUtil.m; sourceTree = "<group>"; };
 		500EFDBD239F84530027721C /* ZHFilterItemTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterItemTableViewCell.h; sourceTree = "<group>"; };
 		500EFDBE239F84530027721C /* ZHFilterItemTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterItemTableViewCell.m; sourceTree = "<group>"; };
 		500EFDBF239F84530027721C /* ZHFilterItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZHFilterItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -75,6 +80,8 @@
 		50FD131C230D20C40030499E /* ZHFilterMenuViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZHFilterMenuViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50FD1320230D20C40030499E /* ZHFilterMenuViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterMenuViewUITests.m; sourceTree = "<group>"; };
 		50FD1322230D20C40030499E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		707415DD831D57C8391A0FAD /* Pods-ZHFilterMenuView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZHFilterMenuView.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZHFilterMenuView/Pods-ZHFilterMenuView.release.xcconfig"; sourceTree = "<group>"; };
+		BBB4AB243A42B1C39CB36A3F /* libPods-ZHFilterMenuView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZHFilterMenuView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51E439D176DD75A77A082BA8 /* libPods-ZHFilterMenuView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +137,8 @@
 				50FD1314230D20C40030499E /* ZHFilterMenuViewTests */,
 				50FD131F230D20C40030499E /* ZHFilterMenuViewUITests */,
 				50FD12FA230D20C20030499E /* Products */,
+				9E61137649957029C2522C06 /* Pods */,
+				E3A570C7B1A3F80B71EB50BD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -152,6 +162,8 @@
 				50FD1300230D20C20030499E /* ViewController.m */,
 				5006756523A0E997007ADC12 /* FilterViewController.h */,
 				5006756623A0E997007ADC12 /* FilterViewController.m */,
+				500733B623AB67E600BB3B2E /* FilterDataUtil.h */,
+				500733B723AB67E600BB3B2E /* FilterDataUtil.m */,
 				5005D12323A9FAA70040EDB9 /* FilterData.geojson */,
 				50FD1302230D20C20030499E /* Main.storyboard */,
 				50FD1305230D20C40030499E /* Assets.xcassets */,
@@ -180,6 +192,23 @@
 			path = ZHFilterMenuViewUITests;
 			sourceTree = "<group>";
 		};
+		9E61137649957029C2522C06 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0AF371853686C03D265217A2 /* Pods-ZHFilterMenuView.debug.xcconfig */,
+				707415DD831D57C8391A0FAD /* Pods-ZHFilterMenuView.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E3A570C7B1A3F80B71EB50BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BBB4AB243A42B1C39CB36A3F /* libPods-ZHFilterMenuView.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -187,9 +216,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50FD1325230D20C40030499E /* Build configuration list for PBXNativeTarget "ZHFilterMenuView" */;
 			buildPhases = (
+				B9E3AA76C17370599E728A89 /* [CP] Check Pods Manifest.lock */,
 				50FD12F5230D20C20030499E /* Sources */,
 				50FD12F6230D20C20030499E /* Frameworks */,
 				50FD12F7230D20C20030499E /* Resources */,
+				4C7AA6D0C08E303BB15AA2FC /* [CP] Embed Pods Frameworks */,
+				D480A790E49B2B04B52CF841 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -306,6 +338,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4C7AA6D0C08E303BB15AA2FC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZHFilterMenuView/Pods-ZHFilterMenuView-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B9E3AA76C17370599E728A89 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZHFilterMenuView-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D480A790E49B2B04B52CF841 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZHFilterMenuView/Pods-ZHFilterMenuView-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		50FD12F5230D20C20030499E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -319,6 +402,7 @@
 				500EFDC4239F849A0027721C /* ZHFilterTitleTableViewCell.m in Sources */,
 				50FD130C230D20C40030499E /* main.m in Sources */,
 				509890F9239A0763007FA433 /* ZHFilterModel.m in Sources */,
+				500733B823AB67E600BB3B2E /* FilterDataUtil.m in Sources */,
 				509890FC239A0776007FA433 /* ZHFilterItemModel.m in Sources */,
 				50FD12FE230D20C20030499E /* AppDelegate.m in Sources */,
 			);
@@ -489,16 +573,14 @@
 		};
 		50FD1326230D20C40030499E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0AF371853686C03D265217A2 /* Pods-ZHFilterMenuView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -507,16 +589,14 @@
 		};
 		50FD1327230D20C40030499E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 707415DD831D57C8391A0FAD /* Pods-ZHFilterMenuView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -530,11 +610,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -549,11 +625,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -567,11 +639,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -585,11 +653,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

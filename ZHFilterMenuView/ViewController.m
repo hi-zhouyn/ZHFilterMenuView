@@ -21,7 +21,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"ZHFilterMenuView";
-    self.titleArr = @[@"新房筛选",@"二手房筛选",@"租房筛选",@"中介筛选",@"侧边筛选"];
+    self.titleArr = @[@"新房筛选",@"二手房筛选",@"租房筛选",@"侧边筛选"];
     [self.tableView reloadData];
 }
 

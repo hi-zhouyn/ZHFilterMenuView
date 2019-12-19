@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, ZHFilterItemType) {
 @property (nonatomic, assign) CGFloat itemTitleFontSize;
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat space;//item间隔（默认15）
-@property (nonatomic, assign) CGFloat itemHeight;//item高（默认28）
+@property (nonatomic, assign) CGFloat itemHeight;//item高（默认35）
 @property (nonatomic, assign) NSInteger lineNum;//一行展示数量（默认4）
 @property (nonatomic, assign) NSInteger maxLength;//输入框最大文本数量（默认7）
 @end

@@ -10,7 +10,7 @@
 #import "ZHFilterMenuView.h"
 #import "ZHFilterRightView.h"
 
-@interface FilterViewController ()
+@interface FilterViewController ()<ZHFilterMenuViewDelegate,ZHFilterMenuViewDetaSource>
 @property (nonatomic, strong) NSMutableArray *dataArr;
 @end
 
@@ -22,6 +22,26 @@
     
 }
 
+/** 确定回调 */
+- (void)menuView:(ZHFilterMenuView *)menuView didSelectConfirmAtSelectedModelArr:(NSArray *)selectedModelArr
+{
+    
+}
+
+
+/** 返回每个 tabIndex 下的确定类型 */
+- (ZHFilterMenuConfirmType)menuView:(ZHFilterMenuView *)menuView confirmTypeInTabIndex:(NSInteger)tabIndex
+{
+    
+    return 1;
+}
+
+/** 返回每个 tabIndex 下的下拉展示类型 */
+- (ZHFilterMenuDownType)menuView:(ZHFilterMenuView *)menuView downTypeInTabIndex:(NSInteger)tabIndex
+{
+    
+    return 1;
+}
 
 
 /*

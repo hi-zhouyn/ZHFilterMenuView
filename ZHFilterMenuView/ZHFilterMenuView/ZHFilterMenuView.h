@@ -8,8 +8,27 @@
 
 #import <UIKit/UIKit.h>
 #import "ZHFilterModel.h"
-
 @class ZHFilterMenuView;
+
+#define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self
+#define SS(strongSelf)  __strong __typeof(&*self)strongSelf = weakSelf
+
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define KTableViewCellHeight 44
+#define KBottomViewHeight    90
+
+#define kBaseSetHEXColor(rgbValue,al) ([UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:(al)])
+
+#define kSetHEXColor(rgbValue) kBaseSetHEXColor(rgbValue,1)
+
+#define KTitleColor          kSetHEXColor(0x333333)
+#define KTitleSelectedColor  kSetHEXColor(0x4998E8)
+#define KLineColor           kSetHEXColor(0xe8e8e8)//分割线
+#define KItemBGColor         kSetHEXColor(0xf5f5f5)
+#define KItemBGSelectedColor kSetHEXColor(0xeef6ff)
+
+
 
 @interface ZHIndexPath : NSObject
 
@@ -100,7 +119,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIColor *itemBGColor;//item背景颜色（默认f5f5f5）
 @property (nonatomic, strong) UIColor *itemBGSelectedColor;//item选择时背景颜色（默认eef6ff）
 @property (nonatomic, assign) CGFloat space;//item间隔（默认15）
-@property (nonatomic, assign) CGFloat itemHeight;//item高（默认28）
+@property (nonatomic, assign) CGFloat itemHeight;//item高（默认35）
 @property (nonatomic, assign) NSInteger lineNum;//一行展示数量（默认4）
 @property (nonatomic, assign) NSInteger maxLength;//输入框最大文本数量（默认7位）
 
