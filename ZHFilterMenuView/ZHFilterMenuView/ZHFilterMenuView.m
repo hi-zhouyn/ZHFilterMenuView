@@ -35,7 +35,7 @@
         [self addSubview:self.resetButton];
         
         self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.resetButton.frame = CGRectMake(CGRectGetWidth(self.frame) / 2 + 10, 20, CGRectGetWidth(self.frame) / 2 - 60, CGRectGetHeight(self.frame) - 40);
+        self.confirmButton.frame = CGRectMake(CGRectGetWidth(self.frame) / 2 + 10, 20, CGRectGetWidth(self.frame) / 2 - 60, CGRectGetHeight(self.frame) - 40);
         [self.confirmButton setTitle:@"确定" forState:UIControlStateNormal];
         [self.confirmButton addTarget:self action:resetAction forControlEvents:UIControlEventTouchUpInside];
         [self.confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -72,9 +72,11 @@
 - (instancetype)initWithFrame:(CGRect)frame maxHeight:(CGFloat)maxHeight
 {
     if (self = [super initWithFrame:frame]) {
+        self.selectedTabIndex = -1;
         self.titleColor = KTitleColor;
         self.titleSelectedColor = KTitleSelectedColor;
         self.lineColor = KLineColor;
+        self.titleFontSize = 15;
         self.showLine = YES;
         self.titleLeft = NO;
         self.listHeight = KTableViewCellHeight;
@@ -91,8 +93,17 @@
         self.itemManager.itemHeight = 35;
         self.itemManager.lineNum = 4;
         self.itemManager.maxLength = 7;
+        
+        self.maxHeight = maxHeight;
+        
     }
     return self;
+}
+
+- (void)setTitleArr:(NSArray<NSString *> *)titleArr
+{
+    _titleArr = titleArr;
+    self.menuCount = titleArr.count;
 }
 
 - (void)setTitleColor:(UIColor *)titleColor
@@ -105,6 +116,12 @@
 {
     _titleSelectedColor = titleSelectedColor;
     self.itemManager.titleSelectedColor = titleSelectedColor;
+}
+
+- (void)setShowLine:(BOOL)showLine
+{
+    _showLine = showLine;
+    self.lineView.hidden = !showLine;
 }
 
 - (void)setItemBGColor:(UIColor *)itemBGColor
@@ -164,11 +181,14 @@
 /** 参数传完后开始调用以显示 */
 - (void)beginShowMenuView
 {
-    CGFloat buttonInterval = (self.frame.size.width - 60 - (_menuCount - 1) * 10) / (_menuCount - 1);
+    if (!self.selectImageNameArr.count) {
+        self.selectImageNameArr = self.imageNameArr;
+    }
+    CGFloat buttonInterval = (self.frame.size.width - (_menuCount + 1) * 10) / _menuCount;
     self.buttonArr = [NSMutableArray arrayWithCapacity:_menuCount];
     for (int i = 0; i < _menuCount; i++) {
         NSString *titleString = self.titleArr[i];
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.titleLabel.font = [UIFont systemFontOfSize:_titleFontSize];
         [button setTitleColor:self.titleColor forState:UIControlStateNormal];
         [button setTitleColor:self.titleSelectedColor forState:UIControlStateSelected];
@@ -198,9 +218,10 @@
         [button addTarget:self action:@selector(menuTapped:) forControlEvents:UIControlEventTouchUpInside];
         button.frame = CGRectMake(titlePositionX, 0, buttonWidth, self.frame.size.height);
         button.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-//        [button layoutButtonWithEdgeInsetsStyle:(MKButtonEdgeInsetsStyleRight) imageTitleSpace:3];
+        [self layoutButtonWithEdgeInsetsType:1 button:button imageTitleSpace:3];
         [self.buttonArr addObject:button];
     }
+    [self bringSubviewToFront:self.lineView];
 }
 
 - (UIImage *)imageTintedWithImage:(UIImage *)fromImage color:(UIColor *)color fraction:(CGFloat)fraction
@@ -240,6 +261,37 @@
     }
     return fromImage;
 }
+
+/**
+ 更改button图片文本位置
+ type:1~文本在左，图片在右；2~图片在左，文本在右
+ */
+- (void)layoutButtonWithEdgeInsetsType:(NSInteger)type
+                                 button:(UIButton *)button
+                        imageTitleSpace:(CGFloat)space
+{
+    // 1. 得到imageView和titleLabel的宽、高
+    CGFloat imageWith = button.imageView.frame.size.width;
+    CGFloat labelWidth = button.titleLabel.intrinsicContentSize.width;
+    
+    // 2. 声明全局的imageEdgeInsets和labelEdgeInsets
+    UIEdgeInsets imageEdgeInsets = UIEdgeInsetsZero;
+    UIEdgeInsets labelEdgeInsets = UIEdgeInsetsZero;
+    
+    // 3. 根据style和space得到imageEdgeInsets和labelEdgeInsets的值
+    if (type == 1) {
+        imageEdgeInsets = UIEdgeInsetsMake(0, labelWidth+space/2.0, 0, -labelWidth-space/2.0);
+        labelEdgeInsets = UIEdgeInsetsMake(0, -imageWith-space/2.0, 0, imageWith+space/2.0);
+    } else if (type == 2) {
+        imageEdgeInsets = UIEdgeInsetsMake(0, -space/2.0, 0, space/2.0);
+        labelEdgeInsets = UIEdgeInsetsMake(0, space/2.0, 0, -space/2.0);
+    }
+    
+    // 4. 赋值
+    button.titleEdgeInsets = labelEdgeInsets;
+    button.imageEdgeInsets = imageEdgeInsets;
+}
+
 
 #pragma mark - 顶部菜单点击
 - (void)menuTapped:(UIButton *)sender {
@@ -331,7 +383,6 @@
         if (self.zh_delegate && [self.zh_delegate respondsToSelector:@selector(menuView:willShowAtTabIndex:)]) {
             [self.zh_delegate menuView:self willShowAtTabIndex:self.selectedTabIndex];
         }
-        
         [self.superview addSubview:self.backGroundView];
         if (downType == ZHFilterMenuDownTypeTwoLists) {
             self.leftTableView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width / 3, 0);
@@ -342,12 +393,14 @@
             self.leftTableView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
             [self.superview addSubview:self.leftTableView];
         }
-        CGFloat viewHeight = [self getListHeightWithDownType:downType];
+        CGFloat viewHeight = [self getListHeightWithDownType:downType confirmType:confirmType];
         CGFloat bottomHeight = 0.f;
         self.bottomView.hidden = YES;
         if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
             self.bottomView.hidden = NO;
             self.bottomView.frame = CGRectMake(self.frame.origin.x, CGRectGetMaxY(self.leftTableView.frame), self.frame.size.width, 0);
+            self.bottomView.resetButton.frame = CGRectMake(20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 60, 0);
+            self.bottomView.confirmButton.frame = CGRectMake(CGRectGetWidth(self.bottomView.frame) / 2 + 10, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 60, 0);
             [self.superview addSubview:self.bottomView];
             bottomHeight = self.bottomHeight;
         }
@@ -363,6 +416,8 @@
             }
             if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
                 self.bottomView.frame = CGRectMake(self.frame.origin.x, CGRectGetMaxY(self.leftTableView.frame), self.frame.size.width, bottomHeight);
+                self.bottomView.resetButton.frame = CGRectMake(20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 60, CGRectGetHeight(self.bottomView.frame) - 40);
+                self.bottomView.confirmButton.frame = CGRectMake(CGRectGetWidth(self.bottomView.frame) / 2 + 10, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 60, CGRectGetHeight(self.bottomView.frame) - 40);
             }
         }];
     } else {
@@ -432,7 +487,7 @@
 }
 
 /** tabIndex 下的列表高度 */
-- (CGFloat)getListHeightWithDownType:(ZHFilterMenuDownType)downType
+- (CGFloat)getListHeightWithDownType:(ZHFilterMenuDownType)downType confirmType:(ZHFilterMenuConfirmType)confirmType
 {
     CGFloat listHeight = 0.f;
     NSArray *sectionArr = self.dataArr[self.selectedTabIndex];
@@ -440,7 +495,7 @@
         NSLog(@"当前下拉列表数据为空!");
         return 0.f;
     }
-    if (downType == ZHFilterMenuDownTypeTwoLists) {
+    if (confirmType == ZHFilterMenuDownTypeTwoLists) {
         NSInteger maxCount = 0;
         for (ZHFilterModel *filterModel in sectionArr) {
             if (filterModel.itemArr.count > maxCount) {
@@ -449,8 +504,31 @@
         }
         return maxCount * self.listHeight;
     } else {
-        for (ZHFilterModel *filterModel in sectionArr) {
-            listHeight += filterModel.listHeight;
+        NSInteger count = 0;
+        if (downType == ZHFilterMenuDownTypeItemInput) {
+            for (ZHFilterModel *filterModel in sectionArr) {
+                if (filterModel.itemArr.count > count) {
+                    count = filterModel.itemArr.count;
+                }
+            }
+            CGFloat itemHiight = 60.f;
+            NSInteger lineCount = count / self.itemManager.lineNum + (count % self.itemManager.lineNum ? 1 : 0);
+            if (count) {
+                itemHiight += (self.itemManager.itemHeight + self.itemManager.space) * lineCount + self.itemManager.space;
+            }
+            itemHiight += 90;
+            return itemHiight;
+        } else {
+            for (ZHFilterModel *filterModel in sectionArr) {
+                CGFloat itemHiight = 60.f;
+                NSInteger lineCount = filterModel.itemArr.count / self.itemManager.lineNum + (filterModel.itemArr.count % self.itemManager.lineNum ? 1 : 0);
+                if (filterModel.itemArr.count) {
+                    itemHiight += (self.itemManager.itemHeight + self.itemManager.space) * lineCount + self.itemManager.space;
+                }
+                itemHiight += 20;
+                filterModel.listHeight = itemHiight;
+                listHeight += itemHiight;
+            }
         }
     }
     return listHeight;
@@ -506,7 +584,7 @@
     if (downType == ZHFilterMenuDownTypeTwoLists || downType == ZHFilterMenuDownTypeOnlyList) {
         ZHFilterTitleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZHFilterTitleTableViewCell class]) forIndexPath:indexPath];
         if (tableView == self.leftTableView) {
-            ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section][indexPath.row];
+            ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section];
             cell.titleLabel.text = filterModel.title;
             cell.titleLabel.textColor = filterModel.selected?self.titleSelectedColor:self.titleColor;
         } else if (tableView == self.rightTableView) {
@@ -519,7 +597,7 @@
         return cell;
     } else {
         ZHFilterItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZHFilterItemTableViewCell class]) forIndexPath:indexPath];
-        ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section][indexPath.row];
+        ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section];
         if (downType == ZHFilterMenuDownTypeOnlyItem) {
             cell.itemType = ZHFilterItemTypeOnlyItem;
         } else if (downType == ZHFilterMenuDownTypeItemInput) {
@@ -537,7 +615,7 @@
     if (downType == ZHFilterMenuDownTypeTwoLists || downType == ZHFilterMenuDownTypeOnlyList) {
         return self.listHeight;
     } else {
-        ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section][indexPath.row];
+        ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section];
         return filterModel.listHeight;
     }
 }
@@ -656,6 +734,16 @@
         [_backGroundView addGestureRecognizer:gesture];
     }
     return _backGroundView;
+}
+
+- (UIView *)lineView
+{
+    if (!_lineView) {
+        _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.frame) - 0.5, CGRectGetWidth(self.frame), 0.5)];
+        _lineView.backgroundColor = KLineColor;
+        [self addSubview:_lineView];
+    }
+    return _lineView;
 }
 
 /*

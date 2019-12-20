@@ -63,6 +63,8 @@
             self.maxCount = filterModel.itemArr.count;
         }
     }
+    [self.leftButton setTitle:[[modelArr firstObject] title] forState:UIControlStateNormal];
+    [self.rightButton setTitle:[[modelArr lastObject] title] forState:UIControlStateNormal];
     if (!self.leftButton.selected && !self.rightButton.selected) {
         self.leftButton.selected = YES;
         self.filterModel = [modelArr firstObject];
@@ -84,7 +86,8 @@
         self.minTextField.text = filterModel.minPrice;
         self.maxTextField.text = filterModel.maxPrice;
     }
-    filterModel.listHeight = listHiight;
+//    filterModel.listHeight = listHiight;
+    self.titleLabel.text = filterModel.title;
     [self createButtonItem];
 }
 
@@ -166,6 +169,10 @@
 
 - (void)createButtonItem
 {
+    for (UIButton *button in self.buttonArr) {
+        [button removeFromSuperview];
+    }
+    [self.buttonArr removeAllObjects];
     [self layoutIfNeeded];
     UIButton *tempButton = [UIButton buttonWithType:UIButtonTypeCustom];
     for (int i = 0; i < self.filterModel.itemArr.count; i ++) {

@@ -157,7 +157,7 @@
                 <outlet property="rightButton" destination="Djx-En-5gK" id="4ka-Yg-6PY"/>
                 <outlet property="titleLabel" destination="kl9-iQ-0n6" id="GIM-R2-Rc1"/>
             </connections>
-            <point key="canvasLocation" x="347" y="-15"/>
+            <point key="canvasLocation" x="124" y="-9"/>
         </tableViewCell>
     </objects>
 </document>

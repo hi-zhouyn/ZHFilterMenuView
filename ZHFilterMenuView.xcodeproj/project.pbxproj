@@ -13,6 +13,7 @@
 		500EFDC0239F84530027721C /* ZHFilterItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500EFDBE239F84530027721C /* ZHFilterItemTableViewCell.m */; };
 		500EFDC1239F84530027721C /* ZHFilterItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EFDBF239F84530027721C /* ZHFilterItemTableViewCell.xib */; };
 		500EFDC4239F849A0027721C /* ZHFilterTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500EFDC3239F849A0027721C /* ZHFilterTitleTableViewCell.m */; };
+		502EAD6623ACC60F005BAB31 /* FilterData.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 5005D12323A9FAA70040EDB9 /* FilterData.geojson */; };
 		509890F3239A0028007FA433 /* ZHFilterRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = 509890F2239A0028007FA433 /* ZHFilterRightView.m */; };
 		509890F9239A0763007FA433 /* ZHFilterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 509890F8239A0763007FA433 /* ZHFilterModel.m */; };
 		509890FC239A0776007FA433 /* ZHFilterItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 509890FB239A0776007FA433 /* ZHFilterItemModel.m */; };
@@ -317,6 +318,7 @@
 			files = (
 				500EFDC1239F84530027721C /* ZHFilterItemTableViewCell.xib in Resources */,
 				50FD1309230D20C40030499E /* LaunchScreen.storyboard in Resources */,
+				502EAD6623ACC60F005BAB31 /* FilterData.geojson in Resources */,
 				50FD1306230D20C40030499E /* Assets.xcassets in Resources */,
 				50FD1304230D20C20030499E /* Main.storyboard in Resources */,
 			);
@@ -580,7 +582,10 @@
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -596,7 +601,10 @@
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -610,7 +618,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -625,7 +637,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -639,7 +655,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -653,7 +673,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
