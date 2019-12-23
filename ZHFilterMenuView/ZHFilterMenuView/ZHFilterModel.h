@@ -24,10 +24,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSInteger listHeight;        //列表高度(用于内部列表展示时使用)
 
+/** 快速构造ZHFilterModel */
 + (ZHFilterModel *)createFilterModelWithHeadTitle:(NSString *)title modelArr:(NSArray *)modelArr selectFirst:(BOOL)selectFirst multiple:(BOOL)multiple;
 
+/** 所有置位未选中 */
 - (void)setModelItemSelectesNO;
 
+/** 首位选中 */
+- (void)setModelItemSelecteFirst;
+
+/** 快速获取选中ZHFilterItemModel */
 - (ZHFilterItemModel *)getSelectedItemModel;
 
 - (NSString *)getSelectedItemModelCode;

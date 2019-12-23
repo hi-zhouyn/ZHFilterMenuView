@@ -34,8 +34,8 @@
     // Initialization code
     self.buttonArr = [NSMutableArray array];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self.minTextField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventValueChanged];
-    [self.maxTextField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.minTextField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
+    [self.maxTextField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)setItemType:(ZHFilterItemType)itemType
@@ -71,6 +71,7 @@
             if (!self.leftButton.selected && !self.rightButton.selected) {
                 self.leftButton.selected = YES;
                 self.filterModel = [modelArr firstObject];
+                self.filterModel.selected = YES;
             }
         } else {
             self.titleLabel.hidden = NO;
@@ -112,6 +113,8 @@
     self.leftButton.selected = YES;
     self.rightButton.selected = NO;
     ZHFilterModel *filterModel = [self.modelArr firstObject];
+    filterModel.selected = YES;
+    [[self.modelArr lastObject] setSelected:NO];
     [filterModel setModelItemSelectesNO];
     self.filterModel = filterModel;
 }
@@ -127,6 +130,8 @@
     self.leftButton.selected = NO;
     self.rightButton.selected = YES;
     ZHFilterModel *filterModel = [self.modelArr lastObject];
+    filterModel.selected = YES;
+    [[self.modelArr firstObject] setSelected:NO];
     [filterModel setModelItemSelectesNO];
     self.filterModel = filterModel;
 }

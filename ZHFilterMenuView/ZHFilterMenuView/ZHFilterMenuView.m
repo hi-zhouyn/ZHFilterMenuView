@@ -380,7 +380,7 @@
     }
 }
 
-
+/** 筛选视图显示&关闭 */
 - (void)animateMenuViewWithShow:(BOOL)show
 {
     ZHFilterMenuConfirmType confirmType = [self getConfirmTypeBySelectedTabIndex:self.selectedTabIndex];
@@ -390,7 +390,7 @@
         if (self.zh_delegate && [self.zh_delegate respondsToSelector:@selector(menuView:willShowAtTabIndex:)]) {
             [self.zh_delegate menuView:self willShowAtTabIndex:self.selectedTabIndex];
         }
-        self.backGroundView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, self.maxHeight - self.frame.size.height);
+        self.backGroundView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, self.maxHeight);
         [self.superview bringSubviewToFront:self];
         [self.superview addSubview:self.backGroundView];
         if (downType == ZHFilterMenuDownTypeTwoLists) {
@@ -401,6 +401,7 @@
         } else {
             self.leftTableView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
             [self.superview addSubview:self.leftTableView];
+            [self.rightTableView removeFromSuperview];
         }
         CGFloat viewHeight = [self getListHeightWithDownType:downType confirmType:confirmType];
         CGFloat bottomHeight = 0.f;
@@ -441,9 +442,7 @@
                 self.bottomView.frame = CGRectMake(self.frame.origin.x, CGRectGetMaxY(self.leftTableView.frame), self.frame.size.width, 0);
             }
         } completion:^(BOOL finished) {
-            if (downType == ZHFilterMenuDownTypeTwoLists) {
-                [self.rightTableView removeFromSuperview];
-            }
+            [self.rightTableView removeFromSuperview];
             [self.backGroundView removeFromSuperview];
             [self.leftTableView removeFromSuperview];
             [self.bottomView removeFromSuperview];
@@ -564,6 +563,8 @@
                 itemModel.minPrice = filterModel.minPrice;
                 itemModel.maxPrice = filterModel.maxPrice;
                 itemModel.code = [NSString stringWithFormat:@"%ld",[modelArr indexOfObject:filterModel]];
+                itemModel.selected = YES;
+                [selectArr addObject:itemModel];
             } else {
                 for (ZHFilterItemModel *itemModel in filterModel.itemArr) {
                     if (itemModel.selected) {
@@ -621,7 +622,7 @@
             cell.titleLabel.textColor = itemModel.selected?self.titleSelectedColor:self.titleColor;
         }
         if (tableView == self.rightTableView) {
-            cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+            cell.backgroundColor = KItemBGColor;
         }
         return cell;
     } else {
@@ -671,11 +672,16 @@
         if (downType == ZHFilterMenuDownTypeTwoLists) {
             if (tableView == self.leftTableView) {
                 NSArray *modelArr = [self getSelectedTabIndexFilterModelArr];
+                ZHFilterModel *selModel = modelArr[indexPath.row];
                 for (ZHFilterModel *filterModel in modelArr) {
-                    filterModel.selected = NO;
+                    if ([selModel.title isEqualToString:filterModel.title]) {
+                        filterModel.selected = YES;
+                    }else {
+                        filterModel.selected = NO;
+                        /** 还原初始 首位选中 */
+                        [filterModel setModelItemSelecteFirst];
+                    }
                 }
-                ZHFilterModel *tempModel = modelArr[indexPath.row];
-                tempModel.selected = YES;
                 [self.leftTableView reloadData];
                 [self.rightTableView reloadData];
             } else if (tableView == self.rightTableView) {
@@ -741,8 +747,8 @@
         _rightTableView.rowHeight = KTableViewCellHeight;
         _rightTableView.dataSource = self;
         _rightTableView.delegate = self;
-        _rightTableView.separatorColor = KLineColor;
-        _rightTableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        //_rightTableView.separatorColor = KLineColor;
+        _rightTableView.backgroundColor = KItemBGColor;
         _rightTableView.separatorInset = UIEdgeInsetsZero;
         _rightTableView.tableFooterView = [[UIView alloc]init];
         _rightTableView.showsVerticalScrollIndicator = NO;

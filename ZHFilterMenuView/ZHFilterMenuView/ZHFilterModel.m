@@ -32,6 +32,14 @@
     }
 }
 
+- (void)setModelItemSelecteFirst
+{
+    for (int i = 0; i < self.itemArr.count; i ++) {
+        ZHFilterItemModel *infoModel = self.itemArr[i];
+        infoModel.selected = !i;
+    }
+}
+
 - (ZHFilterItemModel *)getSelectedItemModel
 {
     ZHFilterItemModel *infoModel = [[ZHFilterItemModel alloc] init];

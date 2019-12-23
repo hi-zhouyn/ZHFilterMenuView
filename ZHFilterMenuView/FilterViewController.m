@@ -21,17 +21,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.navigationController.navigationBar setTranslucent:NO];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //房源展示数据源暂时是写在本地
     FilterDataUtil *dataUtil = [[FilterDataUtil alloc] init];
     self.menuView.dataArr = [dataUtil getTabDataByType:self.filterType];
+    //开始显示
     [self.menuView beginShowMenuView];
 }
 
 /** 确定回调 */
 - (void)menuView:(ZHFilterMenuView *)menuView didSelectConfirmAtSelectedModelArr:(NSArray *)selectedModelArr
 {
-    NSLog(@"结果回调：%@",[ZHFilterItemModel mj_keyValuesArrayWithObjectArray:selectedModelArr]);
+    NSArray *dictArr = [ZHFilterItemModel mj_keyValuesArrayWithObjectArray:selectedModelArr];
+    NSLog(@"结果回调：%@",dictArr.mj_JSONString);
 }
 
 /** 警告回调(用于错误提示) */
