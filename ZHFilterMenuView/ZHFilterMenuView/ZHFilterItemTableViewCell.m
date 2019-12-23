@@ -32,6 +32,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.buttonArr = [NSMutableArray array];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.minTextField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventValueChanged];
     [self.maxTextField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventValueChanged];
@@ -45,7 +46,7 @@
         self.leftButton.hidden = YES;
         self.rightButton.hidden = YES;
         self.bottomView.hidden = YES;
-        self.bottomViewBottom.constant = 20;
+        self.bottomViewBottom.constant = 0;
     } else if (itemType == ZHFilterItemTypeItemInput) {
         self.titleLabel.hidden = YES;
         self.leftButton.hidden = NO;
@@ -63,30 +64,29 @@
             self.maxCount = filterModel.itemArr.count;
         }
     }
-    [self.leftButton setTitle:[[modelArr firstObject] title] forState:UIControlStateNormal];
-    [self.rightButton setTitle:[[modelArr lastObject] title] forState:UIControlStateNormal];
-    if (!self.leftButton.selected && !self.rightButton.selected) {
-        self.leftButton.selected = YES;
-        self.filterModel = [modelArr firstObject];
+    if (self.itemType == ZHFilterItemTypeItemInput) {
+        if (modelArr.count > 1) {
+            [self.leftButton setTitle:[[modelArr firstObject] title] forState:UIControlStateNormal];
+            [self.rightButton setTitle:[[modelArr lastObject] title] forState:UIControlStateNormal];
+            if (!self.leftButton.selected && !self.rightButton.selected) {
+                self.leftButton.selected = YES;
+                self.filterModel = [modelArr firstObject];
+            }
+        } else {
+            self.titleLabel.hidden = NO;
+            self.leftButton.hidden = YES;
+            self.rightButton.hidden = YES;
+        }
     }
 }
 
 - (void)setFilterModel:(ZHFilterModel *)filterModel
 {
     _filterModel = filterModel;
-    CGFloat listHiight = 60.f;
-    NSInteger lineCount = self.maxCount / self.itemManager.lineNum + (self.maxCount % self.itemManager.lineNum ? 1 : 0);
-    if (self.maxCount) {
-        listHiight += (self.itemManager.itemHeight + self.itemManager.space) * lineCount + self.itemManager.space;
-    }
-    if (self.itemType == ZHFilterItemTypeOnlyItem) {
-        listHiight += 20;
-    } else if (self.itemType == ZHFilterItemTypeItemInput) {
-        listHiight += 90;
+    if (self.itemType == ZHFilterItemTypeItemInput) {
         self.minTextField.text = filterModel.minPrice;
         self.maxTextField.text = filterModel.maxPrice;
     }
-//    filterModel.listHeight = listHiight;
     self.titleLabel.text = filterModel.title;
     [self createButtonItem];
 }
@@ -105,10 +105,12 @@
     if (self.leftButton.selected) {
         return;
     }
-    for (UIButton *button in self.buttonArr) {
+    for (UIButton *button in self.itemView.subviews) {
         [button removeFromSuperview];
     }
     [self.buttonArr removeAllObjects];
+    self.leftButton.selected = YES;
+    self.rightButton.selected = NO;
     ZHFilterModel *filterModel = [self.modelArr firstObject];
     [filterModel setModelItemSelectesNO];
     self.filterModel = filterModel;
@@ -118,10 +120,12 @@
     if (self.rightButton.selected) {
         return;
     }
-    for (UIButton *button in self.buttonArr) {
+    for (UIButton *button in self.itemView.subviews) {
         [button removeFromSuperview];
     }
     [self.buttonArr removeAllObjects];
+    self.leftButton.selected = NO;
+    self.rightButton.selected = YES;
     ZHFilterModel *filterModel = [self.modelArr lastObject];
     [filterModel setModelItemSelectesNO];
     self.filterModel = filterModel;
@@ -169,11 +173,10 @@
 
 - (void)createButtonItem
 {
-    for (UIButton *button in self.buttonArr) {
+    for (UIButton *button in self.itemView.subviews) {
         [button removeFromSuperview];
     }
     [self.buttonArr removeAllObjects];
-    [self layoutIfNeeded];
     UIButton *tempButton = [UIButton buttonWithType:UIButtonTypeCustom];
     for (int i = 0; i < self.filterModel.itemArr.count; i ++) {
         ZHFilterItemModel *model = self.filterModel.itemArr[i];
@@ -192,7 +195,7 @@
         [self.itemView addSubview:button];
         CGFloat itemWidth = (self.itemManager.width - self.itemManager.space * (self.itemManager.lineNum + 1)) / self.itemManager.lineNum;
         CGFloat offictX = (i % self.itemManager.lineNum + 1) * (self.itemManager.space + itemWidth) - itemWidth;
-        CGFloat offictY = (i / self.itemManager.lineNum) * (self.itemManager.space + self.itemManager.itemHeight);
+        CGFloat offictY = (i / self.itemManager.lineNum) * (self.itemManager.space + self.itemManager.itemHeight) + self.itemManager.space;
         button.frame = CGRectMake(offictX, offictY, itemWidth, self.itemManager.itemHeight);
         tempButton = button;
         [self.buttonArr addObject:button];

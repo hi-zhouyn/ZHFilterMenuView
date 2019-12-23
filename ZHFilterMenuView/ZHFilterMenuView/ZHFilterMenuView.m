@@ -18,11 +18,15 @@
 @implementation ZHFilterBottomView
 
 /** 快速初始化 */
-- (instancetype _Nonnull )initBottomViewWithResetAction:(SEL _Nonnull )resetAction confirmAction:(SEL _Nonnull )confirmAction
+- (instancetype _Nonnull )initBottomViewWithTarget:(id _Nonnull)target
+                                       resetAction:(SEL _Nonnull )resetAction
+                                     confirmAction:(SEL _Nonnull )confirmAction
 {
     if (self = [super init]) {
+        self.backgroundColor = [UIColor whiteColor];
+        
         self.resetButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.resetButton.frame = CGRectMake(20, 20, CGRectGetWidth(self.frame) / 2 - 60, CGRectGetHeight(self.frame) - 40);
+        self.resetButton.frame = CGRectMake(20, 20, CGRectGetWidth(self.frame) / 2 - 40, CGRectGetHeight(self.frame) - 40);
         [self.resetButton setTitle:@"重置" forState:UIControlStateNormal];
         [self.resetButton setTitleColor:KTitleSelectedColor forState:UIControlStateNormal];
         [self.resetButton setBackgroundColor:[UIColor whiteColor]];
@@ -31,13 +35,13 @@
         self.resetButton.layer.borderColor = KTitleSelectedColor.CGColor;
         self.resetButton.layer.borderWidth = 1;
         self.resetButton.titleLabel.font = [UIFont systemFontOfSize:16];
-        [self.resetButton addTarget:self action:resetAction forControlEvents:UIControlEventTouchUpInside];
+        [self.resetButton addTarget:target action:resetAction forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.resetButton];
         
         self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.confirmButton.frame = CGRectMake(CGRectGetWidth(self.frame) / 2 + 10, 20, CGRectGetWidth(self.frame) / 2 - 60, CGRectGetHeight(self.frame) - 40);
+        self.confirmButton.frame = CGRectMake(CGRectGetWidth(self.frame) / 2 + 20, 20, CGRectGetWidth(self.frame) / 2 - 40, CGRectGetHeight(self.frame) - 40);
         [self.confirmButton setTitle:@"确定" forState:UIControlStateNormal];
-        [self.confirmButton addTarget:self action:resetAction forControlEvents:UIControlEventTouchUpInside];
+        [self.confirmButton addTarget:target action:confirmAction forControlEvents:UIControlEventTouchUpInside];
         [self.confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.confirmButton setBackgroundColor:KTitleSelectedColor];
         self.confirmButton.layer.masksToBounds = YES;
@@ -72,6 +76,12 @@
 - (instancetype)initWithFrame:(CGRect)frame maxHeight:(CGFloat)maxHeight
 {
     if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = [UIColor whiteColor];
+        
+        self.itemManager = [[ZHFilterItemManger alloc] init];
+        self.itemManager.width = self.frame.size.width;
+        self.itemManager.maxLength = 7;
+        
         self.selectedTabIndex = -1;
         self.titleColor = KTitleColor;
         self.titleSelectedColor = KTitleSelectedColor;
@@ -81,21 +91,14 @@
         self.titleLeft = NO;
         self.listHeight = KTableViewCellHeight;
         self.bottomHeight = KBottomViewHeight;
-        
-        self.itemManager = [[ZHFilterItemManger alloc] init];
-        self.itemManager.titleColor = KTitleColor;
-        self.itemManager.titleSelectedColor = KTitleSelectedColor;
-        self.itemManager.itemBGColor = KItemBGColor;
-        self.itemManager.itemBGSelectedColor = KItemBGSelectedColor;
-        self.itemManager.itemTitleFontSize = 13;
-        self.itemManager.width = self.frame.size.width;
-        self.itemManager.space = 15;
-        self.itemManager.itemHeight = 35;
-        self.itemManager.lineNum = 4;
-        self.itemManager.maxLength = 7;
+        self.itemTitleFontSize = 12;
+        self.itemBGColor = KItemBGColor;
+        self.itemBGSelectedColor = KItemBGSelectedColor;
+        self.space = 15;
+        self.itemHeight = 30;
+        self.lineNum = 4;
         
         self.maxHeight = maxHeight;
-        
     }
     return self;
 }
@@ -307,6 +310,7 @@
 {
     if (self.selectedTabIndex == tapIndex) {
         [self animateMenuViewWithShow:NO];
+        self.selectedTabIndex = -1;
     } else {
         self.selectedTabIndex = tapIndex;
         [self animateMenuViewWithShow:YES];
@@ -362,7 +366,10 @@
             }
         }
         if (filterModel.minPrice.integerValue > filterModel.maxPrice.integerValue) {
-            NSLog(@"请输入正确的价格区间！");
+            //价格区间不正确
+            if (self.zh_delegate && [self.zh_delegate respondsToSelector:@selector(menuView:wangType:)]) {
+                [self.zh_delegate menuView:self wangType:ZHFilterMenuViewWangTypeInput];
+            }
             return;
         }
     }
@@ -383,6 +390,8 @@
         if (self.zh_delegate && [self.zh_delegate respondsToSelector:@selector(menuView:willShowAtTabIndex:)]) {
             [self.zh_delegate menuView:self willShowAtTabIndex:self.selectedTabIndex];
         }
+        self.backGroundView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, self.maxHeight - self.frame.size.height);
+        [self.superview bringSubviewToFront:self];
         [self.superview addSubview:self.backGroundView];
         if (downType == ZHFilterMenuDownTypeTwoLists) {
             self.leftTableView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width / 3, 0);
@@ -399,12 +408,12 @@
         if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
             self.bottomView.hidden = NO;
             self.bottomView.frame = CGRectMake(self.frame.origin.x, CGRectGetMaxY(self.leftTableView.frame), self.frame.size.width, 0);
-            self.bottomView.resetButton.frame = CGRectMake(20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 60, 0);
-            self.bottomView.confirmButton.frame = CGRectMake(CGRectGetWidth(self.bottomView.frame) / 2 + 10, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 60, 0);
+            self.bottomView.resetButton.frame = CGRectMake(20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 40, 0);
+            self.bottomView.confirmButton.frame = CGRectMake(CGRectGetWidth(self.bottomView.frame) / 2 + 20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 40, 0);
             [self.superview addSubview:self.bottomView];
             bottomHeight = self.bottomHeight;
         }
-        viewHeight = MIN(viewHeight, self.maxHeight - self.frame.size.height - bottomHeight);
+        viewHeight = MIN(viewHeight, self.maxHeight - bottomHeight);
         
         [UIView animateWithDuration:0.3 animations:^{
             self.backGroundView.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.3f];
@@ -416,19 +425,17 @@
             }
             if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
                 self.bottomView.frame = CGRectMake(self.frame.origin.x, CGRectGetMaxY(self.leftTableView.frame), self.frame.size.width, bottomHeight);
-                self.bottomView.resetButton.frame = CGRectMake(20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 60, CGRectGetHeight(self.bottomView.frame) - 40);
-                self.bottomView.confirmButton.frame = CGRectMake(CGRectGetWidth(self.bottomView.frame) / 2 + 10, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 60, CGRectGetHeight(self.bottomView.frame) - 40);
+                self.bottomView.resetButton.frame = CGRectMake(20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 40, CGRectGetHeight(self.bottomView.frame) - 40);
+                self.bottomView.confirmButton.frame = CGRectMake(CGRectGetWidth(self.bottomView.frame) / 2 + 20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 40, CGRectGetHeight(self.bottomView.frame) - 40);
             }
         }];
+        [self.leftTableView reloadData];
+        [self.rightTableView reloadData];
     } else {
         [UIView animateWithDuration:0.3 animations:^{
             self.backGroundView.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.f];
-            if (downType == ZHFilterMenuDownTypeTwoLists) {
-                self.leftTableView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width / 3, 0);
-                self.rightTableView.frame = CGRectMake(self.frame.size.width / 3, self.frame.origin.y + self.frame.size.height, self.frame.size.width / 3 * 2, 0);
-            } else {
-                self.leftTableView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
-            }
+            self.leftTableView.frame = CGRectMake(self.leftTableView.frame.origin.x, self.leftTableView.frame.origin.y, self.leftTableView.frame.size.width, 0);
+            self.rightTableView.frame = CGRectMake(self.rightTableView.frame.origin.x, self.rightTableView.frame.origin.y, self.rightTableView.frame.size.width, 0);
             if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
                 self.bottomView.hidden = YES;
                 self.bottomView.frame = CGRectMake(self.frame.origin.x, CGRectGetMaxY(self.leftTableView.frame), self.frame.size.width, 0);
@@ -489,6 +496,7 @@
 /** tabIndex 下的列表高度 */
 - (CGFloat)getListHeightWithDownType:(ZHFilterMenuDownType)downType confirmType:(ZHFilterMenuConfirmType)confirmType
 {
+    self.itemManager.lineNum = self.lineNum;
     CGFloat listHeight = 0.f;
     NSArray *sectionArr = self.dataArr[self.selectedTabIndex];
     if (!sectionArr.count) {
@@ -511,21 +519,30 @@
                     count = filterModel.itemArr.count;
                 }
             }
-            CGFloat itemHiight = 60.f;
+            //当内容字符数大于7时lineNum = 2
+            ZHFilterModel *filterModel = [sectionArr firstObject];
+            ZHFilterItemModel *itemModel = [filterModel.itemArr lastObject];
+            if (itemModel.name.length > 7) {
+                self.itemManager.lineNum = 2;
+            }
+            CGFloat itemHiight = 40.f;
             NSInteger lineCount = count / self.itemManager.lineNum + (count % self.itemManager.lineNum ? 1 : 0);
             if (count) {
                 itemHiight += (self.itemManager.itemHeight + self.itemManager.space) * lineCount + self.itemManager.space;
             }
-            itemHiight += 90;
+            itemHiight += 70;
+            for (ZHFilterModel *filterModel in sectionArr) {
+                filterModel.listHeight = itemHiight;
+            }
             return itemHiight;
         } else {
             for (ZHFilterModel *filterModel in sectionArr) {
-                CGFloat itemHiight = 60.f;
+                CGFloat itemHiight = 40.f;
                 NSInteger lineCount = filterModel.itemArr.count / self.itemManager.lineNum + (filterModel.itemArr.count % self.itemManager.lineNum ? 1 : 0);
                 if (filterModel.itemArr.count) {
                     itemHiight += (self.itemManager.itemHeight + self.itemManager.space) * lineCount + self.itemManager.space;
                 }
-                itemHiight += 20;
+//                itemHiight += 20;
                 filterModel.listHeight = itemHiight;
                 listHeight += itemHiight;
             }
@@ -574,6 +591,15 @@
     if (downType == ZHFilterMenuDownTypeItemInput) {
         return 1;
     } else {
+        if (downType == ZHFilterMenuDownTypeTwoLists) {
+            if (tableView == self.leftTableView) {
+                return [[self getSelectedTabIndexFilterModelArr] count];
+            } else if (tableView == self.rightTableView) {
+                return [[self getSelectedFilterModel].itemArr count];
+            }
+        } else if (downType == ZHFilterMenuDownTypeOnlyList){
+            return [[self getSelectedFilterModel].itemArr count];
+        }
         return [[self getSelectedTabIndexFilterModelArr] count];
     }
 }
@@ -583,29 +609,37 @@
     ZHFilterMenuDownType downType = [self getDownTypeBySelectedTabIndex:self.selectedTabIndex];
     if (downType == ZHFilterMenuDownTypeTwoLists || downType == ZHFilterMenuDownTypeOnlyList) {
         ZHFilterTitleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZHFilterTitleTableViewCell class]) forIndexPath:indexPath];
-        if (tableView == self.leftTableView) {
-            ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (tableView == self.leftTableView && downType == ZHFilterMenuDownTypeTwoLists) {
+            ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.row];
             cell.titleLabel.text = filterModel.title;
             cell.titleLabel.textColor = filterModel.selected?self.titleSelectedColor:self.titleColor;
-        } else if (tableView == self.rightTableView) {
+        } else if (tableView == self.rightTableView || downType == ZHFilterMenuDownTypeOnlyList) {
             ZHFilterModel *filterModel = [self getSelectedFilterModel];
             ZHFilterItemModel *itemModel = filterModel.itemArr[indexPath.row];
             cell.titleLabel.text = itemModel.name;
             cell.titleLabel.textColor = itemModel.selected?self.titleSelectedColor:self.titleColor;
         }
-        
+        if (tableView == self.rightTableView) {
+            cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        }
         return cell;
     } else {
-        ZHFilterItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZHFilterItemTableViewCell class]) forIndexPath:indexPath];
-        ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section];
-        if (downType == ZHFilterMenuDownTypeOnlyItem) {
-            cell.itemType = ZHFilterItemTypeOnlyItem;
-        } else if (downType == ZHFilterMenuDownTypeItemInput) {
-            cell.itemType = ZHFilterItemTypeItemInput;
+        if (tableView == self.leftTableView) {
+            ZHFilterItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZHFilterItemTableViewCell class]) forIndexPath:indexPath];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.row];
+            if (downType == ZHFilterMenuDownTypeOnlyItem) {
+                cell.itemType = ZHFilterItemTypeOnlyItem;
+            } else if (downType == ZHFilterMenuDownTypeItemInput) {
+                cell.itemType = ZHFilterItemTypeItemInput;
+            }
+            cell.itemManager = self.itemManager;
+            cell.modelArr = [self getSelectedTabIndexFilterModelArr];
+            cell.filterModel = filterModel;
+            return cell;
         }
-        cell.itemManager = self.itemManager;
-        cell.filterModel = filterModel;
-        return cell;
+        return nil;
     }
 }
 
@@ -615,7 +649,7 @@
     if (downType == ZHFilterMenuDownTypeTwoLists || downType == ZHFilterMenuDownTypeOnlyList) {
         return self.listHeight;
     } else {
-        ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.section];
+        ZHFilterModel *filterModel = [self getSelectedTabIndexFilterModelArr][indexPath.row];
         return filterModel.listHeight;
     }
 }
@@ -708,6 +742,7 @@
         _rightTableView.dataSource = self;
         _rightTableView.delegate = self;
         _rightTableView.separatorColor = KLineColor;
+        _rightTableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
         _rightTableView.separatorInset = UIEdgeInsetsZero;
         _rightTableView.tableFooterView = [[UIView alloc]init];
         _rightTableView.showsVerticalScrollIndicator = NO;
@@ -719,7 +754,7 @@
 - (ZHFilterBottomView *)bottomView
 {
     if (!_bottomView) {
-        _bottomView = [[ZHFilterBottomView alloc] initBottomViewWithResetAction:@selector(resetAction) confirmAction:@selector(confirmAction)];
+        _bottomView = [[ZHFilterBottomView alloc] initBottomViewWithTarget:self resetAction:@selector(resetAction) confirmAction:@selector(confirmAction)];
     }
     return _bottomView;
 }

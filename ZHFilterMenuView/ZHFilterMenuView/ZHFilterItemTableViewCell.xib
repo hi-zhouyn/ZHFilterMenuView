@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KTN-tB-gHQ">
-                        <rect key="frame" x="0.0" y="197.5" width="423" height="90"/>
+                        <rect key="frame" x="0.0" y="207.5" width="423" height="80"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4SJ-4N-XnI">
                                 <rect key="frame" x="30" y="60" width="174.5" height="1"/>
@@ -80,19 +80,20 @@
                             <constraint firstItem="4SJ-4N-XnI" firstAttribute="top" secondItem="DiF-7w-lxY" secondAttribute="bottom" id="SkC-3b-pz1"/>
                             <constraint firstItem="Khp-dm-mHe" firstAttribute="leading" secondItem="DiF-7w-lxY" secondAttribute="trailing" id="UlS-AT-2Cw"/>
                             <constraint firstItem="kOc-NF-KHW" firstAttribute="leading" secondItem="Khp-dm-mHe" secondAttribute="trailing" id="cPT-u3-iKM"/>
-                            <constraint firstAttribute="height" constant="90" id="ftD-a6-1Zp"/>
+                            <constraint firstAttribute="height" constant="80" id="ftD-a6-1Zp"/>
                             <constraint firstItem="kOc-NF-KHW" firstAttribute="width" secondItem="DiF-7w-lxY" secondAttribute="width" id="g4d-Mk-ITj"/>
                             <constraint firstItem="kOc-NF-KHW" firstAttribute="centerY" secondItem="DiF-7w-lxY" secondAttribute="centerY" id="s6v-MG-UJY"/>
-                            <constraint firstAttribute="bottom" secondItem="DiF-7w-lxY" secondAttribute="bottom" constant="30" id="tEZ-G2-Mku"/>
+                            <constraint firstAttribute="bottom" secondItem="DiF-7w-lxY" secondAttribute="bottom" constant="20" id="tEZ-G2-Mku"/>
                             <constraint firstItem="DiF-7w-lxY" firstAttribute="leading" secondItem="KTN-tB-gHQ" secondAttribute="leading" constant="30" id="upz-sa-Znf"/>
                             <constraint firstItem="4SJ-4N-XnI" firstAttribute="leading" secondItem="DiF-7w-lxY" secondAttribute="leading" id="xzv-SN-oe3"/>
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ch4-Kc-la1">
-                        <rect key="frame" x="0.0" y="20" width="211.5" height="40"/>
+                        <rect key="frame" x="0.0" y="10" width="211.5" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="eR2-uT-8Iv"/>
                         </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="总价（万/套）">
                             <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -105,7 +106,8 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Djx-En-5gK">
-                        <rect key="frame" x="211.5" y="20" width="211.5" height="40"/>
+                        <rect key="frame" x="211.5" y="10" width="211.5" height="40"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="单价(万/㎡)">
                             <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -118,13 +120,13 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kl9-iQ-0n6">
-                        <rect key="frame" x="30" y="30" width="31" height="18"/>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                        <rect key="frame" x="20" y="20" width="35" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VrL-kK-TAp">
-                        <rect key="frame" x="0.0" y="60" width="423" height="137.5"/>
+                        <rect key="frame" x="0.0" y="40" width="423" height="157.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                 </subviews>
@@ -134,17 +136,17 @@
                     <constraint firstAttribute="trailing" secondItem="Djx-En-5gK" secondAttribute="trailing" id="6rU-ym-ATo"/>
                     <constraint firstItem="Djx-En-5gK" firstAttribute="height" secondItem="ch4-Kc-la1" secondAttribute="height" id="Auw-f0-08h"/>
                     <constraint firstItem="KTN-tB-gHQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Bie-an-QFh"/>
-                    <constraint firstItem="ch4-Kc-la1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="C4i-1P-aCC"/>
+                    <constraint firstItem="ch4-Kc-la1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="C4i-1P-aCC"/>
                     <constraint firstAttribute="bottom" secondItem="KTN-tB-gHQ" secondAttribute="bottom" id="InO-Lk-BvB"/>
                     <constraint firstItem="Djx-En-5gK" firstAttribute="leading" secondItem="ch4-Kc-la1" secondAttribute="trailing" id="Ir7-k9-A3l"/>
                     <constraint firstItem="Djx-En-5gK" firstAttribute="centerY" secondItem="ch4-Kc-la1" secondAttribute="centerY" id="J0o-nh-lB0"/>
                     <constraint firstItem="VrL-kK-TAp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Jpn-YL-vjM"/>
                     <constraint firstItem="ch4-Kc-la1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="O50-AA-sXo"/>
-                    <constraint firstItem="VrL-kK-TAp" firstAttribute="top" secondItem="ch4-Kc-la1" secondAttribute="bottom" id="Ra6-43-FEO"/>
-                    <constraint firstItem="kl9-iQ-0n6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="UrR-Nv-7u8"/>
+                    <constraint firstItem="kl9-iQ-0n6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="UrR-Nv-7u8"/>
+                    <constraint firstItem="VrL-kK-TAp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="40" id="qUU-Cm-7ji"/>
                     <constraint firstItem="Djx-En-5gK" firstAttribute="width" secondItem="ch4-Kc-la1" secondAttribute="width" id="sgh-ab-f8H"/>
                     <constraint firstAttribute="bottom" secondItem="VrL-kK-TAp" secondAttribute="bottom" constant="90" id="twx-Xb-KFG"/>
-                    <constraint firstItem="kl9-iQ-0n6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="zBM-Mn-cgo"/>
+                    <constraint firstItem="kl9-iQ-0n6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="zBM-Mn-cgo"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -157,7 +159,7 @@
                 <outlet property="rightButton" destination="Djx-En-5gK" id="4ka-Yg-6PY"/>
                 <outlet property="titleLabel" destination="kl9-iQ-0n6" id="GIM-R2-Rc1"/>
             </connections>
-            <point key="canvasLocation" x="124" y="-9"/>
+            <point key="canvasLocation" x="-37" y="21"/>
         </tableViewCell>
     </objects>
 </document>

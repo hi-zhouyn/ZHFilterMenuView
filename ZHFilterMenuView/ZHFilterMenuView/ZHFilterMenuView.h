@@ -16,7 +16,7 @@
 #define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
 #define KTableViewCellHeight 44
-#define KBottomViewHeight    90
+#define KBottomViewHeight    80
 
 #define kBaseSetHEXColor(rgbValue,al) ([UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:(al)])
 
@@ -27,7 +27,6 @@
 #define KLineColor           kSetHEXColor(0xe8e8e8)//分割线
 #define KItemBGColor         kSetHEXColor(0xf5f5f5)
 #define KItemBGSelectedColor kSetHEXColor(0xeef6ff)
-
 
 
 @interface ZHIndexPath : NSObject
@@ -46,7 +45,9 @@
 @property (nonatomic, strong) UIView * _Nonnull lineView;
 
 /** 快速初始化 */
-- (instancetype _Nonnull )initBottomViewWithResetAction:(SEL _Nonnull )resetAction confirmAction:(SEL _Nonnull )confirmAction;
+- (instancetype _Nonnull )initBottomViewWithTarget:(id _Nonnull)target
+                                       resetAction:(SEL _Nonnull )resetAction
+                                     confirmAction:(SEL _Nonnull )confirmAction;
 
 @end
 
@@ -66,9 +67,17 @@ typedef NS_ENUM(NSUInteger, ZHFilterMenuDownType) {
     ZHFilterMenuDownTypeItemInput,   //可点item加输入框
 };
 
+/** 警告类型（方便后续拓展） */
+typedef NS_ENUM(NSUInteger, ZHFilterMenuViewWangType) {
+    ZHFilterMenuViewWangTypeInput,    //输入框价格区间不正确
+};
+
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZHFilterMenuViewDelegate <NSObject>
+
+/** 警告回调(用于错误提示) */
+- (void)menuView:(ZHFilterMenuView *)menuView wangType:(ZHFilterMenuViewWangType)wangType;
 
 /** 确定回调 */
 - (void)menuView:(ZHFilterMenuView *)menuView didSelectConfirmAtSelectedModelArr:(NSArray *)selectedModelArr;
@@ -101,8 +110,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<ZHFilterMenuViewDetaSource> zh_dataSource;
 
 @property (nonatomic, strong) NSMutableArray *dataArr;//传入数据源
-@property (nonatomic, strong) NSArray<NSString *> *titleArr;
-@property (nonatomic, strong) NSArray<NSString *> *imageNameArr;
+@property (nonatomic, strong) NSArray<NSString *> *titleArr;//传入标题数据源
+@property (nonatomic, strong) NSArray<NSString *> *imageNameArr;//传入折叠图片数据源
 @property (nonatomic, strong) NSArray<NSString *> *selectImageNameArr;
 
 @property (nonatomic, strong) UIColor *titleColor;
@@ -113,14 +122,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL showLine;
 @property (nonatomic, assign) BOOL titleLeft; // 文字标题是否居左 不平分 default NO
 @property (nonatomic, assign) CGFloat listHeight;  //选择列表的高度（默认44）
-@property (nonatomic, assign) CGFloat bottomHeight;//列表底部的高度（默认90）
+@property (nonatomic, assign) CGFloat bottomHeight;//列表底部的高度（默认80）
 
 @property (nonatomic, assign) CGFloat itemTitleFontSize;
 @property (nonatomic, strong) UIColor *itemBGColor;//item背景颜色（默认f5f5f5）
 @property (nonatomic, strong) UIColor *itemBGSelectedColor;//item选择时背景颜色（默认eef6ff）
 @property (nonatomic, assign) CGFloat space;//item间隔（默认15）
-@property (nonatomic, assign) CGFloat itemHeight;//item高（默认35）
-@property (nonatomic, assign) NSInteger lineNum;//一行展示数量（默认4）
+@property (nonatomic, assign) CGFloat itemHeight;//item高（默认30）
+@property (nonatomic, assign) NSInteger lineNum;//一行展示数量（默认4，当内容字符数大于7时lineNum = 2）
 @property (nonatomic, assign) NSInteger maxLength;//输入框最大文本数量（默认7位）
 
 @property (nonatomic, strong) NSMutableArray *buttonArr;

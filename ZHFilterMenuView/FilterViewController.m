@@ -31,9 +31,16 @@
 /** 确定回调 */
 - (void)menuView:(ZHFilterMenuView *)menuView didSelectConfirmAtSelectedModelArr:(NSArray *)selectedModelArr
 {
-    
+    NSLog(@"结果回调：%@",[ZHFilterItemModel mj_keyValuesArrayWithObjectArray:selectedModelArr]);
 }
 
+/** 警告回调(用于错误提示) */
+- (void)menuView:(ZHFilterMenuView *)menuView wangType:(ZHFilterMenuViewWangType)wangType
+{
+    if (wangType == ZHFilterMenuViewWangTypeInput) {
+        NSLog(@"请输入正确的价格区间！");
+    }
+}
 
 /** 返回每个 tabIndex 下的确定类型 */
 - (ZHFilterMenuConfirmType)menuView:(ZHFilterMenuView *)menuView confirmTypeInTabIndex:(NSInteger)tabIndex

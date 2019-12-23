@@ -26,9 +26,9 @@
         NSMutableArray *sortArr = [NSMutableArray array];
         
         [areaArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"城区" modelArr:[self getDataByType:FilterDataType_GG_QY] selectFirst:YES multiple:NO]];
-        [areaArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"附近" modelArr:[self getDataByType:FilterDataType_GG_FJ] selectFirst:NO multiple:NO]];
+        [areaArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"附近" modelArr:[self getDataByType:FilterDataType_GG_FJ] selectFirst:YES multiple:NO]];
         
-        [priceArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"总价(万/套)" modelArr:[self getDataByType:FilterDataType_GG_ZJ] selectFirst:YES multiple:YES]];
+        [priceArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"总价(万/套)" modelArr:[self getDataByType:FilterDataType_GG_ZJ] selectFirst:NO multiple:YES]];
         [priceArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"单价(万/㎡)" modelArr:[self getDataByType:FilterDataType_XF_DJ] selectFirst:NO multiple:NO]];
         
         [roomTypeArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"户型区间" modelArr:[self getDataByType:FilterDataType_GG_HX] selectFirst:NO multiple:YES]];
@@ -90,7 +90,7 @@
         [roomTypeArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"整租" modelArr:[self getDataByType:FilterDataType_ZF_ZZ] selectFirst:NO multiple:YES]];
         [roomTypeArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"合租" modelArr:[self getDataByType:FilterDataType_ZF_HZ] selectFirst:NO multiple:YES]];
         
-        [priceArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"租金" modelArr:[self getDataByType:FilterDataType_ZF_ZJ] selectFirst:YES multiple:NO]];
+        [priceArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"租金" modelArr:[self getDataByType:FilterDataType_ZF_ZJ] selectFirst:NO multiple:NO]];
         
         [moreArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"朝向" modelArr:[self getDataByType:FilterDataType_GG_CX] selectFirst:NO multiple:YES]];
         [moreArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"租期" modelArr:[self getDataByType:FilterDataType_ZF_ZQ] selectFirst:NO multiple:YES]];
