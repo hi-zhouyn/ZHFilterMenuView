@@ -8,7 +8,6 @@
 
 #import "FilterViewController.h"
 #import "ZHFilterMenuView.h"
-#import "ZHFilterRightView.h"
 #import "FilterDataUtil.h"
 
 @interface FilterViewController ()<ZHFilterMenuViewDelegate,ZHFilterMenuViewDetaSource>

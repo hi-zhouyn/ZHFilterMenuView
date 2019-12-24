@@ -14,7 +14,6 @@
 		500EFDC1239F84530027721C /* ZHFilterItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EFDBF239F84530027721C /* ZHFilterItemTableViewCell.xib */; };
 		500EFDC4239F849A0027721C /* ZHFilterTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500EFDC3239F849A0027721C /* ZHFilterTitleTableViewCell.m */; };
 		502EAD6623ACC60F005BAB31 /* FilterData.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 5005D12323A9FAA70040EDB9 /* FilterData.geojson */; };
-		509890F3239A0028007FA433 /* ZHFilterRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = 509890F2239A0028007FA433 /* ZHFilterRightView.m */; };
 		509890F9239A0763007FA433 /* ZHFilterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 509890F8239A0763007FA433 /* ZHFilterModel.m */; };
 		509890FC239A0776007FA433 /* ZHFilterItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 509890FB239A0776007FA433 /* ZHFilterItemModel.m */; };
 		50FD12FE230D20C20030499E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD12FD230D20C20030499E /* AppDelegate.m */; };
@@ -59,8 +58,6 @@
 		500EFDBF239F84530027721C /* ZHFilterItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZHFilterItemTableViewCell.xib; sourceTree = "<group>"; };
 		500EFDC2239F849A0027721C /* ZHFilterTitleTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterTitleTableViewCell.h; sourceTree = "<group>"; };
 		500EFDC3239F849A0027721C /* ZHFilterTitleTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterTitleTableViewCell.m; sourceTree = "<group>"; };
-		509890F1239A0028007FA433 /* ZHFilterRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterRightView.h; sourceTree = "<group>"; };
-		509890F2239A0028007FA433 /* ZHFilterRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterRightView.m; sourceTree = "<group>"; };
 		509890F7239A0763007FA433 /* ZHFilterModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterModel.h; sourceTree = "<group>"; };
 		509890F8239A0763007FA433 /* ZHFilterModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterModel.m; sourceTree = "<group>"; };
 		509890FA239A0776007FA433 /* ZHFilterItemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterItemModel.h; sourceTree = "<group>"; };
@@ -116,8 +113,6 @@
 			children = (
 				5003FABD231CFDB100D06560 /* ZHFilterMenuView.h */,
 				5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */,
-				509890F1239A0028007FA433 /* ZHFilterRightView.h */,
-				509890F2239A0028007FA433 /* ZHFilterRightView.m */,
 				500EFDBD239F84530027721C /* ZHFilterItemTableViewCell.h */,
 				500EFDBE239F84530027721C /* ZHFilterItemTableViewCell.m */,
 				500EFDBF239F84530027721C /* ZHFilterItemTableViewCell.xib */,
@@ -397,7 +392,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				500EFDC0239F84530027721C /* ZHFilterItemTableViewCell.m in Sources */,
-				509890F3239A0028007FA433 /* ZHFilterRightView.m in Sources */,
 				5006756723A0E997007ADC12 /* FilterViewController.m in Sources */,
 				50FD1301230D20C20030499E /* ViewController.m in Sources */,
 				5003FABF231CFDB100D06560 /* ZHFilterMenuView.m in Sources */,
