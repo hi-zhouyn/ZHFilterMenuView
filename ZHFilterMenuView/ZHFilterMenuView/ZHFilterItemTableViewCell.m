@@ -56,6 +56,15 @@
     }
 }
 
+- (void)setItemManager:(ZHFilterItemManger *)itemManager
+{
+    _itemManager = itemManager;
+    [self.leftButton setTitleColor:[itemManager.titleColor colorWithAlphaComponent:0.6] forState:UIControlStateNormal];
+    [self.leftButton setTitleColor:itemManager.titleSelectedColor forState:UIControlStateSelected];
+    [self.rightButton setTitleColor:[itemManager.titleColor colorWithAlphaComponent:0.6] forState:UIControlStateNormal];
+    [self.rightButton setTitleColor:itemManager.titleSelectedColor forState:UIControlStateSelected];
+}
+
 - (void)setModelArr:(NSArray *)modelArr
 {
     _modelArr = modelArr;

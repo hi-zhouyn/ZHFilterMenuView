@@ -30,7 +30,7 @@
         [areaArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"附近" modelArr:[self getDataByType:FilterDataType_GG_FJ] selectFirst:YES multiple:NO]];
         
         [priceArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"总价(万/套)" modelArr:[self getDataByType:FilterDataType_GG_ZJ] selectFirst:NO multiple:YES]];
-        [priceArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"单价(万/㎡)" modelArr:[self getDataByType:FilterDataType_XF_DJ] selectFirst:NO multiple:NO]];
+        [priceArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"单价(万/㎡)" modelArr:[self getDataByType:FilterDataType_XF_DJ] selectFirst:NO multiple:YES]];
         
         [roomTypeArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"户型区间" modelArr:[self getDataByType:FilterDataType_GG_HX] selectFirst:NO multiple:YES]];
         
@@ -90,7 +90,7 @@
         ZHFilterModel *areaModel = [ZHFilterModel createFilterModelWithHeadTitle:@"城区" modelArr:[self getDataByType:FilterDataType_GG_QY] selectFirst:YES multiple:NO];
         areaModel.selected = YES;
         [areaArr addObject:areaModel];
-        [areaArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"附近" modelArr:[self getDataByType:FilterDataType_GG_FJ] selectFirst:NO multiple:NO]];
+        [areaArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"附近" modelArr:[self getDataByType:FilterDataType_GG_FJ] selectFirst:YES multiple:NO]];
         
         [roomTypeArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"整租" modelArr:[self getDataByType:FilterDataType_ZF_ZZ] selectFirst:NO multiple:YES]];
         [roomTypeArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"合租" modelArr:[self getDataByType:FilterDataType_ZF_HZ] selectFirst:NO multiple:YES]];

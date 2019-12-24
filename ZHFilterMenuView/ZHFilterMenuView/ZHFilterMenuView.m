@@ -10,11 +10,6 @@
 #import "ZHFilterItemTableViewCell.h"
 #import "ZHFilterTitleTableViewCell.h"
 
-@implementation ZHIndexPath
-
-
-@end
-
 @implementation ZHFilterBottomView
 
 /** 快速初始化 */
@@ -68,7 +63,7 @@
 @property (nonatomic, assign) CGFloat maxHeight;
 @property (nonatomic, assign) BOOL isShow;//是否展开
 @property (nonatomic, strong) ZHFilterItemManger *itemManager;
-
+@property (nonatomic, strong) NSMutableArray *dataArr;//传入数据源
 @end
 
 @implementation ZHFilterMenuView
@@ -89,6 +84,7 @@
         self.titleFontSize = 15;
         self.showLine = YES;
         self.titleLeft = NO;
+        self.lastTitleRight = NO;
         self.listHeight = KTableViewCellHeight;
         self.bottomHeight = KBottomViewHeight;
         self.itemTitleFontSize = 12;
@@ -125,6 +121,12 @@
 {
     _showLine = showLine;
     self.lineView.hidden = !showLine;
+}
+
+- (void)setLineColor:(UIColor *)lineColor
+{
+    _lineColor = lineColor;
+    self.lineView.backgroundColor = lineColor;
 }
 
 - (void)setItemBGColor:(UIColor *)itemBGColor
@@ -213,7 +215,7 @@
             titlePositionX = i * buttonWidth + (i + 1) * 10;
             buttonWidth = 80;
         }
-        if (i == _menuCount - 1 && ![self.titleArr lastObject].length) {
+        if (self.lastTitleRight && i == _menuCount - 1) {
             buttonWidth = 60;
             titlePositionX = self.frame.size.width - 60;
         }
@@ -267,7 +269,7 @@
 
 /**
  更改button图片文本位置
- type:1~文本在左，图片在右；2~图片在左，文本在右
+ type:1~文本在左，图片在右；2~图片在上，文本在下
  */
 - (void)layoutButtonWithEdgeInsetsType:(NSInteger)type
                                  button:(UIButton *)button
@@ -276,18 +278,20 @@
     // 1. 得到imageView和titleLabel的宽、高
     CGFloat imageWith = button.imageView.frame.size.width;
     CGFloat labelWidth = button.titleLabel.intrinsicContentSize.width;
+    CGFloat imageHeight = button.imageView.frame.size.height;
+    CGFloat labelHeight = button.titleLabel.intrinsicContentSize.height;
     
     // 2. 声明全局的imageEdgeInsets和labelEdgeInsets
     UIEdgeInsets imageEdgeInsets = UIEdgeInsetsZero;
     UIEdgeInsets labelEdgeInsets = UIEdgeInsetsZero;
     
-    // 3. 根据style和space得到imageEdgeInsets和labelEdgeInsets的值
+    // 3. 根据type和space得到imageEdgeInsets和labelEdgeInsets的值
     if (type == 1) {
         imageEdgeInsets = UIEdgeInsetsMake(0, labelWidth+space/2.0, 0, -labelWidth-space/2.0);
         labelEdgeInsets = UIEdgeInsetsMake(0, -imageWith-space/2.0, 0, imageWith+space/2.0);
     } else if (type == 2) {
-        imageEdgeInsets = UIEdgeInsetsMake(0, -space/2.0, 0, space/2.0);
-        labelEdgeInsets = UIEdgeInsetsMake(0, space/2.0, 0, -space/2.0);
+        imageEdgeInsets = UIEdgeInsetsMake(-labelHeight-space/2.0, 0, 0, -labelWidth);
+        labelEdgeInsets = UIEdgeInsetsMake(0, -imageWith, -imageHeight-space/2.0, 0);
     }
     
     // 4. 赋值
@@ -310,7 +314,6 @@
 {
     if (self.selectedTabIndex == tapIndex) {
         [self animateMenuViewWithShow:NO];
-        self.selectedTabIndex = -1;
     } else {
         self.selectedTabIndex = tapIndex;
         [self animateMenuViewWithShow:YES];
@@ -350,6 +353,8 @@
     }
     [self.leftTableView reloadData];
     [self.rightTableView reloadData];
+    //通过归解档实现模型数组深拷贝
+    self.filterDataArr = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self.dataArr]];
 }
 
 /** 确定 */
@@ -374,6 +379,8 @@
         }
     }
     NSArray *selectedModelArr = [self getSelectedModelArrAndUpdateSelectArr];
+    //通过归解档实现模型数组深拷贝
+    self.filterDataArr = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self.dataArr]];
     [self animateMenuViewWithShow:NO];
     if (self.zh_delegate && [self.zh_delegate respondsToSelector:@selector(menuView:didSelectConfirmAtSelectedModelArr:)]) {
         [self.zh_delegate menuView:self didSelectConfirmAtSelectedModelArr:selectedModelArr];
@@ -386,6 +393,9 @@
     ZHFilterMenuConfirmType confirmType = [self getConfirmTypeBySelectedTabIndex:self.selectedTabIndex];
     ZHFilterMenuDownType downType = [self getDownTypeBySelectedTabIndex:self.selectedTabIndex];
     if (show) {
+        //通过归解档实现模型数组深拷贝
+        self.dataArr = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self.filterDataArr]];
+        
         //将要显示回调
         if (self.zh_delegate && [self.zh_delegate respondsToSelector:@selector(menuView:willShowAtTabIndex:)]) {
             [self.zh_delegate menuView:self willShowAtTabIndex:self.selectedTabIndex];
@@ -447,10 +457,61 @@
             [self.leftTableView removeFromSuperview];
             [self.bottomView removeFromSuperview];
         }];
+        self.selectedTabIndex = -1;
     }
-    self.isShow = !show;
+    self.isShow = show;
+    //开始更新标题显示状态
+    [self updateMenuTitle];
 }
 
+#pragma mark - 更新标题选择状态
+- (void)updateMenuTitle
+{
+    for (int i = 0; i < self.titleArr.count; i++) {
+        UIButton *tabButton = self.buttonArr[i];
+        BOOL selected = NO;//设置初始值
+        if (i == self.selectedTabIndex && self.isShow) {
+            selected = YES;
+        } else {
+            NSArray *modelArr = self.filterDataArr[i];
+            for (ZHFilterModel *filterModel in modelArr) {
+                if (filterModel.selectFirst) {
+                    if (filterModel.multiple) {
+                        ZHFilterItemModel *firstModel = [filterModel.itemArr firstObject];
+                        for (ZHFilterItemModel *itemModel in filterModel.itemArr) {
+                            if ([itemModel.name isEqualToString:firstModel.name]) {
+                                continue;
+                            }
+                            if (itemModel.selected) {
+                                selected = YES;
+                                break;
+                            }
+                        }
+                    } else {
+                        if ([[filterModel.itemArr firstObject] selected]) {
+                            continue;
+                        }
+                    }
+                    if (selected) {
+                        break;
+                    }
+                }
+                for (ZHFilterItemModel *itemModel in filterModel.itemArr) {
+                    if (itemModel.selected) {
+                        selected = YES;
+                        break;
+                    }
+                }
+                if (selected) {
+                    break;
+                }
+            }
+        }
+        
+        tabButton.selected = selected;
+        [self layoutButtonWithEdgeInsetsType:1 button:tabButton imageTitleSpace:3];
+    }
+}
 
 #pragma mark - getData
 
@@ -668,6 +729,7 @@
         }
         [self.leftTableView reloadData];
         [self.rightTableView reloadData];
+        [self confirmAction];
     } else if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
         if (downType == ZHFilterMenuDownTypeTwoLists) {
             if (tableView == self.leftTableView) {
@@ -747,7 +809,7 @@
         _rightTableView.rowHeight = KTableViewCellHeight;
         _rightTableView.dataSource = self;
         _rightTableView.delegate = self;
-        //_rightTableView.separatorColor = KLineColor;
+        _rightTableView.separatorColor = KLineColor;
         _rightTableView.backgroundColor = KItemBGColor;
         _rightTableView.separatorInset = UIEdgeInsetsZero;
         _rightTableView.tableFooterView = [[UIView alloc]init];

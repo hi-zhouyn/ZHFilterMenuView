@@ -28,9 +28,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //房源展示数据源暂时是写在本地
+    //便于演示房源展示数据源暂时是写在本地，可根据自身情况，如果需从接口请求可自行做下调整
     FilterDataUtil *dataUtil = [[FilterDataUtil alloc] init];
-    self.menuView.dataArr = [dataUtil getTabDataByType:self.filterType];
+    self.menuView.filterDataArr = [dataUtil getTabDataByType:self.filterType];
     //开始显示
     [self.menuView beginShowMenuView];
 }

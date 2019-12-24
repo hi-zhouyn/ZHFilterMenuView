@@ -88,7 +88,7 @@
                             <constraint firstItem="4SJ-4N-XnI" firstAttribute="leading" secondItem="DiF-7w-lxY" secondAttribute="leading" id="xzv-SN-oe3"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ch4-Kc-la1">
+                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ch4-Kc-la1">
                         <rect key="frame" x="0.0" y="10" width="211.5" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="eR2-uT-8Iv"/>
@@ -99,7 +99,7 @@
                             <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <state key="selected">
-                            <color key="titleColor" red="0.28627450980392155" green="0.59607843137254901" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="titleColor" red="0.18823529411764706" green="0.44705882352941173" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
                             <action selector="leftButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="BGw-7h-Iip"/>

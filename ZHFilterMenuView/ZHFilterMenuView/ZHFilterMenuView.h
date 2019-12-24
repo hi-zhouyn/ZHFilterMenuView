@@ -10,10 +10,10 @@
 #import "ZHFilterModel.h"
 @class ZHFilterMenuView;
 
-#define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self
+#define WS(weakSelf)    __weak __typeof(&*self)weakSelf = self
 #define SS(strongSelf)  __strong __typeof(&*self)strongSelf = weakSelf
 
-#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_WIDTH  ([[UIScreen mainScreen] bounds].size.width)
 #define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
 #define KTableViewCellHeight 44
 #define KBottomViewHeight    80
@@ -23,19 +23,10 @@
 #define kSetHEXColor(rgbValue) kBaseSetHEXColor(rgbValue,1)
 
 #define KTitleColor          kSetHEXColor(0x333333)
-#define KTitleSelectedColor  kSetHEXColor(0x4998E8)
+#define KTitleSelectedColor  kSetHEXColor(0x3072F5)
 #define KLineColor           kSetHEXColor(0xe8e8e8)//分割线
 #define KItemBGColor         kSetHEXColor(0xf5f5f5)
 #define KItemBGSelectedColor kSetHEXColor(0xeef6ff)
-
-
-@interface ZHIndexPath : NSObject
-
-@property (nonatomic, assign) NSInteger tabIndex;
-@property (nonatomic, assign) NSInteger sectionIndex;
-@property (nonatomic, assign) NSInteger rowIndex;
-
-@end
 
 
 @interface ZHFilterBottomView : UIView
@@ -45,7 +36,7 @@
 @property (nonatomic, strong) UIView * _Nonnull lineView;
 
 /** 快速初始化 */
-- (instancetype _Nonnull )initBottomViewWithTarget:(id _Nonnull)target
+- (instancetype _Nonnull )initBottomViewWithTarget:(id  _Nonnull )target
                                        resetAction:(SEL _Nonnull )resetAction
                                      confirmAction:(SEL _Nonnull )confirmAction;
 
@@ -109,33 +100,36 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<ZHFilterMenuViewDelegate> zh_delegate;
 @property (nonatomic, weak) id<ZHFilterMenuViewDetaSource> zh_dataSource;
 
-@property (nonatomic, strong) NSMutableArray *dataArr;//传入数据源
-@property (nonatomic, strong) NSArray<NSString *> *titleArr;//传入标题数据源
-@property (nonatomic, strong) NSArray<NSString *> *imageNameArr;//传入折叠图片数据源
-@property (nonatomic, strong) NSArray<NSString *> *selectImageNameArr;
+@property (nonatomic, strong) NSMutableArray *filterDataArr;          //传入数据源(必传)
+@property (nonatomic, strong) NSArray<NSString *> *titleArr;          //传入标题数据源(必传)
+@property (nonatomic, strong) NSArray<NSString *> *imageNameArr;      //传入折叠图片数据源(不传不展示图片)
+@property (nonatomic, strong) NSArray<NSString *> *selectImageNameArr;//传入选择状态下的折叠图片数据源(不传默认取imageNameArr里的图片)
 
-@property (nonatomic, strong) UIColor *titleColor;
-@property (nonatomic, strong) UIColor *titleSelectedColor;
-@property (nonatomic, strong) UIColor *lineColor;
-@property (nonatomic, assign) CGFloat titleFontSize;
+@property (nonatomic, strong) UIColor *titleColor;           //菜单标题文本颜色（默认333333）
+@property (nonatomic, strong) UIColor *titleSelectedColor;   //菜单标题选择状态下的颜色（默认3072F5）
+@property (nonatomic, strong) UIColor *lineColor;            //菜单标题底部分割线颜色（默认e8e8e8）
+@property (nonatomic, assign) CGFloat titleFontSize;         //菜单标题字号（默认15）
 
-@property (nonatomic, assign) BOOL showLine;
-@property (nonatomic, assign) BOOL titleLeft; // 文字标题是否居左 不平分 default NO
-@property (nonatomic, assign) CGFloat listHeight;  //选择列表的高度（默认44）
-@property (nonatomic, assign) CGFloat bottomHeight;//列表底部的高度（默认80）
+@property (nonatomic, assign) BOOL showLine;                 //菜单标题底部分割线是否显示（默认YES）
+@property (nonatomic, assign) BOOL titleLeft;                //文字标题是否居左 不平分（默认NO）
+@property (nonatomic, assign) BOOL lastTitleRight;           //最后一个文字标题是否固定居右（默认NO,为YES的情况下tab标题宽度固定为60）
+@property (nonatomic, assign) CGFloat listHeight;            //选择列表的高度（默认44）
+@property (nonatomic, assign) CGFloat bottomHeight;          //列表底部的高度（默认80）
 
-@property (nonatomic, assign) CGFloat itemTitleFontSize;
-@property (nonatomic, strong) UIColor *itemBGColor;//item背景颜色（默认f5f5f5）
-@property (nonatomic, strong) UIColor *itemBGSelectedColor;//item选择时背景颜色（默认eef6ff）
-@property (nonatomic, assign) CGFloat space;//item间隔（默认15）
-@property (nonatomic, assign) CGFloat itemHeight;//item高（默认30）
-@property (nonatomic, assign) NSInteger lineNum;//一行展示数量（默认4，当内容字符数大于7时lineNum = 2）
-@property (nonatomic, assign) NSInteger maxLength;//输入框最大文本数量（默认7位）
+@property (nonatomic, assign) CGFloat itemTitleFontSize;     //item标题字号大小（默认12）
+@property (nonatomic, strong) UIColor *itemBGColor;          //item背景颜色（默认f5f5f5）
+@property (nonatomic, strong) UIColor *itemBGSelectedColor;  //item选择时背景颜色（默认eef6ff）
+@property (nonatomic, assign) CGFloat space;                 //item间隔（默认15）
+@property (nonatomic, assign) CGFloat itemHeight;            //item高（默认30）
+@property (nonatomic, assign) NSInteger lineNum;             //一行展示数量（默认4，当内容字符数大于7时lineNum = 2）
+@property (nonatomic, assign) NSInteger maxLength;           //输入框最大文本数量（默认7位）
 
-@property (nonatomic, strong) NSMutableArray *buttonArr;
+@property (nonatomic, strong) NSMutableArray *buttonArr;//菜单tab标题button数据
 
 
-/** 快速初始化 */
+/** 快速初始化
+ *  maxHeight:下拉列表最大展示高度
+ */
 - (instancetype)initWithFrame:(CGRect)frame maxHeight:(CGFloat)maxHeight;
 
 /** 参数传完后开始调用以显示 */
