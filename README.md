@@ -1,6 +1,6 @@
 # ZHFilterMenuView
 一款类似贝壳找房的通用筛选控件！当然不局限于用于房屋筛选，也可用于其他类型的筛选！
-# 预览
+## 预览
 ![ZHFilterMenuView](/Image/IMG_4269.PNG)
 ![ZHFilterMenuView](/Image/IMG_4270.PNG)
 ![ZHFilterMenuView](/Image/IMG_4271.PNG)
@@ -10,7 +10,7 @@
 ![ZHFilterMenuView](/Image/IMG_4276.PNG)
 ![ZHFilterMenuView](/Image/IMG_4277.PNG)
 
-# 调用示例
+## 调用示例
 ```
 FilterDataUtil *dataUtil = [[FilterDataUtil alloc] init];
 self.menuView.filterDataArr = [dataUtil getTabDataByType:self.filterType];
@@ -39,7 +39,7 @@ self.menuView.filterDataArr = [dataUtil getTabDataByType:self.filterType];
     return _menuView;
 }
 ```
-# 方法定义
+## 方法定义
 ```
 /** 确定类型 */
 typedef NS_ENUM(NSUInteger, ZHFilterMenuConfirmType) {
@@ -138,3 +138,5 @@ NS_ASSUME_NONNULL_BEGIN
 /** 菜单列表消失 */
 - (void)hideMenuList;
 ```
+## 意见建议
+如果感觉此项目对你有帮助，欢迎Star！如果使用过程中遇到问题或者有更好的建议,欢迎在Issues提出！
