@@ -18,6 +18,56 @@ self.menuView.filterDataArr = [dataUtil getTabDataByType:self.filterType];
 [self.menuView beginShowMenuView];
 ```
 ```
+/** 确定回调 */
+- (void)menuView:(ZHFilterMenuView *)menuView didSelectConfirmAtSelectedModelArr:(NSArray *)selectedModelArr
+{
+    NSArray *dictArr = [ZHFilterItemModel mj_keyValuesArrayWithObjectArray:selectedModelArr];
+    NSLog(@"结果回调：%@",dictArr.mj_JSONString);
+}
+
+/** 警告回调(用于错误提示) */
+- (void)menuView:(ZHFilterMenuView *)menuView wangType:(ZHFilterMenuViewWangType)wangType
+{
+    if (wangType == ZHFilterMenuViewWangTypeInput) {
+        NSLog(@"请输入正确的价格区间！");
+    }
+}
+
+/** 返回每个 tabIndex 下的确定类型 */
+- (ZHFilterMenuConfirmType)menuView:(ZHFilterMenuView *)menuView confirmTypeInTabIndex:(NSInteger)tabIndex
+{
+    if (tabIndex == 4) {
+        return ZHFilterMenuConfirmTypeSpeedConfirm;
+    }
+    return ZHFilterMenuConfirmTypeBottomConfirm;
+}
+
+/** 返回每个 tabIndex 下的下拉展示类型 */
+- (ZHFilterMenuDownType)menuView:(ZHFilterMenuView *)menuView downTypeInTabIndex:(NSInteger)tabIndex
+{
+    if (tabIndex == 0) {
+        return ZHFilterMenuDownTypeTwoLists;
+    } else if (tabIndex == 1) {
+        if (self.filterType == FilterTypeISRent) {
+            return ZHFilterMenuDownTypeOnlyItem;
+        } else {
+            return ZHFilterMenuDownTypeItemInput;
+        }
+    } else if (tabIndex == 2) {
+        if (self.filterType == FilterTypeISRent) {
+            return ZHFilterMenuDownTypeItemInput;
+        } else {
+            return ZHFilterMenuDownTypeOnlyItem;
+        }
+    } else if (tabIndex == 3) {
+        return ZHFilterMenuDownTypeOnlyItem;
+    } else if (tabIndex == 4) {
+        return ZHFilterMenuDownTypeOnlyList;
+    }
+    return 1;
+}
+
+
 - (ZHFilterMenuView *)menuView
 {
     if (!_menuView) {
