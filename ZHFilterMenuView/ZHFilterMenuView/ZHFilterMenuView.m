@@ -197,8 +197,18 @@
         button.titleLabel.font = [UIFont systemFontOfSize:_titleFontSize];
         [button setTitleColor:self.titleColor forState:UIControlStateNormal];
         [button setTitleColor:self.titleSelectedColor forState:UIControlStateSelected];
-        UIImage *image = [UIImage imageNamed:self.imageNameArr[i]];
-        UIImage *selectImage = [UIImage imageNamed:self.selectImageNameArr[i]];
+        UIImage *image = nil;
+        if (i < self.imageNameArr.count) {
+            image = [UIImage imageNamed:self.imageNameArr[i]];
+        }
+        UIImage *selectImage = nil;
+        if (i < self.selectImageNameArr.count) {
+            selectImage = [UIImage imageNamed:self.selectImageNameArr[i]];
+        } else {
+            if (image) {
+                selectImage = image;
+            }
+        }
         image = [self imageTintedWithImage:image color:self.titleColor fraction:0.f];
         selectImage = [self imageTintedWithImage:selectImage color:self.titleSelectedColor fraction:0.f];
         [button setImage:[image imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:UIControlStateNormal];
