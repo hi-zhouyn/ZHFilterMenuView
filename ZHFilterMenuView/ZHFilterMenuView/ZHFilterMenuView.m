@@ -343,10 +343,12 @@
     ZHFilterModel *filterModel = [modelArr firstObject];
     for (ZHFilterModel *model in modelArr) {
         if (model.selectFirst) {
-            [model setModelItemSelectesNO];
+            model.selected = NO;
             if (model == filterModel) {
                 model.selected = YES;
             }
+            [model setModelItemSelectesNO];
+            [[model.itemArr firstObject] setSelected:YES];
         } else {
             [model setModelItemSelectesNO];
         }
