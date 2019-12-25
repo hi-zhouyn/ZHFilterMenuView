@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8C141A4473C6BE74E16652085E626A74"
+               BlueprintIdentifier = "965DA93CE6512B6794C2211F64982CEC"
                BlueprintName = "Pods-ZHFilterMenuView"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "libPods-ZHFilterMenuView.a">
+               BuildableName = "Pods-ZHFilterMenuView.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

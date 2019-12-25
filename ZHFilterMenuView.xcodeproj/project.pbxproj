@@ -24,7 +24,7 @@
 		50FD130C230D20C40030499E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD130B230D20C40030499E /* main.m */; };
 		50FD1316230D20C40030499E /* ZHFilterMenuViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD1315230D20C40030499E /* ZHFilterMenuViewTests.m */; };
 		50FD1321230D20C40030499E /* ZHFilterMenuViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD1320230D20C40030499E /* ZHFilterMenuViewUITests.m */; };
-		51E439D176DD75A77A082BA8 /* libPods-ZHFilterMenuView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB4AB243A42B1C39CB36A3F /* libPods-ZHFilterMenuView.a */; };
+		EC5A87FF137B7F9518233618 /* Pods_ZHFilterMenuView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F44DA27485582D7E488666C /* Pods_ZHFilterMenuView.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,8 +78,8 @@
 		50FD131C230D20C40030499E /* ZHFilterMenuViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZHFilterMenuViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50FD1320230D20C40030499E /* ZHFilterMenuViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterMenuViewUITests.m; sourceTree = "<group>"; };
 		50FD1322230D20C40030499E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5F44DA27485582D7E488666C /* Pods_ZHFilterMenuView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZHFilterMenuView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		707415DD831D57C8391A0FAD /* Pods-ZHFilterMenuView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZHFilterMenuView.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZHFilterMenuView/Pods-ZHFilterMenuView.release.xcconfig"; sourceTree = "<group>"; };
-		BBB4AB243A42B1C39CB36A3F /* libPods-ZHFilterMenuView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZHFilterMenuView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51E439D176DD75A77A082BA8 /* libPods-ZHFilterMenuView.a in Frameworks */,
+				EC5A87FF137B7F9518233618 /* Pods_ZHFilterMenuView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +200,7 @@
 		E3A570C7B1A3F80B71EB50BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BBB4AB243A42B1C39CB36A3F /* libPods-ZHFilterMenuView.a */,
+				5F44DA27485582D7E488666C /* Pods_ZHFilterMenuView.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -342,9 +342,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ZHFilterMenuView/Pods-ZHFilterMenuView-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -576,10 +579,7 @@
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -595,10 +595,7 @@
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -612,11 +609,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -631,11 +624,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -649,11 +638,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -667,11 +652,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8H6HKVCBR9;
 				INFOPLIST_FILE = ZHFilterMenuViewUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhouyn.ZHFilterMenuViewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
