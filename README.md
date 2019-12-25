@@ -64,7 +64,7 @@ self.menuView.filterDataArr = [dataUtil getTabDataByType:self.filterType];
     } else if (tabIndex == 4) {
         return ZHFilterMenuDownTypeOnlyList;
     }
-    return 1;
+    return ZHFilterMenuDownTypeOnlyList;
 }
 
 
