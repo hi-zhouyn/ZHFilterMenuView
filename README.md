@@ -1,14 +1,10 @@
 # ZHFilterMenuView
-一款类似贝壳找房的通用筛选控件！当然不局限于用于房屋筛选，也可用于其他类型的筛选！
+一款类似贝壳找房的通用筛选控件，支持单列表、双列表、滑动列表、切换列表、列表输入等多种展示样式，可通过传入参数进行控制！为方便演示，demo中提供新房、二手房、租房的完整筛选功能实现！当然此控件不局限用于房屋筛选，也可用于其他类型的筛选，如果有其它项目或功能需求筛选，修改展示数据源即可！
 ## 预览
-![ZHFilterMenuView](/Image/IMG_4269.PNG)
-![ZHFilterMenuView](/Image/IMG_4270.PNG)
-![ZHFilterMenuView](/Image/IMG_4271.PNG)
-![ZHFilterMenuView](/Image/IMG_4273.PNG)
+![ZHFilterMenuView](/Image/filter.gif)
+
 ![ZHFilterMenuView](/Image/IMG_4274.PNG)
-![ZHFilterMenuView](/Image/IMG_4275.PNG)
 ![ZHFilterMenuView](/Image/IMG_4276.PNG)
-![ZHFilterMenuView](/Image/IMG_4277.PNG)
 
 ## 调用示例
 ```
@@ -190,3 +186,5 @@ NS_ASSUME_NONNULL_BEGIN
 ```
 ## 意见建议
 如果感觉此项目对你有帮助，欢迎Star！如果使用过程中遇到问题或者有更好的建议,欢迎在Issues提出！
+## 更新记录
+* 2019-12-25 修复双列表点重置出错的问题，增加预览GIF图
