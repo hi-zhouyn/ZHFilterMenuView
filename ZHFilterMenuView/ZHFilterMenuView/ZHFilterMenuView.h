@@ -67,13 +67,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZHFilterMenuViewDelegate <NSObject>
 
-/** 警告回调(用于错误提示) */
-- (void)menuView:(ZHFilterMenuView *)menuView wangType:(ZHFilterMenuViewWangType)wangType;
-
 /** 确定回调 */
 - (void)menuView:(ZHFilterMenuView *)menuView didSelectConfirmAtSelectedModelArr:(NSArray *)selectedModelArr;
 
 @optional
+
+/** 警告回调(用于错误提示) */
+- (void)menuView:(ZHFilterMenuView *)menuView wangType:(ZHFilterMenuViewWangType)wangType;
 
 /** 消失回调 */
 - (void)menuView:(ZHFilterMenuView *)menuView didHideAtSelectedModelArr:(NSArray *)selectedModelArr;
