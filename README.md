@@ -5,7 +5,8 @@
 
 ![ZHFilterMenuView](/Image/IMG_4274.PNG)
 ![ZHFilterMenuView](/Image/IMG_4276.PNG)
-
+## 简书文章
+更多了解可以查看[详细文章](https://www.jianshu.com/p/0f0638eef65f)
 ## 调用示例
 ```
 FilterDataUtil *dataUtil = [[FilterDataUtil alloc] init];
