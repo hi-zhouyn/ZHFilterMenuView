@@ -47,7 +47,10 @@ typedef NS_ENUM(NSUInteger, FilterDataType) {
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FilterDataUtil : NSObject
+
+/** 根据FilterType类型获取数据 */
 - (NSMutableArray *)getTabDataByType:(FilterType)type;
+
 @end
 
 NS_ASSUME_NONNULL_END
