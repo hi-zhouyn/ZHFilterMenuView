@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ZHFilterModel : NSObject <NSCoding>
 
 @property (nonatomic, copy) NSString *title;             //标题
-@property (nonatomic, strong) NSMutableArray *itemArr;   //item数据
-@property (nonatomic, strong) NSMutableArray *selectArr; //选择的数据
+@property (nonatomic, strong) NSMutableArray *itemArr;   //item数据[<ZHFilterItemModel *>]
+@property (nonatomic, strong) NSMutableArray *selectArr; //选择的数据[<ZHFilterItemModel *>]
 @property (nonatomic, assign) BOOL multiple;             //是否多选
 @property (nonatomic, assign) BOOL selected;             //是否已选
 @property (nonatomic, assign) BOOL selectFirst;          //是否选择第一个

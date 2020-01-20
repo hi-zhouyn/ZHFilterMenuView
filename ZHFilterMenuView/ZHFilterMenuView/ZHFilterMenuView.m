@@ -500,8 +500,11 @@
                             }
                         }
                     } else {
-                        if ([[filterModel.itemArr firstObject] selected]) {
-                            continue;
+                        if (filterModel.itemArr.count) {
+                            ZHFilterItemModel *itemModel = [filterModel.itemArr firstObject];
+                            if (itemModel && itemModel.selected) {
+                                continue;
+                            }
                         }
                     }
                     if (selected) {
