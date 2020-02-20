@@ -93,6 +93,8 @@
         self.space = 15;
         self.itemHeight = 30;
         self.lineNum = 4;
+        self.showInWindow = NO;
+        self.inWindowMinY = 0.f;
         
         self.maxHeight = maxHeight;
     }
@@ -182,6 +184,7 @@
     _maxLength = maxLength;
     self.itemManager.maxLength = maxLength;
 }
+
 
 /** 参数传完后开始调用以显示 */
 - (void)beginShowMenuView
@@ -322,11 +325,18 @@
 #pragma mark - 点击
 - (void)menuTappedWithIndex:(NSInteger)tapIndex
 {
+    //点击菜单回调
+    if (self.zh_delegate && [self.zh_delegate respondsToSelector:@selector(menuView:selectMenuAtTabIndex:)]) {
+        [self.zh_delegate menuView:self selectMenuAtTabIndex:tapIndex];
+    }
     if (self.selectedTabIndex == tapIndex) {
         [self animateMenuViewWithShow:NO];
     } else {
         self.selectedTabIndex = tapIndex;
-        [self animateMenuViewWithShow:YES];
+        CGFloat time = self.showInWindow ? self.waitTime : 0.f;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self animateMenuViewWithShow:YES];
+        });
     }
 }
 
@@ -404,6 +414,14 @@
 {
     ZHFilterMenuConfirmType confirmType = [self getConfirmTypeBySelectedTabIndex:self.selectedTabIndex];
     ZHFilterMenuDownType downType = [self getDownTypeBySelectedTabIndex:self.selectedTabIndex];
+    
+    CGRect menuViewFrom = self.frame;
+    UIView *superView = self.superview;
+    if (self.showInWindow) {
+        menuViewFrom.origin = CGPointMake(menuViewFrom.origin.x, self.inWindowMinY);
+        superView = KKeyWindow;
+    }
+    
     if (show) {
         //通过归解档实现模型数组深拷贝
         self.dataArr = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self.filterDataArr]];
@@ -412,17 +430,17 @@
         if (self.zh_delegate && [self.zh_delegate respondsToSelector:@selector(menuView:willShowAtTabIndex:)]) {
             [self.zh_delegate menuView:self willShowAtTabIndex:self.selectedTabIndex];
         }
-        self.backGroundView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, self.maxHeight);
+        self.backGroundView.frame = CGRectMake(0, CGRectGetMaxY(menuViewFrom), menuViewFrom.size.width, self.maxHeight);
         [self.superview bringSubviewToFront:self];
-        [self.superview addSubview:self.backGroundView];
+        [superView addSubview:self.backGroundView];
         if (downType == ZHFilterMenuDownTypeTwoLists) {
-            self.leftTableView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width / 3, 0);
-            self.rightTableView.frame = CGRectMake(self.frame.size.width / 3, self.frame.origin.y + self.frame.size.height, self.frame.size.width / 3 * 2, 0);
-            [self.superview addSubview:self.leftTableView];
-            [self.superview addSubview:self.rightTableView];
+            self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(menuViewFrom), menuViewFrom.size.width / 3, 0);
+            self.rightTableView.frame = CGRectMake(menuViewFrom.size.width / 3, CGRectGetMaxY(menuViewFrom), menuViewFrom.size.width / 3 * 2, 0);
+            [superView addSubview:self.leftTableView];
+            [superView addSubview:self.rightTableView];
         } else {
-            self.leftTableView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
-            [self.superview addSubview:self.leftTableView];
+            self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(menuViewFrom), menuViewFrom.size.width, 0);
+            [superView addSubview:self.leftTableView];
             [self.rightTableView removeFromSuperview];
         }
         CGFloat viewHeight = [self getListHeightWithDownType:downType confirmType:confirmType];
@@ -430,10 +448,10 @@
         self.bottomView.hidden = YES;
         if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
             self.bottomView.hidden = NO;
-            self.bottomView.frame = CGRectMake(self.frame.origin.x, CGRectGetMaxY(self.leftTableView.frame), self.frame.size.width, 0);
+            self.bottomView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(self.leftTableView.frame), menuViewFrom.size.width, 0);
             self.bottomView.resetButton.frame = CGRectMake(20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 40, 0);
             self.bottomView.confirmButton.frame = CGRectMake(CGRectGetWidth(self.bottomView.frame) / 2 + 20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 40, 0);
-            [self.superview addSubview:self.bottomView];
+            [superView addSubview:self.bottomView];
             bottomHeight = self.bottomHeight;
         }
         viewHeight = MIN(viewHeight, self.maxHeight - bottomHeight);
@@ -441,13 +459,13 @@
         [UIView animateWithDuration:0.3 animations:^{
             self.backGroundView.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.3f];
             if (downType == ZHFilterMenuDownTypeTwoLists) {
-                self.leftTableView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width / 3, viewHeight);
-                self.rightTableView.frame = CGRectMake(self.frame.size.width / 3, self.frame.origin.y + self.frame.size.height, self.frame.size.width / 3 * 2, viewHeight);
+                self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, menuViewFrom.origin.y + menuViewFrom.size.height, menuViewFrom.size.width / 3, viewHeight);
+                self.rightTableView.frame = CGRectMake(menuViewFrom.size.width / 3, menuViewFrom.origin.y + menuViewFrom.size.height, menuViewFrom.size.width / 3 * 2, viewHeight);
             } else {
-                self.leftTableView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, viewHeight);
+                self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(menuViewFrom), menuViewFrom.size.width, viewHeight);
             }
             if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
-                self.bottomView.frame = CGRectMake(self.frame.origin.x, CGRectGetMaxY(self.leftTableView.frame), self.frame.size.width, bottomHeight);
+                self.bottomView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(self.leftTableView.frame), menuViewFrom.size.width, bottomHeight);
                 self.bottomView.resetButton.frame = CGRectMake(20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 40, CGRectGetHeight(self.bottomView.frame) - 40);
                 self.bottomView.confirmButton.frame = CGRectMake(CGRectGetWidth(self.bottomView.frame) / 2 + 20, 20, CGRectGetWidth(self.bottomView.frame) / 2 - 40, CGRectGetHeight(self.bottomView.frame) - 40);
             }
@@ -461,7 +479,7 @@
             self.rightTableView.frame = CGRectMake(self.rightTableView.frame.origin.x, self.rightTableView.frame.origin.y, self.rightTableView.frame.size.width, 0);
             if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
                 self.bottomView.hidden = YES;
-                self.bottomView.frame = CGRectMake(self.frame.origin.x, CGRectGetMaxY(self.leftTableView.frame), self.frame.size.width, 0);
+                self.bottomView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(self.leftTableView.frame), menuViewFrom.size.width, 0);
             }
         } completion:^(BOOL finished) {
             [self.rightTableView removeFromSuperview];
@@ -472,6 +490,7 @@
         self.selectedTabIndex = -1;
     }
     self.isShow = show;
+    self.isOpen = show;
     //开始更新标题显示状态
     [self updateMenuTitle];
 }

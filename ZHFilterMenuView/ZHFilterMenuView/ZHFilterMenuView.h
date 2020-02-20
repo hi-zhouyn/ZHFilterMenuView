@@ -13,6 +13,7 @@
 #define WS(weakSelf)    __weak __typeof(&*self)weakSelf = self
 #define SS(strongSelf)  __strong __typeof(&*self)strongSelf = weakSelf
 
+#define KKeyWindow    [UIApplication sharedApplication].keyWindow
 #define SCREEN_WIDTH  ([[UIScreen mainScreen] bounds].size.width)
 #define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
 #define KTableViewCellHeight 44
@@ -81,6 +82,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 列表将要显示回调 */
 - (void)menuView:(ZHFilterMenuView *)menuView willShowAtTabIndex:(NSInteger)tabIndex;
 
+/** 点击菜单回调 */
+- (void)menuView:(ZHFilterMenuView *)menuView selectMenuAtTabIndex:(NSInteger)tabIndex;
+
 @end
 
 
@@ -113,6 +117,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL showLine;                 //菜单标题底部分割线是否显示（默认YES）
 @property (nonatomic, assign) BOOL titleLeft;                //文字标题是否居左 不平分（默认NO）
 @property (nonatomic, assign) BOOL lastTitleRight;           //最后一个文字标题是否固定居右（默认NO,为YES的情况下tab标题宽度固定为60）
+@property (nonatomic, assign) BOOL showInWindow;             //下拉列表展示在window上，以应对列表视图展示的问题（默认NO）
+@property (nonatomic, assign) CGFloat inWindowMinY;          //移动后的menuView坐标转换在window上的minY值，showInWindow为YES时有效（默认0）
+@property (nonatomic, assign) CGFloat waitTime;              //下拉框展示等待时间，showInWindow为YES时有效（默认0）
 @property (nonatomic, assign) CGFloat listHeight;            //选择列表的高度（默认44）
 @property (nonatomic, assign) CGFloat bottomHeight;          //列表底部的高度（默认80）
 
@@ -124,8 +131,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger lineNum;             //一行展示数量（默认4，当内容字符数大于7时lineNum = 2）
 @property (nonatomic, assign) NSInteger maxLength;           //输入框最大文本数量（默认7位）
 
-@property (nonatomic, strong) NSMutableArray *buttonArr;//菜单tab标题button数据
-
+@property (nonatomic, strong) NSMutableArray *buttonArr;     //菜单tab标题button数据(可供外部特殊需求时使用)
+@property (nonatomic, assign) BOOL isOpen;                   //展开状态(供外部取值使用)
 
 /** 快速初始化
  *  maxHeight:下拉列表最大展示高度

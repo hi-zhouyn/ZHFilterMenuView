@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "ZHFilterTitleTableViewCell.h"
 #import "FilterViewController.h"
+#import "HeadFilterViewController.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
@@ -21,7 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"ZHFilterMenuView";
-    self.titleArr = @[@"新房筛选",@"二手房筛选",@"租房筛选"];//,@"侧边筛选"
+    self.titleArr = @[@"新房筛选",@"二手房筛选",@"租房筛选",@"悬停下拉筛选"];//,@"侧边筛选"
     [self.tableView reloadData];
 }
 
@@ -52,9 +53,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FilterViewController *filterVC = [[FilterViewController alloc] init];
-    filterVC.filterType = indexPath.row + 1;
-    [self.navigationController pushViewController:filterVC animated:YES];
+    if (indexPath.row == self.titleArr.count - 1) {
+        HeadFilterViewController *headVC = [[HeadFilterViewController alloc] init];
+        [self.navigationController pushViewController:headVC animated:YES];
+    }else {
+        FilterViewController *filterVC = [[FilterViewController alloc] init];
+        filterVC.filterType = indexPath.row + 1;
+        [self.navigationController pushViewController:filterVC animated:YES];
+    }
 }
 
 - (UITableView *)tableView{
