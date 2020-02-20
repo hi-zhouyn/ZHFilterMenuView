@@ -50,6 +50,7 @@ UIScrollViewDelegate>
     
 }
 
+//下拉菜单展示时禁止点击状态栏回到顶部，避免滑动后下拉框未消失的情况（贝壳找房是存在这样的问题）
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
 {
     return !self.menuView.isOpen;
