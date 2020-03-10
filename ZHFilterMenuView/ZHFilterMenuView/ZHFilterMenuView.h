@@ -145,8 +145,14 @@ NS_ASSUME_NONNULL_BEGIN
 /** 外部快捷调用展开菜单列表 */
 - (void)menuTappedWithIndex:(NSInteger)tapIndex;
 
-/** 菜单列表消失 */
+/** 筛选菜单列表关闭消失 */
 - (void)hideMenuList;
+
+/**
+ 列表移除
+ 仅在showInWindow=YES时需要在viewWillDisappear中手动调用移除
+ */
+- (void)removeMenuList;
 
 @end
 

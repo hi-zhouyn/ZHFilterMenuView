@@ -44,10 +44,11 @@ UIScrollViewDelegate>
     [self.menuView beginShowMenuView];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+//视图将要消失时需要手动移除视图
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    
+    [super viewWillDisappear:animated];
+    [self.menuView removeMenuList];
 }
 
 //下拉菜单展示时禁止点击状态栏回到顶部，避免滑动后下拉框未消失的情况（贝壳找房是存在这样的问题）

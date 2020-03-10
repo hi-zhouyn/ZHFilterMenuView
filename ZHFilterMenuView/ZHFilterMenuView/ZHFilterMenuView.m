@@ -356,6 +356,15 @@
     }
 }
 
+/** 列表移除 */
+- (void)removeMenuList
+{
+    [self.rightTableView removeFromSuperview];
+    [self.backGroundView removeFromSuperview];
+    [self.leftTableView removeFromSuperview];
+    [self.bottomView removeFromSuperview];
+}
+
 /** 重置 */
 - (void)resetAction
 {
