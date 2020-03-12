@@ -55,6 +55,9 @@
     if (tabIndex == 4) {
         return ZHFilterMenuConfirmTypeSpeedConfirm;
     }
+    if (tabIndex == 0 && self.twoListCanSpeedSelect) {
+        return ZHFilterMenuConfirmTypeSpeedConfirm;
+    }
     return ZHFilterMenuConfirmTypeBottomConfirm;
 }
 

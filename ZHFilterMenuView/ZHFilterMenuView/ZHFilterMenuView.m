@@ -666,7 +666,7 @@
                 itemModel.name = filterModel.title;
                 itemModel.minPrice = filterModel.minPrice;
                 itemModel.maxPrice = filterModel.maxPrice;
-                itemModel.code = [NSString stringWithFormat:@"%ld",[modelArr indexOfObject:filterModel]];
+                itemModel.code = [NSString stringWithFormat:@"%lu",(unsigned long)[modelArr indexOfObject:filterModel]];
                 itemModel.selected = YES;
                 [selectArr addObject:itemModel];
             } else {
@@ -763,7 +763,32 @@
 {
     ZHFilterMenuDownType downType = [self getDownTypeBySelectedTabIndex:self.selectedTabIndex];
     ZHFilterMenuConfirmType confirmType = [self getConfirmTypeBySelectedTabIndex:self.selectedTabIndex];
-    if (confirmType == ZHFilterMenuConfirmTypeSpeedConfirm) {
+    if (downType == ZHFilterMenuDownTypeTwoLists) {
+        if (tableView == self.leftTableView) {
+            NSArray *modelArr = [self getSelectedTabIndexFilterModelArr];
+            ZHFilterModel *selModel = modelArr[indexPath.row];
+            for (ZHFilterModel *filterModel in modelArr) {
+                if ([selModel.title isEqualToString:filterModel.title]) {
+                    filterModel.selected = YES;
+                }else {
+                    filterModel.selected = NO;
+                    /** 还原初始 首位选中 */
+                    [filterModel setModelItemSelecteFirst];
+                }
+            }
+            [self.leftTableView reloadData];
+            [self.rightTableView reloadData];
+        } else if (tableView == self.rightTableView) {
+            ZHFilterModel *filterModel = [self getSelectedFilterModel];
+            [filterModel setModelItemSelectesNO];
+            ZHFilterItemModel *itemModel = filterModel.itemArr[indexPath.row];
+            itemModel.selected = YES;
+            [self.rightTableView reloadData];
+            if (confirmType == ZHFilterMenuConfirmTypeSpeedConfirm) {
+                [self confirmAction];
+            }
+        }
+    } else if (downType == ZHFilterMenuDownTypeOnlyList) {
         NSArray *modelArr = [self getSelectedTabIndexFilterModelArr];
         ZHFilterModel *filterModel = [modelArr firstObject];
         for (int i = 0; i < filterModel.itemArr.count; i ++) {
@@ -772,39 +797,8 @@
         }
         [self.leftTableView reloadData];
         [self.rightTableView reloadData];
-        [self confirmAction];
-    } else if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
-        if (downType == ZHFilterMenuDownTypeTwoLists) {
-            if (tableView == self.leftTableView) {
-                NSArray *modelArr = [self getSelectedTabIndexFilterModelArr];
-                ZHFilterModel *selModel = modelArr[indexPath.row];
-                for (ZHFilterModel *filterModel in modelArr) {
-                    if ([selModel.title isEqualToString:filterModel.title]) {
-                        filterModel.selected = YES;
-                    }else {
-                        filterModel.selected = NO;
-                        /** 还原初始 首位选中 */
-                        [filterModel setModelItemSelecteFirst];
-                    }
-                }
-                [self.leftTableView reloadData];
-                [self.rightTableView reloadData];
-            } else if (tableView == self.rightTableView) {
-                ZHFilterModel *filterModel = [self getSelectedFilterModel];
-                [filterModel setModelItemSelectesNO];
-                ZHFilterItemModel *itemModel = filterModel.itemArr[indexPath.row];
-                itemModel.selected = YES;
-                [self.rightTableView reloadData];
-            }
-        } else if (downType == ZHFilterMenuDownTypeOnlyList) {
-            NSArray *modelArr = [self getSelectedTabIndexFilterModelArr];
-            ZHFilterModel *filterModel = [modelArr firstObject];
-            for (int i = 0; i < filterModel.itemArr.count; i ++) {
-                ZHFilterItemModel *itemModel = filterModel.itemArr[i];
-                itemModel.selected = i == indexPath.row;
-            }
-            [self.leftTableView reloadData];
-            [self.rightTableView reloadData];
+        if (confirmType == ZHFilterMenuConfirmTypeSpeedConfirm) {
+            [self confirmAction];
         }
     }
 }
