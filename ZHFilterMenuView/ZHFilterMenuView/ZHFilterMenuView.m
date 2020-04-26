@@ -200,6 +200,7 @@
         button.titleLabel.font = [UIFont systemFontOfSize:_titleFontSize];
         [button setTitleColor:self.titleColor forState:UIControlStateNormal];
         [button setTitleColor:self.titleSelectedColor forState:UIControlStateSelected];
+        [button setTitleColor:self.titleSelectedColor forState:UIControlStateHighlighted|UIControlStateSelected];
         UIImage *image = nil;
         if (i < self.imageNameArr.count) {
             image = [UIImage imageNamed:self.imageNameArr[i]];
@@ -599,7 +600,11 @@
 
 - (NSArray *)getSelectedTabIndexFilterModelArr
 {
-    return self.dataArr[self.selectedTabIndex];
+    if (self.dataArr.count > self.selectedTabIndex) {
+        return self.dataArr[self.selectedTabIndex];
+    }
+    NSLog(@"请传入正确的数据源");
+    return @[];
 }
 
 - (ZHFilterModel *)getSelectedFilterModel
