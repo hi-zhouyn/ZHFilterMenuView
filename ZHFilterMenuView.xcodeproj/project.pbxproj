@@ -10,6 +10,7 @@
 		5003FABF231CFDB100D06560 /* ZHFilterMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5003FABE231CFDB100D06560 /* ZHFilterMenuView.m */; };
 		5006756723A0E997007ADC12 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006756623A0E997007ADC12 /* FilterViewController.m */; };
 		500733B823AB67E600BB3B2E /* FilterDataUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 500733B723AB67E600BB3B2E /* FilterDataUtil.m */; };
+		5007C7412452B93E00C2443B /* ChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5007C7402452B93E00C2443B /* ChangeViewController.m */; };
 		500EFDC0239F84530027721C /* ZHFilterItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500EFDBE239F84530027721C /* ZHFilterItemTableViewCell.m */; };
 		500EFDC1239F84530027721C /* ZHFilterItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EFDBF239F84530027721C /* ZHFilterItemTableViewCell.xib */; };
 		500EFDC4239F849A0027721C /* ZHFilterTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500EFDC3239F849A0027721C /* ZHFilterTitleTableViewCell.m */; };
@@ -56,6 +57,8 @@
 		5006756623A0E997007ADC12 /* FilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		500733B623AB67E600BB3B2E /* FilterDataUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterDataUtil.h; sourceTree = "<group>"; };
 		500733B723AB67E600BB3B2E /* FilterDataUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterDataUtil.m; sourceTree = "<group>"; };
+		5007C73F2452B93E00C2443B /* ChangeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangeViewController.h; sourceTree = "<group>"; };
+		5007C7402452B93E00C2443B /* ChangeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeViewController.m; sourceTree = "<group>"; };
 		500EFDBD239F84530027721C /* ZHFilterItemTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterItemTableViewCell.h; sourceTree = "<group>"; };
 		500EFDBE239F84530027721C /* ZHFilterItemTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterItemTableViewCell.m; sourceTree = "<group>"; };
 		500EFDBF239F84530027721C /* ZHFilterItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZHFilterItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -168,6 +171,8 @@
 				5006756623A0E997007ADC12 /* FilterViewController.m */,
 				5034CF1B23F24D03005206A3 /* HeadFilterViewController.h */,
 				5034CF1C23F24D03005206A3 /* HeadFilterViewController.m */,
+				5007C73F2452B93E00C2443B /* ChangeViewController.h */,
+				5007C7402452B93E00C2443B /* ChangeViewController.m */,
 				5076807E23FE3B4D00CB4F09 /* HouseTableViewCell.h */,
 				5076807F23FE3B4D00CB4F09 /* HouseTableViewCell.m */,
 				5076808023FE3B4D00CB4F09 /* HouseTableViewCell.xib */,
@@ -413,6 +418,7 @@
 				5076808123FE3B4D00CB4F09 /* HouseTableViewCell.m in Sources */,
 				50FD1301230D20C20030499E /* ViewController.m in Sources */,
 				5003FABF231CFDB100D06560 /* ZHFilterMenuView.m in Sources */,
+				5007C7412452B93E00C2443B /* ChangeViewController.m in Sources */,
 				500EFDC4239F849A0027721C /* ZHFilterTitleTableViewCell.m in Sources */,
 				50FD130C230D20C40030499E /* main.m in Sources */,
 				5034CF1D23F24D03005206A3 /* HeadFilterViewController.m in Sources */,

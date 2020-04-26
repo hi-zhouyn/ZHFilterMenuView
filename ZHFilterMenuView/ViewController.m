@@ -10,6 +10,7 @@
 #import "ZHFilterTitleTableViewCell.h"
 #import "FilterViewController.h"
 #import "HeadFilterViewController.h"
+#import "ChangeViewController.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
@@ -22,7 +23,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"ZHFilterMenuView";
-    self.titleArr = @[@"新房筛选",@"二手房筛选",@"租房筛选",@"悬停下拉筛选",@"双列表快速选择筛选"];
+    self.titleArr = @[@"新房筛选",@"二手房筛选",@"租房筛选",@"悬停下拉筛选",@"双列表快速选择筛选",@"单双列表切换筛选"];
     [self.tableView reloadData];
 }
 
@@ -53,12 +54,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == self.titleArr.count - 1) {
+    if (indexPath.row == self.titleArr.count - 2) {
         FilterViewController *filterVC = [[FilterViewController alloc] init];
         filterVC.filterType = FilterTypeISRent;
         filterVC.twoListCanSpeedSelect = YES;
         [self.navigationController pushViewController:filterVC animated:YES];
-    }else if (indexPath.row == self.titleArr.count - 2) {
+    }else if (indexPath.row == self.titleArr.count - 1) {
+        ChangeViewController *filterVC = [[ChangeViewController alloc] init];
+        [self.navigationController pushViewController:filterVC animated:YES];
+    } else if (indexPath.row == self.titleArr.count - 3) {
         HeadFilterViewController *headVC = [[HeadFilterViewController alloc] init];
         [self.navigationController pushViewController:headVC animated:YES];
     } else {

@@ -110,7 +110,30 @@
         [dataArr addObject:priceArr];
         [dataArr addObject:moreArr];
         [dataArr addObject:sortArr];
+    } else if (type == FilterTypeISQuery) {
+        NSMutableArray *typeArr = [NSMutableArray array];
+        NSMutableArray *sortArr = [NSMutableArray array];
+        
+        NSArray *itemArr = [self getDataByType:FilterDataType_CX_LX];
+        for (int i = 0; i < itemArr.count; i ++) {
+            ZHFilterItemModel *model = itemArr[i];
+            if ([model.name containsString:@"不限"]) {
+                ZHFilterModel *typeModel = [ZHFilterModel createFilterModelWithHeadTitle:model.name code:model.code modelArr:@[] selectFirst:YES multiple:NO];
+                typeModel.selected = YES;
+                [typeArr addObject:typeModel];
+            } else if ([model.name containsString:@"住房租赁"]) {
+                [typeArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:model.name code:model.code modelArr:[self getDataByType:FilterDataType_ZL_LX] selectFirst:YES multiple:NO]];
+            } else {
+                [typeArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:model.name code:model.code modelArr:@[] selectFirst:NO multiple:NO]];
+            }
+        }
+        
+        [sortArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"" modelArr:[self getDataByType:FilterDataType_CX_PX] selectFirst:YES multiple:NO]];
+        
+        [dataArr addObject:typeArr];
+        [dataArr addObject:sortArr];
     }
+    
     return dataArr;
 }
 
@@ -167,6 +190,12 @@
         key = @"023";
     }else if (type == FilterDataType_GG_CX){
         key = @"024";
+    }else if (type == FilterDataType_CX_LX){
+        key = @"025";
+    }else if (type == FilterDataType_ZL_LX){
+        key = @"026";
+    }else if (type == FilterDataType_CX_PX){
+        key = @"027";
     }
     for (ZHFilterItemModel *model in self.dictArr) {
         if ([model.parentCode isEqualToString:key]) {

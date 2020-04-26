@@ -12,11 +12,17 @@
 
 + (ZHFilterModel *)createFilterModelWithHeadTitle:(NSString *)title modelArr:(NSArray *)modelArr selectFirst:(BOOL)selectFirst multiple:(BOOL)multiple
 {
+    return [self createFilterModelWithHeadTitle:title code:@"" modelArr:modelArr selectFirst:selectFirst multiple:multiple];
+}
+
++ (ZHFilterModel *)createFilterModelWithHeadTitle:(NSString *)title code:(NSString *)code modelArr:(NSArray *)modelArr selectFirst:(BOOL)selectFirst multiple:(BOOL)multiple
+{
     ZHFilterModel *model = [[ZHFilterModel alloc] init];
     ZHFilterItemModel *infoModel = [modelArr firstObject];
     infoModel.selected = selectFirst;
     model.selectFirst = selectFirst;
     model.title = title;
+    model.code = code;
     model.itemArr = [NSMutableArray arrayWithArray:modelArr];
     model.multiple = multiple;
     return model;

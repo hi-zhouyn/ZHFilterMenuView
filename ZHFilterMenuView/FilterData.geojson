@@ -590,6 +590,64 @@
         "code":"024005",
         "name":"西",
         "parentCode":"024"
+    },
+    
+    {
+        "code":"025001",
+        "name":"不限",
+        "parentCode":"025"
+    },{
+        "code":"025002",
+        "name":"新房买卖",
+        "parentCode":"025"
+    },{
+        "code":"025003",
+        "name":"房屋抵押",
+        "parentCode":"025"
+    },{
+        "code":"025004",
+        "name":"二手房买卖",
+        "parentCode":"025"
+    },{
+        "code":"025005",
+        "name":"二手房买卖资金监管",
+        "parentCode":"025"
+    },{
+        "code":"025006",
+        "name":"住房租赁",
+        "parentCode":"025"
+    },{
+        "code":"025007",
+        "name":"房产托管",
+        "parentCode":"025"
+    },
+    
+    {
+        "code":"026001",
+        "name":"不限",
+        "parentCode":"026"
+    },{
+        "code":"026002",
+        "name":"整租",
+        "parentCode":"026"
+    },{
+        "code":"026003",
+        "name":"合租",
+        "parentCode":"026"
+    },
+    
+    {
+        "code":"027001",
+        "name":"默认排序",
+        "parentCode":"027"
+    },{
+        "code":"027002",
+        "name":"签订日期排序",
+        "parentCode":"027"
+    },{
+        "code":"027003",
+        "name":"签订日期顺序",
+        "parentCode":"027"
     }
     
 ]

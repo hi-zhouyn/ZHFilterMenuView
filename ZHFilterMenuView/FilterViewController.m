@@ -90,7 +90,7 @@
 - (ZHFilterMenuView *)menuView
 {
     if (!_menuView) {
-        _menuView = [[ZHFilterMenuView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 45) maxHeight:CGRectGetHeight(self.view.frame) - 45];
+        _menuView = [[ZHFilterMenuView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 45) maxHeight:CGRectGetHeight(self.view.frame) - 45 - 64];
         _menuView.zh_delegate = self;
         _menuView.zh_dataSource = self;
         if (self.filterType == FilterTypeIsNewHouse) {

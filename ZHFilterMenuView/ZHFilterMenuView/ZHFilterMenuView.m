@@ -368,11 +368,12 @@
 /** 重置 */
 - (void)resetAction
 {
+    ZHFilterMenuDownType downType = [self getDownTypeBySelectedTabIndex:self.selectedTabIndex];
     NSArray *modelArr = [self getSelectedTabIndexFilterModelArr];
     ZHFilterModel *filterModel = [modelArr firstObject];
     for (ZHFilterModel *model in modelArr) {
+        model.selected = NO;
         if (model.selectFirst) {
-            model.selected = NO;
             if (model == filterModel) {
                 model.selected = YES;
             }
@@ -381,6 +382,10 @@
         } else {
             [model setModelItemSelectesNO];
         }
+    }
+    if (downType == ZHFilterMenuDownTypeTwoLists) {
+        //根据二级列表是否有值来动态显示二级列表
+        [self updateTableViewWidthWithItemArrHaveData:filterModel.itemArr.count];
     }
     [self.leftTableView reloadData];
     [self.rightTableView reloadData];
@@ -442,13 +447,30 @@
         self.backGroundView.frame = CGRectMake(0, CGRectGetMaxY(menuViewFrom), menuViewFrom.size.width, self.maxHeight);
         [self.superview bringSubviewToFront:self];
         [superView addSubview:self.backGroundView];
+        
+        //判断二级数据是否有值
+        ZHFilterModel *filterModel = [self getSelectedFilterModel];
+        BOOL haveData = filterModel.itemArr.count;
+        CGFloat leftTabWidth = menuViewFrom.size.width;
+        CGFloat rightTabWidth = 0.f;
+        
         if (downType == ZHFilterMenuDownTypeTwoLists) {
-            self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(menuViewFrom), menuViewFrom.size.width / 3, 0);
-            self.rightTableView.frame = CGRectMake(menuViewFrom.size.width / 3, CGRectGetMaxY(menuViewFrom), menuViewFrom.size.width / 3 * 2, 0);
+            if (haveData) {
+                if (self.twoListToOneList) {
+                    leftTabWidth = menuViewFrom.size.width / 2;
+                    rightTabWidth = menuViewFrom.size.width / 2;
+                } else {
+                    leftTabWidth = menuViewFrom.size.width / 3;
+                    rightTabWidth = menuViewFrom.size.width / 3 * 2;
+                }
+            }
+            
+            self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(menuViewFrom), leftTabWidth, 0);
+            self.rightTableView.frame = CGRectMake(leftTabWidth, CGRectGetMaxY(menuViewFrom), rightTabWidth, 0);
             [superView addSubview:self.leftTableView];
             [superView addSubview:self.rightTableView];
         } else {
-            self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(menuViewFrom), menuViewFrom.size.width, 0);
+            self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(menuViewFrom), leftTabWidth, 0);
             [superView addSubview:self.leftTableView];
             [self.rightTableView removeFromSuperview];
         }
@@ -468,10 +490,10 @@
         [UIView animateWithDuration:0.3 animations:^{
             self.backGroundView.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.3f];
             if (downType == ZHFilterMenuDownTypeTwoLists) {
-                self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, menuViewFrom.origin.y + menuViewFrom.size.height, menuViewFrom.size.width / 3, viewHeight);
-                self.rightTableView.frame = CGRectMake(menuViewFrom.size.width / 3, menuViewFrom.origin.y + menuViewFrom.size.height, menuViewFrom.size.width / 3 * 2, viewHeight);
+                self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, menuViewFrom.origin.y + menuViewFrom.size.height, leftTabWidth, viewHeight);
+                self.rightTableView.frame = CGRectMake(leftTabWidth, menuViewFrom.origin.y + menuViewFrom.size.height, rightTabWidth, viewHeight);
             } else {
-                self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(menuViewFrom), menuViewFrom.size.width, viewHeight);
+                self.leftTableView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(menuViewFrom), leftTabWidth, viewHeight);
             }
             if (confirmType == ZHFilterMenuConfirmTypeBottomConfirm) {
                 self.bottomView.frame = CGRectMake(menuViewFrom.origin.x, CGRectGetMaxY(self.leftTableView.frame), menuViewFrom.size.width, bottomHeight);
@@ -529,9 +551,16 @@
                         }
                     } else {
                         if (filterModel.itemArr.count) {
-                            ZHFilterItemModel *itemModel = [filterModel.itemArr firstObject];
-                            if (itemModel && itemModel.selected) {
-                                continue;
+                            if (self.twoListToOneList && filterModel.code.length) {
+                                if (filterModel.selected) {
+                                    selected = YES;
+                                    break;
+                                }
+                            } else {
+                                ZHFilterItemModel *itemModel = [filterModel.itemArr firstObject];
+                                if (itemModel && itemModel.selected) {
+                                    continue;
+                                }
                             }
                         }
                     }
@@ -539,10 +568,19 @@
                         break;
                     }
                 }
-                for (ZHFilterItemModel *itemModel in filterModel.itemArr) {
-                    if (itemModel.selected) {
-                        selected = YES;
+                if (self.twoListToOneList && filterModel.code.length) {
+                    if (filterModel.selected) {
+                        if (!filterModel.selectFirst && !filterModel.itemArr.count) {
+                            selected = YES;
+                        }
                         break;
+                    }
+                } else {
+                    for (ZHFilterItemModel *itemModel in filterModel.itemArr) {
+                        if (itemModel.selected) {
+                            selected = YES;
+                            break;
+                        }
                     }
                 }
                 if (selected) {
@@ -553,6 +591,27 @@
         
         tabButton.selected = selected;
         [self layoutButtonWithEdgeInsetsType:1 button:tabButton imageTitleSpace:3];
+    }
+}
+
+#pragma mark - 更新标题内容
+- (void)updateMenuTitleStr
+{
+    for (int i = 0; i < self.titleArr.count; i++) {
+        UIButton *tabButton = self.buttonArr[i];
+        NSArray *modelArr = self.dataArr[i];
+        NSString *title = self.titleArr[i];
+        NSInteger count = 0;
+        for (ZHFilterModel *filterModel in modelArr) {
+            count += filterModel.selectArr.count;
+        }
+        if (count == 0) {
+            [tabButton setTitle:title forState:UIControlStateNormal];
+        } else if (count == 1) {
+            
+        } else {
+            
+        }
     }
 }
 
@@ -606,49 +665,54 @@
         NSLog(@"当前下拉列表数据为空!");
         return 0.f;
     }
-    if (confirmType == ZHFilterMenuDownTypeTwoLists) {
+    if (downType == ZHFilterMenuDownTypeTwoLists) {
         NSInteger maxCount = 0;
-        for (ZHFilterModel *filterModel in sectionArr) {
-            if (filterModel.itemArr.count > maxCount) {
-                maxCount = filterModel.itemArr.count;
+        if (self.twoListToOneList) {
+            maxCount = sectionArr.count;
+        } else {
+            for (ZHFilterModel *filterModel in sectionArr) {
+                if (filterModel.itemArr.count > maxCount) {
+                    maxCount = filterModel.itemArr.count;
+                }
             }
         }
         return maxCount * self.listHeight;
-    } else {
+    } else if (downType == ZHFilterMenuDownTypeOnlyList) {
+        ZHFilterModel *filterModel = [sectionArr firstObject];
+        return filterModel.itemArr.count * self.listHeight;
+    } else if (downType == ZHFilterMenuDownTypeItemInput) {
         NSInteger count = 0;
-        if (downType == ZHFilterMenuDownTypeItemInput) {
-            for (ZHFilterModel *filterModel in sectionArr) {
-                if (filterModel.itemArr.count > count) {
-                    count = filterModel.itemArr.count;
-                }
+        for (ZHFilterModel *filterModel in sectionArr) {
+            if (filterModel.itemArr.count > count) {
+                count = filterModel.itemArr.count;
             }
-            //当内容字符数大于7时lineNum = 2
-            ZHFilterModel *filterModel = [sectionArr firstObject];
-            ZHFilterItemModel *itemModel = [filterModel.itemArr lastObject];
-            if (itemModel.name.length > 7) {
-                self.itemManager.lineNum = 2;
-            }
+        }
+        //当内容字符数大于7时lineNum = 2
+        ZHFilterModel *filterModel = [sectionArr firstObject];
+        ZHFilterItemModel *itemModel = [filterModel.itemArr lastObject];
+        if (itemModel.name.length > 7) {
+            self.itemManager.lineNum = 2;
+        }
+        CGFloat itemHiight = 40.f;
+        NSInteger lineCount = count / self.itemManager.lineNum + (count % self.itemManager.lineNum ? 1 : 0);
+        if (count) {
+            itemHiight += (self.itemManager.itemHeight + self.itemManager.space) * lineCount + self.itemManager.space;
+        }
+        itemHiight += 70;
+        for (ZHFilterModel *filterModel in sectionArr) {
+            filterModel.listHeight = itemHiight;
+        }
+        return itemHiight;
+    } else if (downType == ZHFilterMenuDownTypeOnlyItem) {
+        for (ZHFilterModel *filterModel in sectionArr) {
             CGFloat itemHiight = 40.f;
-            NSInteger lineCount = count / self.itemManager.lineNum + (count % self.itemManager.lineNum ? 1 : 0);
-            if (count) {
+            NSInteger lineCount = filterModel.itemArr.count / self.itemManager.lineNum + (filterModel.itemArr.count % self.itemManager.lineNum ? 1 : 0);
+            if (filterModel.itemArr.count) {
                 itemHiight += (self.itemManager.itemHeight + self.itemManager.space) * lineCount + self.itemManager.space;
             }
-            itemHiight += 70;
-            for (ZHFilterModel *filterModel in sectionArr) {
-                filterModel.listHeight = itemHiight;
-            }
-            return itemHiight;
-        } else {
-            for (ZHFilterModel *filterModel in sectionArr) {
-                CGFloat itemHiight = 40.f;
-                NSInteger lineCount = filterModel.itemArr.count / self.itemManager.lineNum + (filterModel.itemArr.count % self.itemManager.lineNum ? 1 : 0);
-                if (filterModel.itemArr.count) {
-                    itemHiight += (self.itemManager.itemHeight + self.itemManager.space) * lineCount + self.itemManager.space;
-                }
-//                itemHiight += 20;
-                filterModel.listHeight = itemHiight;
-                listHeight += itemHiight;
-            }
+            //                itemHiight += 20;
+            filterModel.listHeight = itemHiight;
+            listHeight += itemHiight;
         }
     }
     return listHeight;
@@ -670,9 +734,24 @@
                 itemModel.selected = YES;
                 [selectArr addObject:itemModel];
             } else {
-                for (ZHFilterItemModel *itemModel in filterModel.itemArr) {
-                    if (itemModel.selected) {
-                        [selectArr addObject:itemModel];
+                if (self.twoListToOneList && filterModel.selected && filterModel.code.length && !filterModel.itemArr.count) {
+                    ZHFilterItemModel *itemModel = [[ZHFilterItemModel alloc] init];
+                    itemModel.name = filterModel.title;
+                    itemModel.code = filterModel.code;
+                    itemModel.parentCode = filterModel.code;
+                    itemModel.selected = YES;
+                    [selectArr addObject:itemModel];
+                } else {
+                    for (ZHFilterItemModel *itemModel in filterModel.itemArr) {
+                        if (self.twoListToOneList && filterModel.code.length) {
+                            if (filterModel.selected && itemModel.selected) {
+                                [selectArr addObject:itemModel];
+                            }
+                        } else {
+                            if (itemModel.selected) {
+                                [selectArr addObject:itemModel];
+                            }
+                        }
                     }
                 }
             }
@@ -776,6 +855,9 @@
                     [filterModel setModelItemSelecteFirst];
                 }
             }
+            //根据二级列表是否有值来动态显示二级列表
+            [self updateTableViewWidthWithItemArrHaveData:selModel.itemArr.count];
+            
             [self.leftTableView reloadData];
             [self.rightTableView reloadData];
         } else if (tableView == self.rightTableView) {
@@ -803,6 +885,23 @@
     }
 }
 
+//根据二级列表是否有值来动态显示二级列表
+- (void)updateTableViewWidthWithItemArrHaveData:(BOOL)haveData
+{
+    CGFloat leftTabWidth = self.frame.size.width;
+    CGFloat rightTabWidth = 0.f;
+    if (haveData) {
+        if (self.twoListToOneList) {
+            leftTabWidth = self.frame.size.width / 2;
+            rightTabWidth = self.frame.size.width / 2;
+        } else {
+            leftTabWidth = self.frame.size.width / 3;
+            rightTabWidth = self.frame.size.width / 3 * 2;
+        }
+    }
+    self.leftTableView.frame = CGRectMake(self.leftTableView.frame.origin.x, self.leftTableView.frame.origin.y, leftTabWidth, self.leftTableView.frame.size.height);
+    self.rightTableView.frame = CGRectMake(leftTabWidth, self.rightTableView.frame.origin.y, rightTabWidth, self.rightTableView.frame.size.height);
+}
 
 
 #pragma mark - lazyloading

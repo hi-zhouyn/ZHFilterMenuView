@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, FilterType) {
     FilterTypeIsNewHouse = 1,  //新房
     FilterTypeSecondHandHouse, //二手房
     FilterTypeISRent,          //租房
+    FilterTypeISQuery,         //合同查询
 };
 
 typedef NS_ENUM(NSUInteger, FilterDataType) {
@@ -41,6 +42,9 @@ typedef NS_ENUM(NSUInteger, FilterDataType) {
     FilterDataType_ZF_ZQ,   //租房-租期-022
     FilterDataType_ZF_PX,   //租房-排序-023
     FilterDataType_GG_CX,   //公共-朝向-024
+    FilterDataType_CX_LX,   //查询-类型-025
+    FilterDataType_ZL_LX,   //租赁-类型-026
+    FilterDataType_CX_PX,   //查询-排序-027
 };
 //extern NSMutableArray *FilterDataTypeArr(FilterDataType type);
 
