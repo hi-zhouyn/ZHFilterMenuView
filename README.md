@@ -15,6 +15,8 @@
 ![ZHFilterMenuView](/Image/IMG_4276.PNG)
 #### 列表悬停下拉筛选模式（新增）
 ![ZHFilterMenuView](/Image/filter2.gif)
+#### 单双列表切换筛选模式（新增）
+![ZHFilterMenuView](/Image/filter3.gif)
 
 ## 简书文章
 更多了解可以查看[详细文章](https://www.jianshu.com/p/0f0638eef65f)
