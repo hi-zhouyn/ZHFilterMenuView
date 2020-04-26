@@ -42,7 +42,7 @@
 /** 返回每个 tabIndex 下的确定类型 */
 - (ZHFilterMenuConfirmType)menuView:(ZHFilterMenuView *)menuView confirmTypeInTabIndex:(NSInteger)tabIndex
 {
-    if (tabIndex == 1) {
+    if (tabIndex == 2) {
         return ZHFilterMenuConfirmTypeSpeedConfirm;
     }
     return ZHFilterMenuConfirmTypeBottomConfirm;
@@ -51,10 +51,10 @@
 /** 返回每个 tabIndex 下的下拉展示类型 */
 - (ZHFilterMenuDownType)menuView:(ZHFilterMenuView *)menuView downTypeInTabIndex:(NSInteger)tabIndex
 {
-    if (tabIndex == 0) {
-        return ZHFilterMenuDownTypeTwoLists;
+    if (tabIndex == 2) {
+        return ZHFilterMenuDownTypeOnlyList;
     }
-    return ZHFilterMenuDownTypeOnlyList;
+    return ZHFilterMenuDownTypeTwoLists;
 }
 
 
@@ -67,8 +67,8 @@
         _menuView.titleLeft = YES;
         _menuView.lastTitleRight = YES;
         _menuView.twoListToOneList = YES;
-        _menuView.titleArr = @[@"类型",@""];
-        _menuView.imageNameArr = @[@"x_arrow",@"x_px"];
+        _menuView.titleArr = @[@"类型",@"状态",@""];
+        _menuView.imageNameArr = @[@"x_arrow",@"x_arrow",@"x_px"];
         [self.view addSubview:_menuView];
     }
     return _menuView;

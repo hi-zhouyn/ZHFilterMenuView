@@ -112,6 +112,7 @@
         [dataArr addObject:sortArr];
     } else if (type == FilterTypeISQuery) {
         NSMutableArray *typeArr = [NSMutableArray array];
+        NSMutableArray *statusArr = [NSMutableArray array];
         NSMutableArray *sortArr = [NSMutableArray array];
         
         NSArray *itemArr = [self getDataByType:FilterDataType_CX_LX];
@@ -128,9 +129,28 @@
             }
         }
         
+        NSArray *staIitemArr = [self getDataByType:FilterDataType_ZT_LX];
+        for (int i = 0; i < staIitemArr.count; i ++) {
+            ZHFilterItemModel *model = staIitemArr[i];
+            if ([model.name containsString:@"不限"]) {
+                ZHFilterModel *typeModel = [ZHFilterModel createFilterModelWithHeadTitle:model.name code:model.code modelArr:@[] selectFirst:YES multiple:NO];
+                typeModel.selected = YES;
+                [statusArr addObject:typeModel];
+            } else if ([model.name containsString:@"合同状态"]) {
+                [statusArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:model.name code:model.code modelArr:[self getDataByType:FilterDataType_ZT_HT] selectFirst:YES multiple:NO]];
+            } else if ([model.name containsString:@"协议状态"]) {
+                [statusArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:model.name code:model.code modelArr:[self getDataByType:FilterDataType_ZT_XY] selectFirst:YES multiple:NO]];
+            } else if ([model.name containsString:@"备案状态"]) {
+                [statusArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:model.name code:model.code modelArr:[self getDataByType:FilterDataType_ZT_BA] selectFirst:YES multiple:NO]];
+            } else if ([model.name containsString:@"异动状态"]) {
+                [statusArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:model.name code:model.code modelArr:[self getDataByType:FilterDataType_ZT_YD] selectFirst:YES multiple:NO]];
+            }
+        }
+        
         [sortArr addObject:[ZHFilterModel createFilterModelWithHeadTitle:@"" modelArr:[self getDataByType:FilterDataType_CX_PX] selectFirst:YES multiple:NO]];
         
         [dataArr addObject:typeArr];
+        [dataArr addObject:statusArr];
         [dataArr addObject:sortArr];
     }
     
@@ -196,6 +216,16 @@
         key = @"026";
     }else if (type == FilterDataType_CX_PX){
         key = @"027";
+    }else if (type == FilterDataType_ZT_LX){
+        key = @"028";
+    }else if (type == FilterDataType_ZT_HT){
+        key = @"028002";
+    }else if (type == FilterDataType_ZT_XY){
+        key = @"028003";
+    }else if (type == FilterDataType_ZT_BA){
+        key = @"028004";
+    }else if (type == FilterDataType_ZT_YD){
+        key = @"028005";
     }
     for (ZHFilterItemModel *model in self.dictArr) {
         if ([model.parentCode isEqualToString:key]) {

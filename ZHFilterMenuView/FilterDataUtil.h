@@ -45,6 +45,11 @@ typedef NS_ENUM(NSUInteger, FilterDataType) {
     FilterDataType_CX_LX,   //查询-类型-025
     FilterDataType_ZL_LX,   //租赁-类型-026
     FilterDataType_CX_PX,   //查询-排序-027
+    FilterDataType_ZT_LX,   //状态-类型-028
+    FilterDataType_ZT_HT,   //状态-合同-028002
+    FilterDataType_ZT_XY,   //状态-协议-028003
+    FilterDataType_ZT_BA,   //状态-备案-028004
+    FilterDataType_ZT_YD,   //状态-异动-028005
 };
 //extern NSMutableArray *FilterDataTypeArr(FilterDataType type);
 
