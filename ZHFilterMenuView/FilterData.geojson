@@ -648,6 +648,88 @@
         "code":"027003",
         "name":"签订日期顺序",
         "parentCode":"027"
+    },
+    
+    {
+        "code":"028001",
+        "name":"不限",
+        "parentCode":"028"
+    },{
+        "code":"028002",
+        "name":"合同状态",
+        "parentCode":"028"
+    },{
+        "code":"028003",
+        "name":"协议状态",
+        "parentCode":"028"
+    },{
+        "code":"028004",
+        "name":"备案状态",
+        "parentCode":"028"
+    },{
+        "code":"028005",
+        "name":"异动状态",
+        "parentCode":"028"
+    },
+    
+    {
+        "code":"028002001",
+        "name":"不限",
+        "parentCode":"028002"
+    },{
+        "code":"028002002",
+        "name":"有效",
+        "parentCode":"028002"
+    },{
+        "code":"028002003",
+        "name":"无效",
+        "parentCode":"028002"
+    },
+    
+    {
+        "code":"028003001",
+        "name":"不限",
+        "parentCode":"028003"
+    },{
+        "code":"028003002",
+        "name":"有效",
+        "parentCode":"028003"
+    },{
+        "code":"028003003",
+        "name":"无效",
+        "parentCode":"028003"
+    },
+    
+    {
+        "code":"028004001",
+        "name":"不限",
+        "parentCode":"028004"
+    },{
+        "code":"028004002",
+        "name":"未备案",
+        "parentCode":"028004"
+    },{
+        "code":"028004003",
+        "name":"已备案",
+        "parentCode":"028004"
+    },{
+        "code":"028004004",
+        "name":"备案撤销",
+        "parentCode":"028004"
+    },
+    
+    {
+        "code":"028005001",
+        "name":"无异动",
+        "parentCode":"028005"
+    },{
+        "code":"028005002",
+        "name":"正在变更",
+        "parentCode":"028005"
+    },{
+        "code":"028005003",
+        "name":"正在撤销",
+        "parentCode":"028005"
     }
     
 ]
