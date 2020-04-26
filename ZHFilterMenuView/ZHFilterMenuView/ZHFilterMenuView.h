@@ -114,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIColor *lineColor;            //菜单标题底部分割线颜色（默认e8e8e8）
 @property (nonatomic, assign) CGFloat titleFontSize;         //菜单标题字号（默认15）
 
-@property (nonatomic, assign) BOOL twoListToOneList;         //双列表与单列表转换（默认NO）
+@property (nonatomic, assign) BOOL twoListToOneList;         //是否支持双列表与单列表转换（默认NO）
 @property (nonatomic, assign) BOOL showLine;                 //菜单标题底部分割线是否显示（默认YES）
 @property (nonatomic, assign) BOOL titleLeft;                //文字标题是否居左 不平分（默认NO）
 @property (nonatomic, assign) BOOL lastTitleRight;           //最后一个文字标题是否固定居右（默认NO,为YES的情况下tab标题宽度固定为60）

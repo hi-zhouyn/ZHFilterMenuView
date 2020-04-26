@@ -594,26 +594,6 @@
     }
 }
 
-#pragma mark - 更新标题内容
-- (void)updateMenuTitleStr
-{
-    for (int i = 0; i < self.titleArr.count; i++) {
-        UIButton *tabButton = self.buttonArr[i];
-        NSArray *modelArr = self.dataArr[i];
-        NSString *title = self.titleArr[i];
-        NSInteger count = 0;
-        for (ZHFilterModel *filterModel in modelArr) {
-            count += filterModel.selectArr.count;
-        }
-        if (count == 0) {
-            [tabButton setTitle:title forState:UIControlStateNormal];
-        } else if (count == 1) {
-            
-        } else {
-            
-        }
-    }
-}
 
 #pragma mark - getData
 
