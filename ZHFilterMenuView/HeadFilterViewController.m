@@ -142,7 +142,7 @@ UIScrollViewDelegate>
 - (ZHFilterMenuView *)menuView
 {
     if (!_menuView) {
-        _menuView = [[ZHFilterMenuView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), KMenuViewHeight) maxHeight:CGRectGetHeight(self.view.frame) - KMenuViewHeight];
+        _menuView = [[ZHFilterMenuView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), KMenuViewHeight) maxHeight:CGRectGetHeight(self.view.frame) - KMenuViewHeight - KNavbarAndStatusHieght];
         _menuView.zh_delegate = self;
         _menuView.zh_dataSource = self;
         //下拉列表展示在window上，以应对列表视图展示的问题
